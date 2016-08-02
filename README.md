@@ -1,0 +1,4 @@
+# Management Server
+
+## License
+MIT
