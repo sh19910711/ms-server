@@ -1,0 +1,15 @@
+language: ruby
+
+rvm:
+  - 2.3.1
+  - 2.2.5
+
+cache:
+  directories:
+    - vendor/bundle
+
+install:
+  - bundle install --jobs 2 --path vendor/bundle
+
+script:
+  - bundle exec rake test
