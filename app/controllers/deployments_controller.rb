@@ -4,7 +4,7 @@ class DeploymentsController < ApplicationController
     deployment = Deployment.new
     deployment.app = App.find_by_name(deployment_params[:name])
 
-    images = deployment_params[:images].map do |img|
+    images = Array(deployment_params[:images]).map do |img|
       image = Image.new
       image.deployment = deployment
       image.board = img['board']
