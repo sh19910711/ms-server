@@ -18,7 +18,13 @@ RSpec.describe "Apps", type: :request do
       expect(response).to have_http_status(:ok)
       expect(App.find_by_name(name)).to be_present
 
-      images = [File.open('spec/requests/sample_images/esp8266.img')]
+      images = [
+        {
+          board: 'esp8266',
+          file: File.open('spec/requests/sample_images/esp8266.img')
+        }
+      ]
+
       expect {
         post "/apps/#{name}/deployments", params: { images: images }
       }.to change(Deployment, :count).by(1)
