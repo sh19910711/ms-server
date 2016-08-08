@@ -5,6 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 /vendor
+/public/uploads
 
 # Ignore bundler config.
 /.bundle
