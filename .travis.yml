@@ -11,5 +11,8 @@ cache:
 install:
   - bundle install --jobs 2 --path vendor/bundle
 
+before_script:
+  - bundle exec rails db:migrate RAILS_ENV=test
+
 script:
   - bundle exec rspec
