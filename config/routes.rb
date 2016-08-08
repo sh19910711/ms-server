@@ -7,4 +7,9 @@ Rails.application.routes.draw do
   # Devices API
   put 'devices/:name/status', to: 'devices#status'
   get 'devices/:name/image',  to: 'devices#image'
+
+  get    '*unmatched', to: proc { [400, {}, ['']] }
+  put    '*unmatched', to: proc { [400, {}, ['']] }
+  post   '*unmatched', to: proc { [400, {}, ['']] }
+  delete '*unmatched', to: proc { [400, {}, ['']] }
 end
