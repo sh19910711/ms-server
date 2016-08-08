@@ -4,11 +4,11 @@ class DeploymentsController < ApplicationController
     deployment = Deployment.new
     deployment.app = App.find_by_name(deployment_params[:name])
 
-    images = deployment_params[:images].map do |image|
+    images = deployment_params[:images].map do |img|
       image = Image.new
       image.deployment = deployment
-      image.board = image['board']
-      image.file = image['file']
+      image.board = img['board']
+      image.file = img['file']
       image
     end
 
@@ -25,6 +25,6 @@ class DeploymentsController < ApplicationController
   private
 
   def deployment_params
-    params.permit(:name, images: [{}])
+    params.permit(:name, images: [:board, :file])
   end
 end
