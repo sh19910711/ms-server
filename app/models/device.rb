@@ -1,6 +1,5 @@
 class Device < ApplicationRecord
-  belongs_to :app, optional: true
-
+  has_and_belongs_to_many :apps
   validates :status, inclusion: { in: DEVICE_STATUSES }
   validates :board, inclusion: { in: SUPPORTED_BOARDS }
 end
