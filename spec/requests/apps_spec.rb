@@ -45,6 +45,11 @@ RSpec.describe "Apps", type: :request do
       }.to change(Deployment, :count).by(1)
 
       expect(response).to have_http_status(:ok)
+
+      # try to download the uploaded image
+      get "/devices/#{dev_name}/image"
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to eq(File.open(image_filepath, 'rb').read)
     end
   end
 end

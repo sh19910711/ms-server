@@ -6,4 +6,5 @@ Rails.application.routes.draw do
 
   # Devices API
   put 'devices/:name/status', to: 'devices#status'
+  get 'devices/:name/image',  to: 'devices#image'
 end
