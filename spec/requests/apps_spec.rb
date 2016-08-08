@@ -18,10 +18,25 @@ RSpec.describe "Apps", type: :request do
       expect(response).to have_http_status(:ok)
       expect(App.find_by_name(name)).to be_present
 
+      # create a device
+      dev_name = 'abc'
+      put "/devices/#{dev_name}/status",
+        params: { board: 'esp8266', status: 'ready' }
+      expect(response).to have_http_status(:ok)
+      expect(Device.find_by_name(dev_name)).to be_present
+
+      # associate the device with the app
+      dev_name = 'abc'
+      post "/apps/#{name}/devices", params: { device: dev_name }
+      expect(response).to have_http_status(:ok)
+      expect(Device.find_by_name(dev_name)).to be_present
+
+      # deploy an image
+      image_filepath = 'spec/fixtures/sample_images/esp8266.img'
       images = [
         {
           board: 'esp8266',
-          file: File.open('spec/requests/sample_images/esp8266.img')
+          file: Rack::Test::UploadedFile.new(image_filepath)
         }
       ]
 
