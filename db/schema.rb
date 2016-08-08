@@ -10,12 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808014508) do
+ActiveRecord::Schema.define(version: 20160808023348) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "deployments", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "app_id"
+    t.string   "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_id"], name: "index_deployments_on_app_id"
   end
 
   create_table "devices", force: :cascade do |t|
@@ -25,6 +34,15 @@ ActiveRecord::Schema.define(version: 20160808014508) do
     t.datetime "updated_at", null: false
     t.string   "status"
     t.index ["app_id"], name: "index_devices_on_app_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string   "file"
+    t.string   "board"
+    t.integer  "deployment_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["deployment_id"], name: "index_images_on_deployment_id"
   end
 
 end
