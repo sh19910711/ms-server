@@ -1,7 +1,7 @@
 class DevicesController < ApplicationController
 
   def status
-    device = Device.find_or_create_by(name: device_params[:name])
+    device = Device.where(name: device_params[:name]).first_or_initialize
     device.board  = device_params[:board]
     device.status = device_params[:status]
     device.save!
