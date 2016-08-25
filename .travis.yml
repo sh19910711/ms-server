@@ -16,3 +16,6 @@ before_script:
 
 script:
   - bundle exec rspec
+
+#script:
+#  - "CODECLIMATE=true bundle exec rspec"
