@@ -54,6 +54,11 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.5)
     erubis (2.7.0)
+    factory_girl (4.7.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.7.0)
+      factory_girl (~> 4.7.0)
+      railties (>= 3.0.0)
     ffi (1.9.14)
     formatador (0.2.5)
     globalid (0.3.7)
@@ -192,6 +197,7 @@ DEPENDENCIES
   byebug
   carrierwave
   codeclimate-test-reporter
+  factory_girl_rails (~> 4.0)
   guard-rspec
   listen (~> 3.0.5)
   mysql2 (~> 0.3.16)

@@ -14,7 +14,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :development, :test do
   gem 'pry-rails'
   gem 'byebug', platform: :mri
+end
+
+group :test do
   gem 'rspec-rails', '~> 3.5'
+  gem 'factory_girl_rails', '~> 4.0'
   gem 'codeclimate-test-reporter', require: false
   gem 'guard-rspec', require: false
 end
