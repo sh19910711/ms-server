@@ -5,7 +5,7 @@ gem 'puma', '~> 3.0'
 gem 'carrierwave'
 
 gem 'sqlite3', group: :sqlite
-gem 'mysql2', '~> 0.3.16', group: :mysql
+gem 'mysql2', '~> 0.4.4', group: :mysql
 gem 'pg', '~> 0.18.2', group: :postgres
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -24,7 +24,7 @@ group :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.0.5'
+  gem 'listen', '~> 3.1.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
