@@ -17,6 +17,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'support/api'
 require 'support/factory_girl'
 
 RSpec.configure do |config|
