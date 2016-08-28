@@ -1,4 +1,7 @@
 class AppsController < ApplicationController
+  def index
+    render :json => App.all
+  end
 
   def create
     App.create!(apps_params)
