@@ -1,6 +1,17 @@
 API
 ===
 
+`GET /apps`
+-----------
+Returns all applications
+
+**Response:**
+``` json
+[
+    <array of applications>
+]
+```
+
 `POST /apps`
 ------------
 Creates an application.
