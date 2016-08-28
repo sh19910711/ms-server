@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "Apps", type: :request do
+  describe "GET /apps" do
+    before { App.create(name: 'my-app') }
+    before { api('GET', '/apps') }
+    it { expect(response).to have_http_status(:ok) }
+    it { expect(JSON.parse(response.body).map {|app| app['name'] }).to include('my-app') }
+  end
+
   describe "POST /apps" do
     context "normal" do
       it "creates a new app" do
