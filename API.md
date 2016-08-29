@@ -7,9 +7,13 @@ Returns all applications
 
 **Response:**
 ``` json
-[
-    <array of applications>
-]
+{
+    "applications": [
+        {
+            "name": "<application name>"
+        }
+    ]
+}
 ```
 
 `POST /apps`
