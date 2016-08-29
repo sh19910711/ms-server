@@ -1,6 +1,6 @@
 class AppsController < ApplicationController
   def index
-    render :json => App.all
+    render :json => { :applications => App.select(:name) }
   end
 
   def create

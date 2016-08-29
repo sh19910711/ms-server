@@ -5,7 +5,7 @@ RSpec.describe "Apps", type: :request do
     before { App.create(name: 'my-app') }
     before { api('GET', '/apps') }
     it { expect(response).to have_http_status(:ok) }
-    it { expect(JSON.parse(response.body).map {|app| app['name'] }).to include('my-app') }
+    it { expect(JSON.parse(response.body)['applications'].pluck('name')).to include('my-app') }
   end
 
   describe "POST /apps" do
