@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   # Apps API
+  get  'apps', to: 'apps#index'
   post 'apps', to: 'apps#create'
   post 'apps/:name/devices',     to: 'apps#add_device'
   post 'apps/:name/deployments', to: 'deployments#create'

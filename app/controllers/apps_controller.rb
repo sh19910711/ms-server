@@ -1,4 +1,7 @@
 class AppsController < ApplicationController
+  def index
+    render :json => { :applications => App.select(:name) }
+  end
 
   def create
     App.create!(apps_params)
