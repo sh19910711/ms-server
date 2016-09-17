@@ -1,6 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe "Devices", type: :request do
+  describe "GET /devices" do
+    let(:registered_device) { create(:esp8266_new_device) }
+    it "returns a list of devices" do
+      registered_device.save # FIXME: FactoryGirl does not save this
+      r = api('GET', '/devices')
+      expect(response).to have_http_status(:ok)
+      expect(r['devices'][0]['name']).to eq(registered_device.name)
+    end
+  end
+
   describe "PUT /devices/:id/status" do
     let(:registered_device) { create(:esp8266_new_device) }
 

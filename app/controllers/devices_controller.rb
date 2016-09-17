@@ -1,5 +1,10 @@
 class DevicesController < ApplicationController
 
+  def index
+    devices = Device.select("name", "board", "status").all
+    render json: { devices: devices }
+  end
+  
   def status
     device = Device.where(name: device_params[:name]).first_or_initialize
     device.board  = device_params[:board]

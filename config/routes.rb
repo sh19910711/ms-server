@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post 'apps/:name/deployments', to: 'deployments#create'
 
   # Devices API
+  get 'devices',  to: 'devices#index'
   put 'devices/:name/status', to: 'devices#status'
   get 'devices/:name/image',  to: 'devices#image'
 
