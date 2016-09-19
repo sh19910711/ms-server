@@ -4,7 +4,6 @@ gem 'rails', '5.0.0.1'
 gem 'puma', '~> 3.0'
 gem 'carrierwave'
 
-gem 'sqlite3', group: :sqlite
 gem 'mysql2', '~> 0.4.4', group: :mysql
 gem 'pg', '~> 0.18.2', group: :postgres
 
@@ -12,6 +11,7 @@ gem 'pg', '~> 0.18.2', group: :postgres
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :development, :test do
+  gem 'sqlite3', group: :sqlite
   gem 'pry-rails'
   gem 'byebug', platform: :mri
 end
