@@ -11,7 +11,7 @@ gem 'pg', '~> 0.18.2', group: :postgres
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :development, :test do
-  gem 'sqlite3', group: :sqlite
+  gem 'sqlite3'
   gem 'pry-rails'
   gem 'byebug', platform: :mri
 end
