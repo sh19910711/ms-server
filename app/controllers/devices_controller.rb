@@ -42,7 +42,32 @@ class DevicesController < ApplicationController
 
     # TODO: replace send_file with a redirection
     # Since BaseOS does not support redirection we cannot use it.
-    send_file image.file.current_path, status: :ok
+    filepath = image.file.current_path
+    filesize = File.size?(filepath)
+    
+    partial = false # send whole data by default
+    if request.headers["Range"]
+      m = request.headers['Range'].match(/bytes=(?<offset>\d+)-(?<offset_end>\d*)/)
+      if m
+        partial = true
+        offset = m[:offset].to_i
+        offset_end =  (m[:offset_end] == "") ? filesize : m[:offset_end].to_i
+        length = offset_end - offset
+
+        if offset < 0 || length < 0 || offset + length > filesize
+          return head status: :bad_request
+        end
+      end
+    end
+
+    if partial
+      response.header['Content-Length'] = "#{length}"
+      response.header['Content-Range']  = "bytes #{offset}-#{offset_end}/#{filesize}"
+      send_data IO.binread(filepath, length, offset),
+                status: :partial_content, disposition: "inline"
+    else
+      send_file image.file.current_path, status: :ok
+    end
   end
 
   private
