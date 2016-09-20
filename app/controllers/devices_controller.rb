@@ -41,6 +41,7 @@ class DevicesController < ApplicationController
     end
 
     # TODO: replace send_file with a redirection
+    # XXX: introduce image ID
     # Since BaseOS does not support redirection we cannot use it.
     filepath = image.file.current_path
     filesize = File.size?(filepath)
@@ -54,8 +55,14 @@ class DevicesController < ApplicationController
         offset_end =  (m[:offset_end] == "") ? filesize : m[:offset_end].to_i
         length = offset_end - offset
 
-        if offset < 0 || length < 0 || offset + length > filesize
-          return head status: :bad_request
+        if offset < 0 || length < 0
+          return head :bad_request
+        end
+
+        if offset + length > filesize
+          # Parsing Content-Length in BaseOS is hassle for me. Return :no_content
+          # to indicate that BaseOS have downloaded whole file data.
+          return head :no_content
         end
       end
     end
