@@ -60,9 +60,9 @@ class DevicesController < ApplicationController
         end
 
         if offset + length > filesize
-          # Parsing Content-Length in BaseOS is hassle for me. Set X-EOF
+          # Parsing Content-Length in BaseOS is hassle for me. Set X-End-Of-File
           # to indicate that BaseOS have downloaded whole file data.
-          response.header['X-EOF'] = "yes"
+          response.header['X-End-Of-File'] = "yes"
           return head :partial_content
         end
       end
