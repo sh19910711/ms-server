@@ -14,29 +14,8 @@ class DevicesController < ApplicationController
   end
 
   def image
-    device = Device.find_by_name(device_params[:name])
-    unless device
-      logger.info "the device not found"
-      return head :not_found
-    end
-
-    if device.apps == []
-      logger.info "the device is not associated to an app"
-      return head :not_found
-    end
-
-    # TODO: support multi-apps
-    app = device.apps.first
-
-    deployment = Deployment.where(app: app).order("created_at").last
-    unless deployment
-      logger.info "no deployments"
-      return head :not_found
-    end
-
-    image = Image.where(deployment: deployment, board: device.board).first
+    image = get_image(device_params[:name])
     unless image
-      logger.info "no image uploaded for the device in the deploment"
       return head :not_found
     end
 
@@ -79,6 +58,36 @@ class DevicesController < ApplicationController
   end
 
   private
+
+  def get_image(device_name)
+    device = Device.find_by_name(device_name)
+    unless device
+      logger.info "the device not found"
+      return nil
+    end
+
+    if device.apps == []
+      logger.info "the device is not associated to an app"
+      return nil
+    end
+
+    # TODO: support multi-apps
+    app = device.apps.first
+
+    deployment = Deployment.where(app: app).order("created_at").last
+    unless deployment
+      logger.info "no deployments"
+      return nil
+    end
+
+    image = Image.where(deployment: deployment, board: device.board).first
+    unless image
+      logger.info "no image uploaded for the device in the deploment"
+      return nil
+    end
+
+    image
+  end
 
   def device_params
     params.permit(:name, :board, :status)
