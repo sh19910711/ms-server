@@ -10,7 +10,10 @@ class DevicesController < ApplicationController
     device.board  = device_params[:board]
     device.status = device_params[:status]
     device.save!
-    head :ok
+
+    image = get_image(device_params[:name])
+    latest_version = image ? image.deployment.id.to_s : 'X'
+    render body: latest_version
   end
 
   def image
