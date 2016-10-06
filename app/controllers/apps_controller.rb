@@ -1,4 +1,6 @@
 class AppsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     render :json => { :applications => App.select(:name) }
   end
