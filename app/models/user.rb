@@ -5,4 +5,6 @@ class User < ActiveRecord::Base
           :confirmable, :omniauthable
   include DeviseTokenAuth::Concerns::User
   validates :name, presence: true, uniqueness: true
+  has_many :apps
+  has_many :devices
 end
