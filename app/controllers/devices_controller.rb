@@ -25,21 +25,21 @@ class DevicesController < ApplicationController
     device.status = device_params[:status]
     device.save!
 
-    image = get_image(device_params[:name])
-    latest_version = image ? image.deployment.id.to_s : 'X'
+    deployment  = get_deployment(device_params[:name])
+    latest_version = deployment ? deployment.id.to_s : 'X'
     render body: latest_version
   end
 
   def image
-    image = get_image(device_params[:name])
-    unless image
+    deployment = get_deployment(device_params[:name])
+    unless deployment
       return head :not_found
     end
 
     # TODO: replace send_file with a redirection
     # XXX: introduce image ID
     # Since BaseOS does not support redirection we cannot use it.
-    filepath = image.file.current_path
+    filepath = deployment.file.current_path
     filesize = File.size?(filepath)
     
     partial = false # send whole data by default
@@ -70,13 +70,13 @@ class DevicesController < ApplicationController
       send_data IO.binread(filepath, length, offset),
                 status: :partial_content, disposition: "inline"
     else
-      send_file image.file.current_path, status: :ok
+      send_file deployment.file.current_path, status: :ok
     end
   end
 
   private
 
-  def get_image(device_name)
+  def get_deployment(device_name)
     device = current_team.devices.find_by_name(device_name)
     unless device
       logger.info "the device not found"
@@ -91,19 +91,16 @@ class DevicesController < ApplicationController
     # TODO: support multi-apps
     app = device.apps.first
 
-    deployment = Deployment.where(app: app, tag: [device.tag, nil]).order("created_at").last
+    deployment = Deployment.where(app: app,
+                                  board: device.board,
+                                  tag: [device.tag, nil]).order("created_at").last
+
     unless deployment
       logger.info "no deployments"
       return nil
     end
 
-    image = Image.where(deployment: deployment, board: device.board).first
-    unless image
-      logger.info "no image uploaded for the device in the deploment"
-      return nil
-    end
-
-    image
+    deployment
   end
 
   def device_params

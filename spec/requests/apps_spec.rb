@@ -62,10 +62,8 @@ RSpec.describe "Apps", type: :request do
 
       expect {
         api('POST', "apps/#{name}/deployments", {
-          images: [{
-            board: 'esp8266',
-            file: Rack::Test::UploadedFile.new(image_filepath)
-          }]
+          board: 'esp8266',
+          file: Rack::Test::UploadedFile.new(image_filepath)
         })
       }.to change(Deployment, :count).by(1)
 

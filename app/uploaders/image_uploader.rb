@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# ROM/disk image uploader
+# app image uploader
 class ImageUploader < CarrierWave::Uploader::Base
   storage :file
 
