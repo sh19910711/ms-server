@@ -5,7 +5,20 @@ class DevicesController < ApplicationController
     devices = current_team.devices.select("name", "board", "status").all
     render json: { devices: devices }
   end
-  
+
+  def update
+    device = current_team.devices.where(name: device_params[:name]).first
+    if device == nil
+      render status: :not_found, json: { error: "The device not found." }
+      return
+    end
+
+    device.board  = device_params[:board]
+    device.status = device_params[:status]
+    device.tag    = device_params[:tag]
+    device.save!
+  end
+
   def status
     device = current_team.devices.where(name: device_params[:name]).first_or_initialize
     device.board  = device_params[:board]
@@ -78,7 +91,7 @@ class DevicesController < ApplicationController
     # TODO: support multi-apps
     app = device.apps.first
 
-    deployment = Deployment.where(app: app).order("created_at").last
+    deployment = Deployment.where(app: app, tag: [device.tag, nil]).order("created_at").last
     unless deployment
       logger.info "no deployments"
       return nil
@@ -94,6 +107,6 @@ class DevicesController < ApplicationController
   end
 
   def device_params
-    params.permit(:name, :board, :status)
+    params.permit(:name, :board, :status, :tag)
   end
 end
