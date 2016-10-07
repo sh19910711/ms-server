@@ -9,8 +9,12 @@ class AppsController < ApplicationController
     app = App.new
     app.name = apps_params[:name]
     app.user = current_team
-    app.save!
-    head :ok
+
+    if app.save
+      head :ok
+    else
+      render status: :unprocessable_entity, json: { errors: app.errors.full_messages }
+    end
   end
 
   def add_device
