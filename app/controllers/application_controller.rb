@@ -17,6 +17,11 @@ class ApplicationController < ActionController::API
     @current_team = team
   end
 
+  def current_ability
+    @current_ability ||= Ability.new(current_team)
+  end
+
+
   protected
 
   def configure_permitted_parameters
