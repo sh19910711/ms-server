@@ -1,5 +1,5 @@
 class AppsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :auth
 
   def index
     render :json => { :applications => current_team.apps.select(:name) }
