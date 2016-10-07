@@ -42,6 +42,7 @@ GEM
     bcrypt (3.1.11)
     builder (3.2.2)
     byebug (9.0.6)
+    cancancan (1.15.0)
     carrierwave (0.11.2)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -158,6 +159,7 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    rb-readline (0.5.3)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     rspec (3.5.0)
@@ -217,6 +219,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  cancancan (~> 1.10)
   carrierwave
   codeclimate-test-reporter
   devise
@@ -230,6 +233,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 3.0)
   rails (= 5.0.0.1)
+  rb-readline
   rspec-rails (~> 3.5)
   spring
   spring-watcher-listen (~> 2.0.0)

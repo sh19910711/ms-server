@@ -6,6 +6,7 @@ gem 'carrierwave'
 gem 'devise'
 gem 'devise_token_auth'
 gem 'omniauth'
+gem 'cancancan', '~> 1.10'
 
 gem 'mysql2', '~> 0.4.4', group: :mysql
 gem 'pg', '~> 0.18.2', group: :postgres
@@ -16,6 +17,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :development, :test do
   gem 'sqlite3'
   gem 'pry-rails'
+  gem 'rb-readline', require: false
   gem 'byebug', platform: :mri
 end
 
