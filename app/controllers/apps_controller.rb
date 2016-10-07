@@ -2,17 +2,20 @@ class AppsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    render :json => { :applications => App.select(:name) }
+    render :json => { :applications => current_team.select(:name) }
   end
 
   def create
-    App.create!(apps_params)
+    app = App.new
+    app.name = apps_params[:name]
+    app.user = current_team
+    app.save!
     head :ok
   end
 
   def add_device
-    device = Device.find_by_name!(apps_params['device'])
-    app = App.find_by_name!(apps_params['name'])
+    device = current_team.devices.find_by_name!(apps_params['device'])
+    app = current_team.apps.find_by_name!(apps_params['name'])
     app.devices += [device]
     app.save!
     head :ok

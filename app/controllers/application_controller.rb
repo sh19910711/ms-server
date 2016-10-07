@@ -1,6 +1,21 @@
 class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
+  include CanCan::ControllerAdditions
+
   before_action :configure_permitted_parameters, if: :devise_controller?
+
+  def current_team
+    if @current_team
+      return @current_team
+    end
+
+    team = User.find_by_name!(params[:team])
+    if team != current_user
+      raise "You're not allowed to access."
+    end
+
+    @current_team = team
+  end
 
   protected
 

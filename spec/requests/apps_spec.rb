@@ -1,11 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe "Apps", type: :request do
-  describe "GET /api/apps" do
-    before { App.create(name: 'my-app') }
-    before { api('GET', '/api/apps') }
-    it { expect(response).to have_http_status(:ok) }
-    it { expect(JSON.parse(response.body)['applications'].pluck('name')).to include('my-app') }
+  before do
+    create_and_sign_in(:chandler)
+  end
+
+  describe "GET /api/:team/apps" do
+    before { api('POST', 'apps', { name: 'iot_button' }) }
+    it "returns a list of applications" do
+      json = api('GET', 'apps')
+      expect(response).to have_http_status(:ok)
+      expect(json['applications'].pluck('name')).to be('iot-button')
+    end
   end
 
   describe "POST /api/apps" do

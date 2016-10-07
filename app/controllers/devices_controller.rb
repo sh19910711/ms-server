@@ -2,12 +2,12 @@ class DevicesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    devices = Device.select("name", "board", "status").all
+    devices = current_team.devices.select("name", "board", "status").all
     render json: { devices: devices }
   end
   
   def status
-    device = Device.where(name: device_params[:name]).first_or_initialize
+    device = current_team.devices.where(name: device_params[:name]).first_or_initialize
     device.board  = device_params[:board]
     device.status = device_params[:status]
     device.save!
@@ -64,7 +64,7 @@ class DevicesController < ApplicationController
   private
 
   def get_image(device_name)
-    device = Device.find_by_name(device_name)
+    device = current_team.devices.find_by_name(device_name)
     unless device
       logger.info "the device not found"
       return nil
