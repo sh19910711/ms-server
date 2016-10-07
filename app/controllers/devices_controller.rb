@@ -1,5 +1,5 @@
 class DevicesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :auth
 
   def index
     devices = current_team.devices.select("name", "board", "status").all
