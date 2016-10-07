@@ -1,46 +1,43 @@
 require 'rails_helper'
 
 RSpec.describe "Devices", type: :request do
-  describe "GET /devices" do
-    let(:registered_device) { create(:esp8266_new_device) }
+  before do
+    create_and_sign_in(:chandler)
+  end
+
+  let(:device_name) { 'my-board' }
+  let(:board_name) { 'esp8266' }
+
+  describe "GET /api/:team/devices" do
     it "returns a list of devices" do
-      registered_device.save # FIXME: FactoryGirl does not save this
-      r = api('GET', '/api/devices')
+      api('PUT', "devices/#{device_name}/status", {
+        board: board_name,
+        status: 'ready'
+      })
+
+      r = api('GET', 'devices')
       expect(response).to have_http_status(:ok)
-      expect(r['devices'][0]['name']).to eq(registered_device.name)
+      expect(r['devices'][0]['name']).to eq(device_name)
     end
   end
 
-  describe "PUT /api/devices/:id/status" do
-    let(:registered_device) { create(:esp8266_new_device) }
+  describe "PUT /api/:team/devices/:id/status" do
+    it "updates the device status" do
+      api('PUT', "devices/#{device_name}/status", {
+            board: board_name,
+            status: 'ready'
+          })
 
-    context "the device exist" do
-      it "updates the device status" do
+      expect(Device.find_by_name(device_name)).to be_present
+      expect(Device.find_by_name(device_name).status).to eq('ready')
 
-        expect(registered_device.status).to eq('ready')
-        api('PUT', "/api/devices/#{registered_device.name}/status", {
-          board: registered_device.board,
-          status: 'running'
-        })
+      api('PUT', "devices/#{device_name}/status", {
+            board: board_name,
+            status: 'running'
+          })
 
-        expect(response).to have_http_status(:ok)
-        registered_device.reload
-        expect(registered_device.status).to eq('running')
-      end
-    end
-
-    context "the device does not exist" do
-      it "creates a new device" do
-        name = 'my-home-esp8266'
-
-        api('PUT', "/api/devices/#{name}/status", {
-          board: 'esp8266',
-          status: 'ready'
-        })
-
-        expect(response).to have_http_status(:ok)
-        expect(Device.find_by_name(name)).to be_present
-      end
+      expect(response).to have_http_status(:ok)
+      expect(Device.find_by_name(device_name).status).to eq('running')
     end
   end
 end
