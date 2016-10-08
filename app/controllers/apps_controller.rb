@@ -18,8 +18,8 @@ class AppsController < ApplicationController
   end
 
   def add_device
-    device = current_team.devices.find_by_name!(apps_params['device'])
-    app = current_team.apps.find_by_name!(apps_params['name'])
+    device = current_team.devices.find_by_name!(add_device_params[:device])
+    app = current_team.apps.find_by_name!(add_device_params[:name])
     app.devices += [device]
     app.save!
     head :ok
@@ -46,6 +46,10 @@ class AppsController < ApplicationController
   end
 
   def apps_params
+    params.permit(:name)
+  end
+
+  def add_device_params
     params.permit(:name, :device)
   end
 end
