@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     get  '/:team/apps',                   to: 'apps#index'
     post '/:team/apps',                   to: 'apps#create'
     post '/:team/apps/:name/devices',     to: 'apps#add_device'
-    post '/:team/apps/:name/deployments', to: 'deployments#create'
+    post '/:team/apps/:name/deployments', to: 'apps#deploy_image'
 
     # Devices API
     get '/:team/devices',              to: 'devices#index'
