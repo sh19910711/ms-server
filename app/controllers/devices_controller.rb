@@ -40,7 +40,7 @@ class DevicesController < ApplicationController
     # TODO: replace send_file with a redirection
     # XXX: introduce image ID
     # Since BaseOS does not support redirection we cannot use it.
-    filepath = deployment.file.current_path
+    filepath = deployment.image.current_path
     filesize = File.size?(filepath)
     
     partial = false # send whole data by default
@@ -71,7 +71,7 @@ class DevicesController < ApplicationController
       send_data IO.binread(filepath, length, offset),
                 status: :partial_content, disposition: "inline"
     else
-      send_file deployment.file.current_path, status: :ok
+      send_file deployment.image.current_path, status: :ok
     end
   end
 
