@@ -17,7 +17,7 @@ class ApplicationController < ActionController::API
         return
       end
 
-      # implement token expiration
+      # TODO: implement token expiration
 
       request.headers['uid']          = auth_token.uid
       request.headers['client']       = auth_token.client
