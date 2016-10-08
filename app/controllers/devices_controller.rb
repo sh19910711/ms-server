@@ -1,5 +1,6 @@
 class DevicesController < ApplicationController
-  before_action :auth
+  before_action :auth, except: [:status, :image] # XXX: We need "device authentication"
+  before_action :set_current_team, only: [:status, :image]
 
   def index
     devices = current_team.devices.select("name", "board", "status").all
@@ -101,6 +102,11 @@ class DevicesController < ApplicationController
     end
 
     deployment
+  end
+
+  def set_current_team
+    # TODO: verify "device password"
+    @current_team = User.find_by_name!(params[:team])
   end
 
   def device_params
