@@ -1,5 +1,5 @@
 @user = nil
-@auth = nil
+@token = nil
 
 def create_and_sign_in(username)
   unless @user
@@ -15,19 +15,14 @@ def create_and_sign_in(username)
     }
 
     post '/api/auth/sign_in', params: params
-    @auth = response.headers
+    @token = response.headers['Token']
   end
 end
 
 def api(method, path, data = {})
-  headers = {
-    'uid' => @auth['uid'],
-    'access-token' => @auth['access-token'],
-    'client' => @auth['client']
-  }
 
   send(method.downcase, "/api/#{@user.name}/#{path}", params: data,
-       headers: headers)
+       headers: { 'Authorization' => "token #{@token}" })
 
   if response.header['Content-Type'] and \
     response.header['Content-Type'].include?('json')
