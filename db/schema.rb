@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161007230342) do
+ActiveRecord::Schema.define(version: 20161007233457) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -23,6 +23,18 @@ ActiveRecord::Schema.define(version: 20161007230342) do
   create_table "apps_devices", id: false, force: :cascade do |t|
     t.integer "app_id",    null: false
     t.integer "device_id", null: false
+  end
+
+  create_table "auth_tokens", force: :cascade do |t|
+    t.string   "client"
+    t.string   "uid"
+    t.string   "access_token"
+    t.datetime "expires_at"
+    t.string   "description"
+    t.string   "token"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["token"], name: "index_auth_tokens_on_token", unique: true
   end
 
   create_table "deployments", force: :cascade do |t|
