@@ -27,10 +27,21 @@ class AppsController < ApplicationController
 
   def deploy_image
     deployment = Deployment.new
+
+    image_file = deployment_params[:image]
+    unless image_file
+      head :unprocessable_entity
+    end
+
+    unless /.+\.(?<board>.+)\.image/ =~ image_file.original_filename
+      # image file name must be "foo.<board>.image"
+      head :unprocessable_entity
+    end
+
     deployment.app   = App.find_by_name(deployment_params[:name])
+    deployment.board = board
     deployment.tag   = deployment_params[:tag]
-    deployment.board = deployment_params[:board]
-    deployment.file  = deployment_params[:file]
+    deployment.image = image_file
 
     if deployment.save
       head :ok
@@ -42,7 +53,7 @@ class AppsController < ApplicationController
   private
 
   def deployment_params
-    params.permit(:name, :tag, :board, :file)
+    params.permit(:name, :tag, :image)
   end
 
   def apps_params

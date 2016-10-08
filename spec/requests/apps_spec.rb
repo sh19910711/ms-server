@@ -58,12 +58,11 @@ RSpec.describe "Apps", type: :request do
       expect(Device.find_by_name(dev_name)).to be_present
 
       # deploy an image
-      image_filepath = 'spec/fixtures/sample_images/esp8266.img'
+      image_filepath = 'spec/fixtures/sample_images/example.esp8266.image'
 
       expect {
         api('POST', "apps/#{name}/deployments", {
-          board: 'esp8266',
-          file: Rack::Test::UploadedFile.new(image_filepath)
+          image: Rack::Test::UploadedFile.new(image_filepath)
         })
       }.to change(Deployment, :count).by(1)
 
