@@ -41,7 +41,8 @@ class ApplicationController < ActionController::API
         return
       end
 
-      response.headers['Token'] = auth_token.token
+      response.headers['Username'] = User.find_by_uid!(auth_token.uid).name
+      response.headers['Token']    = auth_token.token
       %w(uid client access-token).each {|x| response.headers.delete(x) }
     end
   end
