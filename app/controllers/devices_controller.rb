@@ -32,17 +32,37 @@ class DevicesController < ApplicationController
   end
 
   def image
-    deployment = get_deployment(device_params[:name])
+    if device_params[:deployment_id]
+      # deployment ID can be specified by the client (device). Devices that
+      # does not have enough memory downloads an image using Range.
+      #
+      # This prevents downloading a different image which have deployed
+      # during downloading an older image.
+      deployment = Deployment.find(device_params[:deployment_id])
+      device = Device.find_by_name(device_params[:name])
+      if device.apps == []
+        return head :not_found
+      end
+
+      # TODO: support multi-apps
+      if device.apps.first != deployment.app or
+        deployment.board != device.board or
+        (deployment.tag != nil and deployment.tag != device.tag)
+        return head :not_found
+      end
+    else
+      deployment = get_deployment(device_params[:name])
+    end
+
     unless deployment
       return head :not_found
     end
 
     # TODO: replace send_file with a redirection
-    # XXX: introduce image ID
     # Since BaseOS does not support redirection we cannot use it.
     filepath = deployment.image.current_path
     filesize = File.size?(filepath)
-    
+
     partial = false # send whole data by default
     if request.headers["Range"]
       m = request.headers['Range'].match(/bytes=(?<offset>\d+)-(?<offset_end>\d*)/)
