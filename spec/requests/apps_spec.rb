@@ -43,19 +43,27 @@ RSpec.describe "Apps", type: :request do
       expect(App.find_by_name(name)).to be_present
 
       # create a device
-      dev_name = 'abc'
-      api('PUT', "devices/#{dev_name}/status", {
+      device_name = 'abc'
+      r = api('POST', 'devices', {
+        name: device_name,
+        board: 'esp8266',
+        status: 'ready'
+      })
+
+      rand_id = r['rand_id']
+      expect(response).to have_http_status(:ok)
+      expect(Device.find_by_name(device_name)).to be_present
+
+      api('PUT', "devices/#{rand_id}/status", {
         board: 'esp8266',
         status: 'ready'
       })
       expect(response).to have_http_status(:ok)
-      expect(Device.find_by_name(dev_name)).to be_present
 
       # associate the device with the app
-      dev_name = 'abc'
-      api('POST', "apps/#{name}/devices", { device: dev_name })
+      device_name = 'abc'
+      api('POST', "apps/#{name}/devices", { device: device_name })
       expect(response).to have_http_status(:ok)
-      expect(Device.find_by_name(dev_name)).to be_present
 
       # deploy an image
       image_filepath = 'spec/fixtures/sample_images/example.esp8266.image'
@@ -63,13 +71,13 @@ RSpec.describe "Apps", type: :request do
       expect {
         api('POST', "apps/#{name}/deployments", {
           image: Rack::Test::UploadedFile.new(image_filepath)
-        })
+            })
       }.to change(Deployment, :count).by(1)
 
       expect(response).to have_http_status(:ok)
 
       # try to download the uploaded image
-      api('GET', "devices/#{dev_name}/image")
+      api('GET', "devices/#{rand_id}/image")
       expect(response).to have_http_status(:ok)
       expect(response.body).to eq(File.open(image_filepath, 'rb').read)
     end

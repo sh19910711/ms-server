@@ -1,32 +1,37 @@
 class DevicesController < ApplicationController
-  before_action :auth, except: [:status, :image] # XXX: We need "device authentication"
-  before_action :set_current_team, only: [:status, :image]
+  before_action :auth, except: [:status, :image]
+  before_action :auth_device, only: [:status, :image]
+  before_action :set_current_team, only: [:index, :create, :update]
 
   def index
     devices = current_team.devices.select("name", "board", "status").all
     render json: { devices: devices }
   end
 
-  def update
-    device = current_team.devices.where(name: device_params[:name]).first
-    if device == nil
-      render status: :not_found, json: { error: "The device not found." }
-      return
-    end
-
-    device.board  = device_params[:board]
-    device.status = device_params[:status]
-    device.tag    = device_params[:tag]
+  def create
+    device = Device.new
+    device.user   = current_team
+    device.name    = device_params[:name]
+    device.rand_id = Digest::SHA1.hexdigest(SecureRandom.uuid)
+    device.board   = device_params[:board]
+    device.status  = 'new'
+    device.tag     = device_params[:tag]
     device.save!
+
+    render json: { rand_id: device.rand_id }
+  end
+
+  def update
+    device = current_team.devices.find_by_rand_id!(device_params[:device_rand_id])
+    device.update_attributes(devce_params)
   end
 
   def status
-    device = current_team.devices.where(name: device_params[:name]).first_or_initialize
-    device.board  = device_params[:board]
+    device = Device.find_by_rand_id!(device_params[:device_rand_id])
     device.status = device_params[:status]
     device.save!
 
-    deployment  = get_deployment(device_params[:name])
+    deployment  = get_deployment(device_params[:device_rand_id])
     latest_version = deployment ? deployment.id.to_s : 'X'
     render body: latest_version
   end
@@ -39,7 +44,7 @@ class DevicesController < ApplicationController
       # This prevents downloading a different image which have deployed
       # during downloading an older image.
       deployment = Deployment.find(device_params[:deployment_id])
-      device = Device.find_by_name(device_params[:name])
+      device = Device.find_by_rand_id(device_params[:device_rand_id])
       if device.apps == []
         return head :not_found
       end
@@ -51,7 +56,7 @@ class DevicesController < ApplicationController
         return head :not_found
       end
     else
-      deployment = get_deployment(device_params[:name])
+      deployment = get_deployment(device_params[:device_rand_id])
     end
 
     unless deployment
@@ -97,8 +102,8 @@ class DevicesController < ApplicationController
 
   private
 
-  def get_deployment(device_name)
-    device = current_team.devices.find_by_name(device_name)
+  def get_deployment(device_rand_id)
+    device = Device.find_by_rand_id(device_rand_id)
     unless device
       logger.info "the device not found"
       return nil
@@ -125,11 +130,18 @@ class DevicesController < ApplicationController
   end
 
   def set_current_team
-    # TODO: verify "device password"
     @current_team = User.find_by_name!(params[:team])
   end
 
+  def auth_device
+    device = Device.find_by_rand_id(params[:device_rand_id])
+    unless device
+      head :forbidden
+      return false
+    end
+  end
+
   def device_params
-    params.permit(:name, :board, :status, :tag)
+    params.permit(:device_rand_id, :name, :board, :status, :tag)
   end
 end

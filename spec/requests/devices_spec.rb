@@ -10,10 +10,12 @@ RSpec.describe "Devices", type: :request do
 
   describe "GET /api/:team/devices" do
     it "returns a list of devices" do
-      api('PUT', "devices/#{device_name}/status", {
-        board: board_name,
-        status: 'ready'
+      r = api('POST', 'devices', {
+            name: device_name,
+            board: board_name,
       })
+
+      expect(r['rand_id']).to be_present
 
       r = api('GET', 'devices')
       expect(response).to have_http_status(:ok)
@@ -23,16 +25,22 @@ RSpec.describe "Devices", type: :request do
 
   describe "PUT /api/:team/devices/:id/status" do
     it "updates the device status" do
-      api('PUT', "devices/#{device_name}/status", {
+      r = api('POST', 'devices', {
+            name: device_name,
             board: board_name,
+      })
+
+      rand_id = r['rand_id']
+      expect(Device.find_by_name(device_name)).to be_present
+      expect(Device.find_by_name(device_name).status).to eq('new')
+
+      api('PUT', "devices/#{rand_id}/status", {
             status: 'ready'
           })
 
-      expect(Device.find_by_name(device_name)).to be_present
       expect(Device.find_by_name(device_name).status).to eq('ready')
 
-      api('PUT', "devices/#{device_name}/status", {
-            board: board_name,
+      api('PUT', "devices/#{rand_id}/status", {
             status: 'running'
           })
 

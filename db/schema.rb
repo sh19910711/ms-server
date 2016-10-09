@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161008040147) do
+ActiveRecord::Schema.define(version: 20161009115548) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(version: 20161008040147) do
     t.index ["token"], name: "index_auth_tokens_on_token", unique: true
   end
 
+  create_table "builds", force: :cascade do |t|
+    t.integer  "app_id"
+    t.string   "status"
+    t.text     "log"
+    t.string   "source_file"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["app_id"], name: "index_builds_on_app_id"
+  end
+
   create_table "deployments", force: :cascade do |t|
     t.integer  "app_id"
     t.datetime "created_at", null: false
@@ -57,6 +67,7 @@ ActiveRecord::Schema.define(version: 20161008040147) do
     t.string   "board"
     t.integer  "user_id"
     t.string   "tag"
+    t.string   "rand_id"
     t.index ["user_id"], name: "index_devices_on_user_id"
   end
 
