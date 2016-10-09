@@ -1,5 +1,6 @@
 class DevicesController < ApplicationController
-  before_action :auth
+  before_action :auth, except: [:status, :image] # XXX: We need "device authentication"
+  before_action :set_current_team, only: [:status, :image]
 
   def index
     devices = current_team.devices.select("name", "board", "status").all
@@ -39,7 +40,7 @@ class DevicesController < ApplicationController
     # TODO: replace send_file with a redirection
     # XXX: introduce image ID
     # Since BaseOS does not support redirection we cannot use it.
-    filepath = deployment.file.current_path
+    filepath = deployment.image.current_path
     filesize = File.size?(filepath)
     
     partial = false # send whole data by default
@@ -70,7 +71,7 @@ class DevicesController < ApplicationController
       send_data IO.binread(filepath, length, offset),
                 status: :partial_content, disposition: "inline"
     else
-      send_file deployment.file.current_path, status: :ok
+      send_file deployment.image.current_path, status: :ok
     end
   end
 
@@ -101,6 +102,11 @@ class DevicesController < ApplicationController
     end
 
     deployment
+  end
+
+  def set_current_team
+    # TODO: verify "device password"
+    @current_team = User.find_by_name!(params[:team])
   end
 
   def device_params
