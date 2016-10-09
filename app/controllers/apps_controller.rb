@@ -33,7 +33,7 @@ class AppsController < ApplicationController
       head :unprocessable_entity
     end
 
-    unless /.+\.(?<board>.+)\.image/ =~ image_file.original_filename
+    unless /.+\.(?<board>.+)\.image$/ =~ image_file.original_filename
       # image file name must be "foo.<board>.image"
       head :unprocessable_entity
     end
