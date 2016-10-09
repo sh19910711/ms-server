@@ -34,7 +34,7 @@ RSpec.describe "Apps", type: :request do
     end
   end
 
-  describe "POST /api/:team/apps/:name/deployments" do
+  describe "POST /api/:team/apps/:name/image_deployments" do
     it "deploys an app" do
       name = 'led-blink'
       # TODO: use FactoryGirl
@@ -69,7 +69,7 @@ RSpec.describe "Apps", type: :request do
       image_filepath = 'spec/fixtures/sample_images/example.esp8266.image'
 
       expect {
-        api('POST', "apps/#{name}/deployments", {
+        api('POST', "apps/#{name}/image_deployments", {
           image: Rack::Test::UploadedFile.new(image_filepath)
             })
       }.to change(Deployment, :count).by(1)

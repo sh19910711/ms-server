@@ -25,34 +25,31 @@ class AppsController < ApplicationController
     head :ok
   end
 
-  def deploy_image
-    deployment = Deployment.new
+  def build
+    build = Build.new
+    build.status = 'queued'
+    build.app = App.find_by_name!(build_params[:name])
+    build.source_file = build_params[:source_file]
+    build.save!
 
-    image_file = deployment_params[:image]
-    unless image_file
-      head :unprocessable_entity
-    end
+    BuildJob.perform_later(build.id)
+    head :accepted
+  end
 
-    unless /.+\.(?<board>.+)\.image$/ =~ image_file.original_filename
-      # image file name must be "foo.<board>.image"
-      head :unprocessable_entity
-    end
-
-    deployment.app   = App.find_by_name(deployment_params[:name])
-    deployment.board = board
-    deployment.tag   = deployment_params[:tag]
-    deployment.image = image_file
-
-    if deployment.save
-      head :ok
-    else
-      head :unprocessable_entity
-    end
+  def deploy
+    head DeployService.new.deploy(App.find_by_name!(deploy_params[:name]),
+                                  deploy_params[:image].original_filename,
+                                  deploy_params[:image],
+                                  deploy_params[:tag])
   end
 
   private
 
-  def deployment_params
+  def build_params
+    params.permit(:name, :tag, :source_file)
+  end
+
+  def deploy_params
     params.permit(:name, :tag, :image)
   end
 

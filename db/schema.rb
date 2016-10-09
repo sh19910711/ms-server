@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20161011013844) do
     t.string   "tag"
     t.string   "image"
     t.string   "board"
+    t.string   "group_id"
     t.index ["app_id"], name: "index_deployments_on_app_id"
     t.index ["image_id"], name: "index_deployments_on_image_id"
   end

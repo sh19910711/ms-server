@@ -7,9 +7,12 @@ gem 'devise'
 gem 'devise_token_auth'
 gem 'omniauth'
 gem 'cancancan', '~> 1.10'
+gem 'sidekiq'
 
 gem 'mysql2', '~> 0.4.4', group: :mysql
 gem 'pg', '~> 0.18.2', group: :postgres
+
+gem 'rubyzip'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
