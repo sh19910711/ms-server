@@ -69,7 +69,7 @@ RSpec.describe "Apps", type: :request do
       image_filepath = 'spec/fixtures/sample_images/example.esp8266.image'
 
       expect {
-        api('POST', "apps/#{name}/image_deployments", {
+        api('POST', "apps/#{name}/deployments", {
           image: Rack::Test::UploadedFile.new(image_filepath)
             })
       }.to change(Deployment, :count).by(1)
