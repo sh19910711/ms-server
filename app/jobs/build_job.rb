@@ -7,6 +7,7 @@ class BuildJob < ApplicationJob
   def perform(build_id)
     build = Build.find(build_id)
     logger.info "build ##{build_id}: starting"
+    build.update!(status: 'building')
 
     source_url = build.source_file.url
     if source_url.start_with?('/')
