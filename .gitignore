@@ -6,6 +6,7 @@
 
 /vendor
 /public/uploads
+*.rdb
 
 # Ignore bundler config.
 /.bundle
