@@ -4,8 +4,22 @@ class ApplicationController < ActionController::API
 
   prepend_around_action :handle_auth_token
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_email_in_sign_in
 
   protected
+
+  def set_email_in_sign_in
+    if controller_name == 'sessions' and action_name == 'create'
+      user = User.find_by_name(params[:username])
+
+      unless user
+        head :unauthorized
+        return false
+      end
+
+      params[:email] = user.email
+    end
+  end
 
   def handle_auth_token
     # device_token_auth uses 3 variables to authenticate. That's so painful.

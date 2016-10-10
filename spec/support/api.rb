@@ -10,7 +10,7 @@ def create_and_sign_in(username)
 
   unless @auth
     params = {
-      email:    @user.email,
+      username:    @user.name,
       password: @user.password
     }
 
