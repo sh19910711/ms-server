@@ -34,7 +34,7 @@ RSpec.describe "Apps", type: :request do
     end
   end
 
-  describe "POST /api/:team/apps/:name/image_deployments" do
+  describe "POST /api/:team/apps/:name/deployments" do
     it "deploys an app" do
       name = 'led-blink'
       # TODO: use FactoryGirl
