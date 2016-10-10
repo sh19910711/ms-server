@@ -57,7 +57,7 @@ class ApplicationController < ActionController::API
 
       response.headers['Username'] = User.find_by_uid!(auth_token.uid).name
       response.headers['Token']    = auth_token.token
-      %w(uid client access-token).each {|x| response.headers.delete(x) }
+      %w(uid client access-token expiry token-type).each {|x| response.headers.delete(x) }
     end
   end
 
