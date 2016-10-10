@@ -48,10 +48,11 @@ class BuildJob < ApplicationJob
       end
 
       # deploy images
+      group_id = SecureRandom.uuid
       Dir["*.*.image"].each do |file|
         # TODO: add tag to Build model
         logger.info "build ##{build_id}: deploying #{file}"
-        DeployService.new.deploy(build.app, file, File.open(file), nil)
+        DeployService.new.deploy(build.app, group_id, file, File.open(file), nil)
       end
     end
   end

@@ -38,6 +38,7 @@ class AppsController < ApplicationController
 
   def deploy
     head DeployService.new.deploy(App.find_by_name!(deploy_params[:name]),
+                                  deploy_params[:group_id],
                                   deploy_params[:image].original_filename,
                                   deploy_params[:image],
                                   deploy_params[:tag])
@@ -50,7 +51,7 @@ class AppsController < ApplicationController
   end
 
   def deploy_params
-    params.permit(:name, :tag, :image)
+    params.permit(:group_id, :name, :tag, :image)
   end
 
   def apps_params
