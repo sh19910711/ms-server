@@ -3,10 +3,21 @@ class ApplicationController < ActionController::API
   include CanCan::ControllerAdditions
 
   prepend_around_action :handle_auth_token
+  before_action :handle_api_version
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_email_in_sign_in
 
   protected
+
+  def handle_api_version
+    client_ver = request.headers['API-Version']
+    if client_ver and not client_ver.split(',').map(&:strip).include?(API_VERSION)
+      head :not_acceptable
+      return false
+    end
+
+    response.headers['API-Version'] = API_VERSION
+  end
 
   def set_email_in_sign_in
     if controller_name == 'sessions' and action_name == 'create'

@@ -1,3 +1,4 @@
+API_VERSION = '1'
 SUPPORTED_BOARDS = %w(esp8266)
 
 # TODO: down: The device is down.

@@ -21,8 +21,12 @@ end
 
 def api(method, path, data = {})
 
-  send(method.downcase, "/api/#{@user.name}/#{path}", params: data,
-       headers: { 'Authorization' => "token #{@token}" })
+  headers = {
+    'API-Version': '1',
+    'Authorization': "token #{@token}"
+  }
+
+  send(method.downcase, "/api/#{@user.name}/#{path}", params: data, headers: headers)
 
   if response.header['Content-Type'] and \
     response.header['Content-Type'].include?('json')
