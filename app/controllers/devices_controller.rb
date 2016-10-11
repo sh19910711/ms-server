@@ -29,6 +29,7 @@ class DevicesController < ApplicationController
   def status
     device = Device.find_by_rand_id!(device_params[:device_rand_id])
     device.status = device_params[:status]
+    device.heartbeated_at = Time.now
     device.save!
 
     deployment  = get_deployment(device_params[:device_rand_id])
