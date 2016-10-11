@@ -62,7 +62,7 @@ RSpec.describe "Apps", type: :request do
 
       # associate the device with the app
       device_name = 'abc'
-      api('POST', "apps/#{name}/devices", { device: device_name })
+      api('POST', "apps/#{name}/devices", { device: rand_id })
       expect(response).to have_http_status(:ok)
 
       # deploy an image

@@ -18,7 +18,7 @@ class AppsController < ApplicationController
   end
 
   def add_device
-    device = current_team.devices.find_by_name!(add_device_params[:device])
+    device = current_team.devices.find_by_rand_id!(add_device_params[:device])
     app = current_team.apps.find_by_name!(add_device_params[:name])
     app.devices += [device]
     app.save!
