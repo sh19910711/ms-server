@@ -10,7 +10,7 @@ def create_and_sign_in(username)
 
   unless @auth
     params = {
-      username:    @user.name,
+      username: @user.name,
       password: @user.password
     }
 
@@ -19,14 +19,20 @@ def create_and_sign_in(username)
   end
 end
 
-def api(method, path, data = {})
+def api(method, path, data = {}, with_team_prefix=true)
 
   headers = {
     'API-Version': '1',
     'Authorization': "token #{@token}"
   }
 
-  send(method.downcase, "/api/#{@user.name}/#{path}", params: data, headers: headers)
+  if with_team_prefix
+    path = "/api/#{@user.name}/#{path}"
+  else
+    path = "/api/#{path}"
+  end
+
+  send(method.downcase, path, params: data, headers: headers)
 
   if response.header['Content-Type'] and \
     response.header['Content-Type'].include?('json')

@@ -57,7 +57,7 @@ RSpec.describe "Apps", type: :request do
       api('PUT', "devices/#{rand_id}/status", {
         board: 'esp8266',
         status: 'ready'
-      })
+      }, with_team_prefix=false)
       expect(response).to have_http_status(:ok)
 
       # associate the device with the app
@@ -77,7 +77,7 @@ RSpec.describe "Apps", type: :request do
       expect(response).to have_http_status(:ok)
 
       # try to download the uploaded image
-      api('GET', "devices/#{rand_id}/image")
+      api('GET', "devices/#{rand_id}/image", {}, with_team_prefix=false)
       expect(response).to have_http_status(:ok)
       expect(response.body).to eq(File.open(image_filepath, 'rb').read)
     end

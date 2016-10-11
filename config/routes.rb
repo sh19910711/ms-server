@@ -11,8 +11,8 @@ Rails.application.routes.draw do
     # Devices API
     get  '/:team/devices', to: 'devices#index'
     post '/:team/devices', to: 'devices#create'
-    put '/:team/devices/:device_rand_id/status', to: 'devices#status'
-    get '/:team/devices/:device_rand_id/image',  to: 'devices#image'
+    put '/devices/:device_rand_id/status', to: 'devices#status'
+    get '/devices/:device_rand_id/image',  to: 'devices#image'
 
     get    '*unmatched', to: proc { [400, {}, ['']] }
     put    '*unmatched', to: proc { [400, {}, ['']] }
