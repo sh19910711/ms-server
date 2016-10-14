@@ -18,6 +18,8 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require 'support/api'
+require 'support/device'
+require 'support/fixture'
 require 'support/factory_girl'
 
 RSpec.configure do |config|
