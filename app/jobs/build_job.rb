@@ -44,7 +44,7 @@ class BuildJob < ApplicationJob
       build.save!
 
       unless success
-        return
+        break
       end
 
       # deploy images

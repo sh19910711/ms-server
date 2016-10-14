@@ -3,7 +3,7 @@
 
 def create_and_sign_in(username)
   unless @user
-    @user = create(:chandler)
+    @user = create(username)
     @user.confirmed_at = Date.today
     @user.save!
   end
