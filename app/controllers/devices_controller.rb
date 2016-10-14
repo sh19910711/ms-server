@@ -82,11 +82,11 @@ class DevicesController < ApplicationController
           return head :bad_request
         end
 
-        if offset + length > filesize || offset == filesize
+        if offset + length > filesize
           # Parsing Content-Length in BaseOS is hassle for me. Set X-End-Of-File
           # to indicate that BaseOS have downloaded whole file data.
+          length = filesize - offset
           response.header['X-End-Of-File'] = "yes"
-          return head :partial_content
         end
       end
     end
