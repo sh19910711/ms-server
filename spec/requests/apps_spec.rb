@@ -50,11 +50,11 @@ RSpec.describe "Apps", type: :request do
         status: 'ready'
       })
 
-      rand_id = r['rand_id']
+      device_secret = r['device_secret']
       expect(response).to have_http_status(:ok)
       expect(Device.find_by_name(device_name)).to be_present
 
-      api('PUT', "devices/#{rand_id}/status", {
+      api('PUT', "devices/#{device_secret}/status", {
         board: 'esp8266',
         status: 'ready'
       }, with_team_prefix=false)
@@ -77,7 +77,7 @@ RSpec.describe "Apps", type: :request do
       expect(response).to have_http_status(:ok)
 
       # try to download the uploaded image
-      api('GET', "devices/#{rand_id}/image", {}, with_team_prefix=false)
+      api('GET', "devices/#{device_secret}/image", {}, with_team_prefix=false)
       expect(response).to have_http_status(:ok)
       expect(response.body).to eq(File.open(image_filepath, 'rb').read)
     end

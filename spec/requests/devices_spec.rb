@@ -15,7 +15,7 @@ RSpec.describe "Devices", type: :request do
             board: board_name,
       })
 
-      expect(r['rand_id']).to be_present
+      expect(r['device_secret']).to be_present
 
       r = api('GET', 'devices')
       expect(response).to have_http_status(:ok)
@@ -30,17 +30,17 @@ RSpec.describe "Devices", type: :request do
             board: board_name,
       })
 
-      rand_id = r['rand_id']
+      device_secret = r['device_secret']
       expect(Device.find_by_name(device_name)).to be_present
       expect(Device.find_by_name(device_name).status).to eq('new')
 
-      api('PUT', "devices/#{rand_id}/status", {
+      api('PUT', "devices/#{device_secret}/status", {
             status: 'ready'
           }, with_team_prefix=false)
 
       expect(Device.find_by_name(device_name).status).to eq('ready')
 
-      api('PUT', "devices/#{rand_id}/status", {
+      api('PUT', "devices/#{device_secret}/status", {
             status: 'running'
           }, with_team_prefix=false)
 

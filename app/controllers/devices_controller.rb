@@ -12,27 +12,27 @@ class DevicesController < ApplicationController
     device = Device.new
     device.user   = current_team
     device.name    = device_params[:name]
-    device.rand_id = Digest::SHA1.hexdigest(SecureRandom.uuid)
+    device.device_secret = Digest::SHA1.hexdigest(SecureRandom.uuid)
     device.board   = device_params[:board]
     device.status  = 'new'
     device.tag     = device_params[:tag]
     device.save!
 
-    render json: { rand_id: device.rand_id }
+    render json: { device_secret: device.device_secret }
   end
 
   def update
-    device = current_team.devices.find_by_rand_id!(device_params[:device_rand_id])
+    device = current_team.devices.find_by_device_secret!(device_params[:device_secret])
     device.update_attributes(devce_params)
   end
 
   def status
-    device = Device.find_by_rand_id!(device_params[:device_rand_id])
+    device = Device.find_by_device_secret!(device_params[:device_secret])
     device.status = device_params[:status]
     device.heartbeated_at = Time.now
     device.save!
 
-    deployment  = get_deployment(device_params[:device_rand_id])
+    deployment  = get_deployment(device_params[:device_secret])
     latest_version = deployment ? deployment.id.to_s : 'X'
     render body: latest_version
   end
@@ -45,7 +45,7 @@ class DevicesController < ApplicationController
       # This prevents downloading a different image which have deployed
       # during downloading an older image.
       deployment = Deployment.find(device_params[:deployment_id])
-      device = Device.find_by_rand_id(device_params[:device_rand_id])
+      device = Device.find_by_device_secret(device_params[:device_secret])
       if device.apps == []
         return head :not_found
       end
@@ -57,7 +57,7 @@ class DevicesController < ApplicationController
         return head :not_found
       end
     else
-      deployment = get_deployment(device_params[:device_rand_id])
+      deployment = get_deployment(device_params[:device_secret])
     end
 
     unless deployment
@@ -103,8 +103,8 @@ class DevicesController < ApplicationController
 
   private
 
-  def get_deployment(device_rand_id)
-    device = Device.find_by_rand_id(device_rand_id)
+  def get_deployment(device_secret)
+    device = Device.find_by_device_secret(device_secret)
     unless device
       logger.info "the device not found"
       return nil
@@ -135,7 +135,7 @@ class DevicesController < ApplicationController
   end
 
   def auth_device
-    device = Device.find_by_rand_id(params[:device_rand_id])
+    device = Device.find_by_device_secret(params[:device_secret])
     unless device
       head :forbidden
       return false
@@ -143,6 +143,6 @@ class DevicesController < ApplicationController
   end
 
   def device_params
-    params.permit(:device_rand_id, :name, :board, :status, :tag)
+    params.permit(:device_secret, :name, :board, :status, :tag)
   end
 end
