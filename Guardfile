@@ -48,7 +48,8 @@ guard :rspec, cmd: "bundle exec rspec", notification: false do
       rspec.spec.call(filepath.gsub("#{rspec.spec_dir}/", '').gsub('_spec.rb', ''))
     end
   end
-
+  
+  watch(%r{^app/.+\.rb}) { rspec.spec_dir }
   # Rails config changes
   watch(rails.spec_helper)     { rspec.spec_dir }
   watch(rails.routes)          { "#{rspec.spec_dir}/requests" }
