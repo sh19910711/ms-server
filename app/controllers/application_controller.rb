@@ -2,12 +2,30 @@ class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
   include CanCan::ControllerAdditions
 
+  if not Rails.env.development? and not Rails.env.test?
+    rescue_from Exception, with: :handle_500
+    rescue_from ActionController::RoutingError, with: :handle_routing_error
+    rescue_from ActiveRecord::RecordNotFound, with: :handle_404
+  end
+
   prepend_around_action :handle_auth_token
   before_action :handle_api_version
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_email_in_sign_in
 
   protected
+
+  def handle_500
+    head :internal_server_error
+  end
+
+  def handle_routing_error
+    head :bad_request
+  end
+
+  def handle_404
+    head :not_found
+  end
 
   def handle_api_version
     client_ver = request.headers['API-Version']

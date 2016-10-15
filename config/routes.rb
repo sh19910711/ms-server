@@ -14,10 +14,5 @@ Rails.application.routes.draw do
     post '/:team/devices', to: 'devices#create'
     put '/devices/:device_secret/status', to: 'devices#status'
     get '/devices/:device_secret/image',  to: 'devices#image'
-
-    get    '*unmatched', to: proc { [400, {}, ['']] }
-    put    '*unmatched', to: proc { [400, {}, ['']] }
-    post   '*unmatched', to: proc { [400, {}, ['']] }
-    delete '*unmatched', to: proc { [400, {}, ['']] }
   end
 end
