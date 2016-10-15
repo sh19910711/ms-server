@@ -36,7 +36,7 @@ RSpec.describe "Apps", type: :request do
 
   describe "POST /api/:team/apps/:name/deployments" do
     it "deploys an app" do
-      device_secret = register_and_associate('my-board', 'led-blink')
+      register_and_associate('my-board', 'led-blink')
       image_filepath = fixture('/sample_images/example.esp8266.image')
 
       expect { deploy_app('led-blink', image_filepath) }.to change(Deployment, :count).by(1)
