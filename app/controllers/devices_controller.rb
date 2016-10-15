@@ -44,24 +44,22 @@ class DevicesController < ApplicationController
       #
       # This prevents downloading a different image which have deployed
       # during downloading an older image.
-      deployment = Deployment.find(device_params[:deployment_id])
-      device = Device.find_by_device_secret(device_params[:device_secret])
-      if device.apps == []
+      deployment = Deployment.find_by_id(device_params[:deployment_id])
+      unless deployment
         return head :not_found
       end
 
       # TODO: support multi-apps
-      if device.apps.first != deployment.app or
-        deployment.board != device.board or
+      if @device.apps == [] or @device.apps.first != deployment.app or
+        deployment.board != @device.board or
         (deployment.tag != nil and deployment.tag != device.tag)
         return head :not_found
       end
     else
       deployment = get_deployment(device_params[:device_secret])
-    end
-
-    unless deployment
-      return head :not_found
+      unless deployment
+        return head :not_found
+      end
     end
 
     # TODO: replace send_file with a redirection
@@ -71,11 +69,15 @@ class DevicesController < ApplicationController
 
     partial = false # send whole data by default
     if request.headers["Range"]
-      m = request.headers['Range'].match(/bytes=(?<offset>\d+)-(?<offset_end>\d*)/)
-      if m
+      unless device_params[:deployment_id]
+        # What if another new deployment is created during download?
+        return head :bad_request
+      end
+
+      if /bytes=(?<offset>\d+)-(?<offset_end>\d*)/ =~ request.headers['Range']
         partial = true
-        offset = m[:offset].to_i
-        offset_end =  (m[:offset_end] == "") ? filesize : m[:offset_end].to_i
+        offset = offset.to_i
+        offset_end =  (offset_end == "") ? filesize : offset_end.to_i
         length = offset_end - offset
 
         if offset < 0 || length < 0
@@ -88,6 +90,8 @@ class DevicesController < ApplicationController
           length = filesize - offset
           response.header['X-End-Of-File'] = "yes"
         end
+      else
+        return head :bad_request
       end
     end
 
@@ -135,14 +139,14 @@ class DevicesController < ApplicationController
   end
 
   def auth_device
-    device = Device.find_by_device_secret(params[:device_secret])
-    unless device
+    @device = Device.find_by_device_secret(params[:device_secret])
+    unless @device
       head :forbidden
       return false
     end
   end
 
   def device_params
-    params.permit(:device_secret, :name, :board, :status, :tag)
+    params.permit(:device_secret, :name, :board, :status, :tag, :deployment_id)
   end
 end
