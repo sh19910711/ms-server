@@ -50,26 +50,69 @@ RSpec.describe "Devices", type: :request do
   end
 
   describe "GET /api/devices/:device_secret/image" do
-    it "returns app images" do
-      image_filepath = fixture('sample_images/example.esp8266.image')
-      device_secret = register_and_associate('my-board', 'led-blinker')
-      deploy_app('led-blinker', image_filepath)
-
-      api(method: 'GET', path: "devices/#{device_secret}/image", with_team_prefix: false)
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to eq(File.open(image_filepath, 'rb').read)
+    before(:each) do
+      @image_filepath = fixture('sample_images/example.esp8266.image')
     end
 
-    it "supports Range header" do
-      image_filepath = fixture('sample_images/example.esp8266.image')
-      device_secret = register_and_associate('my-board', 'led-blinker')
-      deploy_app('led-blinker', image_filepath)
+    def deploy_it
+      @device_secret = register_and_associate('my-board', 'led-blinker')
+      deploy_app('led-blinker', @image_filepath)
 
-      api(method: 'GET', path: "devices/#{device_secret}/image", headers: {
-            'Range': 'bytes=7-16'
-          }, with_team_prefix: false)
-      expect(response).to have_http_status(:partial_content)
-      expect(response.body).to eq(IO.binread(image_filepath, 9, 7))
+      # TODO
+      Deployment.where(app: App.find_by_name!('led-blinker')).order('created_at').last.id
+    end
+
+    def download_image(deployment_id=nil, range=nil)
+        api(method: 'GET', path: "devices/#{@device_secret}/image",
+            data: { deployment_id: deployment_id },
+            headers: { Range: range }, with_team_prefix: false)
+    end
+
+    context "deployment id is not speicified" do
+      it "returns the latest deployment app image" do
+        deploy_it()
+        download_image()
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to eq(File.open(@image_filepath, 'rb').read)
+        # TODO: check that the deployment is the latest one
+      end
+    end
+
+    context "deployment id is speicified" do
+      it "returns the specified app image" do
+        deployment_id = deploy_it()
+        download_image(deployment_id)
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to eq(File.open(@image_filepath, 'rb').read)
+      end
+
+      it "returns :not_found if the specified deployment does not exist" do
+        device_secret = register_and_associate('my-board', 'led-blinker')
+        api(method: 'GET', path: "devices/#{device_secret}/image",
+            data: { deployment_id: 1 }, with_team_prefix: false)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "valid Range is speicified" do
+      it "returns the partial content" do
+        deployment_id = deploy_it()
+        download_image(deployment_id,'bytes=7-16')
+        expect(response).to have_http_status(:partial_content)
+        expect(response.body).to eq(IO.binread(@image_filepath, 9, 7))
+      end
+    end
+
+    context "invalid Range is speicified" do
+      it "returns :bad_request" do
+        deployment_id = deploy_it()
+
+        download_image(deployment_id,'bytes=123234-16')
+        expect(response).to have_http_status(:bad_request)
+
+        download_image(deployment_id,'bytes=-123234-16')
+        expect(response).to have_http_status(:bad_request)
+      end
     end
   end
 end
