@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014044946) do
+ActiveRecord::Schema.define(version: 20161015234133) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20161014044946) do
     t.string   "source_file"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "tag"
     t.index ["app_id"], name: "index_builds_on_app_id"
   end
 

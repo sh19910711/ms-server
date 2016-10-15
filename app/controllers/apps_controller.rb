@@ -30,6 +30,7 @@ class AppsController < ApplicationController
     build.status = 'queued'
     build.app = App.find_by_name!(build_params[:name])
     build.source_file = build_params[:source_file]
+    build.tag = build_params[:tag]
     build.save!
 
     BuildJob.perform_later(build.id)
