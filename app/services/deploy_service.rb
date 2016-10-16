@@ -1,12 +1,12 @@
 class DeployService
-  def deploy(app, group_id, image_filename, image_file, tag)
+  def deploy(app, group_id, filename, file, tag)
     deployment = Deployment.new
 
-    unless image_file
+    unless file
       return :unprocessable_entity
     end
 
-    unless /.+\.(?<board>.+)\.image$/ =~ image_filename
+    unless /.+\.(?<board>.+)\.image$/ =~ filename
       # image file name must be "foo.<board>.image"
       return :unprocessable_entity
     end
@@ -15,7 +15,7 @@ class DeployService
     deployment.group_id = group_id || SecureRandom.uuid
     deployment.board    = board
     deployment.tag      = tag
-    deployment.image    = image_file
+    deployment.image    = file.read
 
     if deployment.save
       return :ok
