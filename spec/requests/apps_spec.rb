@@ -43,4 +43,55 @@ RSpec.describe "Apps", type: :request do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe "POST /api/:team/apps/:name/builds" do
+    include ActiveJob::TestHelper
+    before do
+      ActiveJob::Base.queue_adapter = :test
+      register_and_associate('my-board', 'led-blinker')
+
+      # ensure that docker is running
+      %x[docker ps]
+      unless $?.success?
+        raise "Docker is not running. Use docker-machine. 2>&1"
+      end
+    end
+
+    let(:valid_zip)   { fixture('sample-apps/led-blink.zip') }
+    let(:invalid_zip) { fixture('sample-apps/led-blink.corrupt.zip') }
+
+    context "valid source file" do
+      it "creates a build job" do
+        expect {
+          api method: 'POST', path: "apps/led-blinker/builds", data: {
+                source_file: Rack::Test::UploadedFile.new(valid_zip),
+              }
+        }.to have_enqueued_job(BuildJob).exactly(:once)
+
+        expect(response).to have_http_status(:accepted)
+      end
+
+      it "successfully builds an app" do
+        perform_enqueued_jobs do
+          api method: 'POST', path: "apps/led-blinker/builds", data: {
+                source_file: Rack::Test::UploadedFile.new(valid_zip),
+              }
+
+          expect(Build.order('created_at').last.status).to eq('success')
+        end
+      end
+    end
+
+    context "invalid source file" do
+      it "fails to build an app" do
+        perform_enqueued_jobs do
+          api method: 'POST', path: "apps/led-blinker/builds", data: {
+                source_file: Rack::Test::UploadedFile.new(invalid_zip),
+              }
+
+          expect(Build.order('created_at').last.status).to eq('failure')
+        end
+      end
+    end
+  end
 end

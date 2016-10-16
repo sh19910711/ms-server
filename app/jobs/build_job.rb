@@ -9,30 +9,28 @@ class BuildJob < ApplicationJob
     logger.info "build ##{build_id}: starting"
     build.update!(status: 'building')
 
-    source_url = build.source_file.url
-    if source_url.start_with?('/')
-      # XXX: saved in the local file system
-      source_url = URI.join('http://localhost:3000', source_url)
-    end
-
     # Boot2docker in macOS cannot use directories in volumes
     # other than /Users. https://github.com/docker/compose/issues/1039
     tmp_base_dir = RUBY_PLATFORM.include?("darwin") ? "#{Dir.home}/.cs-build-tmp" : Dir.tmpdir
-    FileUtils.mkdir_p(tmp_base_dir)
 
     Dir.mktmpdir("cs-build-", tmp_base_dir) do |tmpdir|
-      Dir.chdir(tmpdir)
-      IO.copy_stream(open(source_url), 'app.zip')
-      Zip::File.open('app.zip') do |zip_file|
-        zip_file.each do |f|
-          if [:file, :directory].include?(f.ftype)
-            f.extract
+      app_zip = File.join(tmpdir, 'app.zip')
+      IO.copy_stream(open(build.source_file.current_path), app_zip)
+
+      begin
+        Zip::File.open(app_zip) do |zip_file|
+          zip_file.each do |f|
+            if [:file, :directory].include?(f.ftype)
+              f.extract(File.join(tmpdir, f.name))
+            end
           end
         end
+      rescue Zip::Error
+        success = false
+      else
+        stdout = %x[docker run --rm -v #{tmpdir}:/app -t codestand/baseos 2>&1]
+        success = $?.success?
       end
-
-      stdout = %x[docker run --rm -v #{tmpdir}:/app -t codestand/baseos 2>&1]
-      success = $?.success?
 
       logger.info "build ##{build_id}: #{success ? 'success' : 'failure'}"
 
@@ -40,7 +38,6 @@ class BuildJob < ApplicationJob
       build.status = success ? 'success' : 'failure'
       build.log = stdout
       build.remove_source_file!
-      build.status = ''
       build.save!
 
       unless success
