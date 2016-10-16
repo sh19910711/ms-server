@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161015234133) do
+ActiveRecord::Schema.define(version: 20161016013351) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -18,11 +18,6 @@ ActiveRecord::Schema.define(version: 20161015234133) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.index ["user_id"], name: "index_apps_on_user_id"
-  end
-
-  create_table "apps_devices", id: false, force: :cascade do |t|
-    t.integer "app_id",    null: false
-    t.integer "device_id", null: false
   end
 
   create_table "auth_tokens", force: :cascade do |t|
@@ -69,6 +64,8 @@ ActiveRecord::Schema.define(version: 20161015234133) do
     t.string   "tag"
     t.string   "device_secret"
     t.datetime "heartbeated_at"
+    t.integer  "app_id"
+    t.index ["app_id"], name: "index_devices_on_app_id"
     t.index ["user_id"], name: "index_devices_on_user_id"
   end
 

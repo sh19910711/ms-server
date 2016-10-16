@@ -18,7 +18,7 @@ def register_and_associate(device_name, app_name)
   api method: 'PUT', path: "devices/#{device_secret}/status", data: {
         board: 'esp8266',
         status: 'ready'
- }, with_team_prefix: false
+      }, with_team_prefix: false
 
   expect(response).to have_http_status(:ok)
 

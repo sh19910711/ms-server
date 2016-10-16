@@ -1,6 +1,6 @@
 class Device < ApplicationRecord
   belongs_to :user
-  has_and_belongs_to_many :apps
+  belongs_to :app
 
   DEVICE_NAME_REGEX = /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/
   validates :user, presence: true

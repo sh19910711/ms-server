@@ -49,8 +49,11 @@ class DevicesController < ApplicationController
         return head :not_found
       end
 
-      # TODO: support multi-apps
-      if @device.apps == [] or @device.apps.first != deployment.app or
+      unless @device.app
+        return head :forbidden
+      end
+
+      if @device.app != deployment.app or
         deployment.board != @device.board or
         (deployment.tag != nil and deployment.tag != device.tag)
         return head :not_found
@@ -107,15 +110,12 @@ class DevicesController < ApplicationController
       return nil
     end
 
-    if device.apps == []
+    unless device.app
       logger.info "the device is not associated to an app"
       return nil
     end
 
-    # TODO: support multi-apps
-    app = device.apps.first
-
-    deployment = Deployment.where(app: app,
+    deployment = Deployment.where(app: device.app,
                                   board: device.board,
                                   tag: [device.tag, nil]).order("created_at").last
 
