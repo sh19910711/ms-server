@@ -28,7 +28,7 @@ class AppsController < ApplicationController
     build = Build.new
     build.status = 'queued'
     build.app = App.find_by_name!(build_params[:name])
-    build.source_file = build_params[:source_file]
+    build.source_file = build_params[:source_file].read
     build.tag = build_params[:tag]
     build.save!
 

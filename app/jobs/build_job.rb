@@ -15,7 +15,7 @@ class BuildJob < ApplicationJob
 
     Dir.mktmpdir("cs-build-", tmp_base_dir) do |tmpdir|
       app_zip = File.join(tmpdir, 'app.zip')
-      IO.copy_stream(open(build.source_file.current_path), app_zip)
+      IO.binwrite(app_zip, build.source_file)
 
       begin
         Zip::File.open(app_zip) do |zip_file|
@@ -37,7 +37,7 @@ class BuildJob < ApplicationJob
       # update the build status
       build.status = success ? 'success' : 'failure'
       build.log = stdout
-      build.remove_source_file!
+      build.source_file = nil
       build.save!
 
       unless success

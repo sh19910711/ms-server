@@ -65,11 +65,14 @@ class DevicesController < ApplicationController
       end
     end
 
-    # TODO: replace send_file with a redirection
-    # Since BaseOS does not support redirection we cannot use it.
-    filepath = deployment.image.current_path
-    filesize = File.size?(filepath)
+    handle_range_header(deployment.image)
+  end
 
+  private
+
+
+  def handle_range_header(file)
+    filesize = file.size
     partial = false # send whole data by default
     if request.headers["Range"]
       unless device_params[:deployment_id]
@@ -91,17 +94,15 @@ class DevicesController < ApplicationController
       end
     end
 
+
     if partial
       response.header['Content-Length'] = "#{length}"
       response.header['Content-Range']  = "bytes #{offset}-#{offset_end}/#{filesize}"
-      send_data IO.binread(filepath, length, offset),
-                status: :partial_content, disposition: "inline"
+      send_data file[offset, length], status: :partial_content, disposition: "inline"
     else
-      send_file deployment.image.current_path, status: :ok
+      send_data file, status: :ok
     end
   end
-
-  private
 
   def get_deployment(device_secret)
     device = Device.find_by_device_secret(device_secret)
