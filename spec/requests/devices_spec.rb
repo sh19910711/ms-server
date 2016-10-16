@@ -51,7 +51,7 @@ RSpec.describe "Devices", type: :request do
 
   describe "GET /api/devices/:device_secret/image" do
     before(:each) do
-      @image_filepath = fixture('sample_images/example.esp8266.image')
+      @image_filepath = fixture('sample-images/example.esp8266.image')
     end
 
     def deploy_it
