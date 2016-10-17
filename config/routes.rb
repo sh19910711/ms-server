@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     # Devices API
     get  '/:team/devices', to: 'devices#index'
     post '/:team/devices', to: 'devices#create'
+    put  '/:team/devices/:device_name', to: 'devices#update'
     put '/devices/:device_secret/status', to: 'baseos#status'
     get '/devices/:device_secret/image',  to: 'baseos#image'
   end

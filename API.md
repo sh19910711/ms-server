@@ -17,7 +17,7 @@ Glossary
   - `running`: The device is running an app.
 
 
-`get /<team>/devices`
+`GET /<team>/devices`
 -----------------------
 Returns all devices.
 
@@ -60,6 +60,29 @@ Registers a device.
     "error": "<error message on falure>"
     "reasons": ["a list of reasons on validaton error"]
 }
+```
+
+**Status codes:**
+- `200`: Success.
+- `422`: Validation error.
+
+
+`POST /<team>/devices/<device_secret>`
+--------------------------------------
+Update device information.
+
+**Request:**
+``` json
+{
+    "name":  "<device name>: /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/",
+    "board": "<board type>",
+    "tag":   "<device tag>: string or null"
+}
+```
+
+**Response:**
+``` json
+{}
 ```
 
 **Status codes:**
