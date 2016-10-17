@@ -2,12 +2,11 @@ class BaseosController < ApplicationController
   before_action :auth_device
 
   def status
-    device = Device.find_by_device_secret!(status_params[:device_secret])
-    device.status = status_params[:status]
-    device.heartbeated_at = Time.now
-    device.save!
+    @device.status = status_params[:status]
+    @device.heartbeated_at = Time.now
+    @device.save!
 
-    deployment  = get_latest_deployment(status_params[:device_secret])
+    deployment  = get_latest_deployment
     latest_version = deployment ? deployment.id.to_s : 'X'
     render body: latest_version
   end
@@ -34,7 +33,7 @@ class BaseosController < ApplicationController
         return head :not_found
       end
     else
-      deployment = get_latest_deployment(image_params[:device_secret])
+      deployment = get_latest_deployment
       unless deployment
         return head :not_found
       end
@@ -45,21 +44,20 @@ class BaseosController < ApplicationController
 
   private
 
-  def get_latest_deployment(device_secret)
-    device = Device.find_by_device_secret(device_secret)
-    unless device
+  def get_latest_deployment
+    unless @device
       logger.info "the device not found"
       return nil
     end
 
-    unless device.app
+    unless @device.app
       logger.info "the device is not associated to an app"
       return nil
     end
 
-    deployment = Deployment.where(app: device.app,
-                                  board: device.board,
-                                  tag: [device.tag, nil]).order("created_at").last
+    deployment = Deployment.where(app: @device.app,
+                                  board: @device.board,
+                                  tag: [@device.tag, nil]).order("created_at").last
 
     unless deployment
       logger.info "no deployments"
