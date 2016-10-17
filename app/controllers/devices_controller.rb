@@ -4,8 +4,8 @@ class DevicesController < ApplicationController
   before_action :set_current_team, only: [:index, :create, :update]
 
   def index
-    devices = current_team.devices.select("name", "board", "status").all
-    render json: { devices: devices }
+    devices = current_team.devices.select("name", "board", "status", "tag").all
+    resp :ok, { devices: devices }
   end
 
   def create
@@ -16,14 +16,18 @@ class DevicesController < ApplicationController
     device.board   = device_params[:board]
     device.status  = 'new'
     device.tag     = device_params[:tag]
-    device.save!
 
-    render json: { device_secret: device.device_secret }
+    if device.save
+      resp :ok, { device_secret: device.device_secret }
+    else
+      resp :unprocessable_entity, { error: 'validation failed', reasons: device.errors.full_messages }
+    end
   end
 
   def update
     device = current_team.devices.find_by_device_secret!(device_params[:device_secret])
     device.update_attributes(devce_params)
+    resp :ok
   end
 
   def status
@@ -32,7 +36,7 @@ class DevicesController < ApplicationController
     device.heartbeated_at = Time.now
     device.save!
 
-    deployment  = get_deployment(device_params[:device_secret])
+    deployment  = get_latest_deployment(device_params[:device_secret])
     latest_version = deployment ? deployment.id.to_s : 'X'
     render body: latest_version
   end
@@ -59,7 +63,7 @@ class DevicesController < ApplicationController
         return head :not_found
       end
     else
-      deployment = get_deployment(device_params[:device_secret])
+      deployment = get_latest_deployment(device_params[:device_secret])
       unless deployment
         return head :not_found
       end
@@ -104,7 +108,7 @@ class DevicesController < ApplicationController
     end
   end
 
-  def get_deployment(device_secret)
+  def get_latest_deployment(device_secret)
     device = Device.find_by_device_secret(device_secret)
     unless device
       logger.info "the device not found"

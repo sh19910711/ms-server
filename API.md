@@ -1,9 +1,78 @@
 API
 ===
 
-`GET /apps`
------------
-Returns all applications
+Glossary
+--------
+
+- `<team>`: An user or team name.
+- **board type:** `esp8266`
+- **device tag:** A string can be set on each device used to deploy an app to
+  only a part of devices.
+- **device secret:** The secret token written to devices. The mgmt authenticates
+  a device by the token.
+- **group id:** The random (usually UUID) string for grouping deployments.
+- **device statuses:**
+  - `new`: The device is created.
+  - `ready`: The device has booted and is ready for running an app.
+  - `running`: The device is running an app.
+
+
+`get /<team>/devices`
+-----------------------
+Returns all devices.
+
+**Request:**
+Empty.
+
+**Response:**
+``` json
+{
+    "devices": [
+      name: "<device name>",
+      board: "<board type>",
+      status: "<refer constants.rb>",
+      tag: "<device tag>",
+    ]
+}
+```
+
+**Status codes:**
+- `200`: Success.
+
+
+`POST /<team>/devices`
+-----------------------
+Registers a device.
+
+**Request:**
+``` json
+{
+    "name":  "<device name>: /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/",
+    "board": "<board type>",
+    "tag":   "<device tag>: string or null"
+}
+```
+
+**Response:**
+``` json
+{
+    "device_secret": "<device secret>"
+    "error": "<error message on falure>"
+    "reasons": ["a list of reasons on validaton error"]
+}
+```
+
+**Status codes:**
+- `200`: Success.
+- `422`: Validation error.
+
+
+`GET /<team>/apps`
+-----------------
+Returns all applications.
+
+**Request:**
+No parameters.
 
 **Response:**
 ``` json
@@ -16,71 +85,153 @@ Returns all applications
 }
 ```
 
-`POST /apps`
-------------
+
+`POST /<team>/apps`
+-------------------
 Creates an application.
 
 **Request:**
 ``` json
 {
-    "name": "<application name>"
+    "app_name": "<application name>: /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/"
 }
 ```
 
+**Response:**
 
-`POST /apps/<app_name>/devices`
--------------------------------
+``` json
+{
+    "error": "<error message on failure>"
+    "reasons": ["a list of reasons on validaton error"]
+}
+```
+
+**Status codes:**
+- `200`: Success.
+- `404`: Validation error.
+
+
+`POST /<team>/apps/<app_name>/devices`
+--------------------------------------
 Associates a device with the application.
 
 **Request:**
 ``` json
 {
-    "name": "<device name>"
+    "deivce_name": "<device name>"
 }
 ```
+
+**Response:**
+``` json
+{
+    "error": "<error message on falure>"
+}
+```
+
+**Status codes:**
+- `200`: Success.
+- `404`: Device or app not found.
+
+
+`POST /apps/<app_name>/builds`
+------------------------------
+Builds and deploys an app.
+
+**Notes:**
+Build and deployment is performed asynchronously. All deployments
+ocurred in the same build have same group id.
+
+**Request:**
+For performance use `multipart/form-data` instead of JSON.
+
+```
+source_file = <source .zip file>
+tag         = "<target tag>: null or string"
+```
+
+**Response:**
+``` json
+{
+    "error": "<error message on falure>"
+    "reasons": ["a list of reasons on validaton error"]
+}
+```
+
+**Status codes:**
+- `202`: The deployment is successfully queued.
+- `422`: Validation error.
 
 
 `POST /apps/<app_name>/deployments`
 -----------------------------------
-Deploys a new version.
+Deploys a pre-built image.
 
 **Request:**
 For performance use `multipart/form-data` instead of JSON.
-`<board name>` is defined as `SUPPORTED_BOARDS` in `constants.rb`.
 
 ```
-images[][board] = "<board name>"
-images[][file]  = <image file>
+board    = "<target board type>"
+image    = <image file>
+tag      = "<target tag>: null or string"
+group_id = "<group id>"
 ```
 
-`GET /devices/<device_name>/image`
-----------------------------------
-Downloads the latest deployed image for the the device.
+**Response:**
+``` json
+{
+    "error": "<error message on falure>"
+    "reasons": ["a list of reasons on validaton error"]
+}
+```
+
+**Status codes:**
+- `200`: Success.
+- `422`: Validation error.
+
+
+`GET /devices/<device_secret>/image`
+------------------------------------
+Downloads the latest deployed image for the the device. If `deployment_id` is speicified,
+it returns the corresponding image. If not, it returns the latest image for the device.
+
+This endpoints *partially* supports [Range header](https://tools.ietf.org/html/rfc7233). The
+acceptable forms are: `Range: bytes=<start>-<end>` and `Range: bytes=<start>-`.
 
 **Notes:**
 This endpoint is for BaseOS.
 
 **Request:**
-Empty.
+Parameters are speicified in query string or JSON.
+
+```
+deployment_id = "<deployment id>"
+```
 
 **Response:**
+Image file data.
 
-The deployed image file.
+**Status codes:**
+- `200`: Success.
+- `403`: The specified deployment exists but the device is not associated to the app.
+- `404`: The specified deployment is not found, the specified deployment is not for the device,
+         or no deployments created for the device.
 
 
-`PUT /devices/<deivce_name>/status`
------------------------------------
+`PUT /devices/<deivce_secret>/status`
+-------------------------------------
 Updates the status of the device.
 
 **Notes:**
-This endpoint is for BaseOS.
+This endpoint is for BaseOS to send heartbeat.
 
 **Request:**
-`<device status>` is defined as `DEVICE_STATUSES` in `constants.rb`.
+Parameters are speicified in query string or JSON.
 
-``` json
-{
-    "board":  "<board name>",
-    "status": "<device status>"
-}
 ```
+status = "<device status>"
+```
+
+**Status codes:**
+- `200`: Success
+- `404`: The device not found.
