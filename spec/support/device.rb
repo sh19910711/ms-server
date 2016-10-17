@@ -1,5 +1,5 @@
 def register_and_associate(device_name, app_name)
-  api method: 'POST', path: 'apps', data: { name: app_name }
+  api method: 'POST', path: 'apps', data: { app_name: app_name }
   expect(response).to have_http_status(:ok)
   expect(App.find_by_name(app_name)).to be_present
 
@@ -23,7 +23,7 @@ def register_and_associate(device_name, app_name)
   expect(response).to have_http_status(:ok)
 
   # associate the device with the app
-  api method: 'POST', path: "apps/#{app_name}/devices", data: { device: device_name }
+  api method: 'POST', path: "apps/#{app_name}/devices", data: { device_name: device_name }
   expect(response).to have_http_status(:ok)
 
   return device_secret

@@ -1,14 +1,27 @@
+class DeployError < StandardError
+  attr_reader :reasons
+  def initialize(msg, reasons=[])
+    @msg = msg
+    @reasons = reasons
+  end
+
+  def to_s
+    @msg
+  end
+end
+
+
 class DeployService
   def deploy(app, group_id, filename, file, tag)
     deployment = Deployment.new
 
     unless file
-      return :unprocessable_entity
+      raise DeployError.new("file is not uploaded")
     end
 
     unless /.+\.(?<board>.+)\.image$/ =~ filename
       # image file name must be "foo.<board>.image"
-      return :unprocessable_entity
+      raise DeployError.new("invalid image filename")
     end
 
     deployment.app      = app
@@ -17,10 +30,8 @@ class DeployService
     deployment.tag      = tag
     deployment.image    = file.read
 
-    if deployment.save
-      return :ok
-    else
-      return :unprocessable_entity
+    unless deployment.save
+      raise DeployError.new('validation failed', deployment.errors.full_messages)
     end
   end
 end

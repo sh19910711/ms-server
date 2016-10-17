@@ -6,7 +6,7 @@ RSpec.describe "Apps", type: :request do
   end
 
   describe "GET /api/:team/apps" do
-    before { api(method: 'POST', path: 'apps', data: { name: 'iot-button' }) }
+    before { api(method: 'POST', path: 'apps', data: { app_name: 'iot-button' }) }
     it "returns a list of applications" do
       json = api(method: 'GET', path: 'apps')
       expect(response).to have_http_status(:ok)
@@ -18,7 +18,7 @@ RSpec.describe "Apps", type: :request do
     context "normal" do
       it "creates a new app" do
         name = 'led-blink'
-        api(method: 'POST', path: 'apps', data: { name: name })
+        api(method: 'POST', path: 'apps', data: { app_name: name })
         expect(response).to have_http_status(:ok)
         expect(App.find_by_name(name)).to be_present
       end
@@ -27,7 +27,7 @@ RSpec.describe "Apps", type: :request do
     context "invalid name" do
       it "fails to create a new app" do
         name = '0000'
-        api(method: 'POST', path: 'apps', data: { name: name })
+        api(method: 'POST', path: 'apps', data: { app_name: name })
         expect(response).to have_http_status(:unprocessable_entity)
         expect(App.find_by_name(name)).not_to be_present
       end
