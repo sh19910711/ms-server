@@ -41,7 +41,7 @@ class AppsController < ApplicationController
     build.tag = build_params[:tag]
 
     unless build.save
-      resp :unprocessable_entity, { error: 'validation failed', reasons: app.errors.full_messages }
+      return resp :unprocessable_entity, { error: 'validation failed', reasons: app.errors.full_messages }
     end
 
     BuildJob.perform_later(build.id)
