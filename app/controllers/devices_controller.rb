@@ -1,6 +1,5 @@
 class DevicesController < ApplicationController
   before_action :auth
-  before_action :set_current_team
 
   def index
     devices = current_team.devices.select("name", "board", "status", "tag").all
@@ -30,10 +29,6 @@ class DevicesController < ApplicationController
   end
 
   private
-
-  def set_current_team
-    @current_team = User.find_by_name!(params[:team])
-  end
 
   def device_params
     params.permit(:name, :board, :tag)
