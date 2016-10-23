@@ -112,7 +112,8 @@ class ApplicationController < ActionController::API
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:account_update, keys: [:name])
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:username, :password])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password])
   end
 
   def resp(status, json={})

@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  [
+    '/',
+    '/signin',
+    '/signup',
+    '/signout',
+  ].each { |page| get page, to: 'pages#page' }
+
   scope :api do
     mount_devise_token_auth_for 'User', at: 'auth'
 
