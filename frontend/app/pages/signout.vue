@@ -21,10 +21,13 @@
       api.signout().then(
         res => {
           api.token = null;
+          localStorage.removeItem('cs-token');
           this.state = 'OK, see you';
-          this.$root.$router.push('/');
+          this.$router.push('/');
         },
         res => {
+          api.token = null;
+          localStorage.removeItem('cs-token');
           this.state = 'Error';
           this.error = res.statusText;
         }

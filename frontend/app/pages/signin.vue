@@ -29,7 +29,7 @@
     methods: {
       formSubmit(user) {
         return api.signin(user).then(res => {
-          api.token = res.headers['token'];
+          localStorage.setItem('cs-token', api.token = res.headers['token']);
           this.$router.push('/');
         })
       }

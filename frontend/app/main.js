@@ -19,7 +19,6 @@ function createRouter() {
 
 Vue.use(VueRouter);
 window.api = new API(localStorage.getItem('cs-token'));
-window.currentUser = localStorage.getItem('cs-username');
 window.onload = _ => {
   const router = createRouter();
   router.beforeEach((nextPage, _, done) => {
