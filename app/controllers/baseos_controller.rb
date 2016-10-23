@@ -1,8 +1,8 @@
 class BaseosController < ApplicationController
   before_action :auth_device
 
-  def status
-    @device.status = status_params[:status]
+  def heartbeat
+    @device.status = heartbeat_params[:status]
     @device.heartbeated_at = Time.now
     @device.save!
 
@@ -109,7 +109,7 @@ class BaseosController < ApplicationController
     end
   end
 
-  def status_params
+  def heartbeat_params
     params.permit(:device_secret, :status)
   end
 

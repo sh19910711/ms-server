@@ -23,7 +23,7 @@ RSpec.describe "Devices", type: :request do
     end
   end
 
-  describe "PUT /api/devices/:id/status" do
+  describe "PUT /api/devices/:id/heartbeat" do
     it "updates the device status" do
       r = api(method: 'POST', path: 'devices', data: {
             name: device_name,
@@ -34,13 +34,13 @@ RSpec.describe "Devices", type: :request do
       expect(Device.find_by_name(device_name)).to be_present
       expect(Device.find_by_name(device_name).status).to eq('new')
 
-      api(method: 'PUT', path: "devices/#{device_secret}/status", data: {
+      api(method: 'PUT', path: "devices/#{device_secret}/heartbeat", data: {
             status: 'ready'
           }, with_team_prefix: false)
 
       expect(Device.find_by_name(device_name).status).to eq('ready')
 
-      api(method: 'PUT', path: "devices/#{device_secret}/status", data: {
+      api(method: 'PUT', path: "devices/#{device_secret}/heartbeat", data: {
             status: 'running'
           }, with_team_prefix: false)
 
