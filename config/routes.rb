@@ -27,5 +27,6 @@ Rails.application.routes.draw do
     # API for BaseOS
     put  '/devices/:device_secret/heartbeat', to: 'baseos#heartbeat'
     get  '/devices/:device_secret/image',  to: 'baseos#image'
+    get  '/devices/:device_secret/envvars',  to: 'baseos#envvars'
   end
 end

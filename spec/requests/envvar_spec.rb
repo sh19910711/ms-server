@@ -50,4 +50,25 @@ RSpec.describe "Envvars", type: :request do
       expect(Envvar.where(device: device, name: 'FOO_BAR')).not_to exist
       end
   end
+
+  describe "GET /api/devices/:device_secret/envvars" do
+    it "returns envvars" do
+      device_secret = register_and_associate('my-board', 'led-blinker')
+      device = Device.find_by_name!('my-board')
+
+      api(method: 'PUT', path: "devices/my-board/envvars/FOO",
+          data: { value: '123' })
+      expect(response).to have_http_status(:ok)
+
+      api(method: 'PUT', path: "devices/my-board/envvars/BAR",
+          data: { value: '456' })
+      expect(response).to have_http_status(:ok)
+
+      api(method: 'GET', path: "devices/#{device_secret}/envvars",
+          data: { value: '456' }, with_team_prefix: false)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to eq("FOO=123\x04BAR=456\x04")
+    end
+  end
 end

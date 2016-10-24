@@ -42,6 +42,12 @@ class BaseosController < ApplicationController
     handle_range_header(image_params[:deployment_id], deployment.image)
   end
 
+  def envvars
+    vars = Envvar.where(device: @device).select("name", "value").all
+    body = vars.inject("") {|b, v| b += "#{v.name}=#{v.value}\x04" }
+    render status: :ok, body: body
+  end
+
   private
 
   def get_latest_deployment
