@@ -43,7 +43,7 @@ class BaseosController < ApplicationController
   end
 
   def envvars
-    vars = Envvar.where(device: @device).select("name", "value").all
+    vars = @device.envvars.select("name", "value").all
     body = vars.inject("") {|b, v| b += "#{v.name}=#{v.value}\x04" }
     render status: :ok, body: body
   end
