@@ -23,7 +23,7 @@ class DevicesController < ApplicationController
   end
 
   def update
-    device = current_team.devices.find_by_device_secret!(params[:device_secret])
+    device = current_team.devices.find_by_name!(params[:device_name])
     device.update_attributes(device_params)
     resp :ok
   end
