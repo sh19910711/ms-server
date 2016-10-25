@@ -10,7 +10,7 @@ class BaseosController < ApplicationController
                           lines: request.raw_post.split("\n"))
 
     unless [heartbeat.save, device_status.save, logging.save].all?
-      logging.warn "failed to save to Redis"
+      logger.warn "failed to save to Redis"
       # ignore the error; BaseOS doesn't care about that
     end
 

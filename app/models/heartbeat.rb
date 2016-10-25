@@ -1,6 +1,6 @@
 class Heartbeat
   def initialize(device_secret)
-    @key = "devices:hearbeat:#{device_secret}"
+    @key = "devices:heartbeat:#{device_secret}"
   end
 
   def save
