@@ -67,6 +67,8 @@ GEM
     factory_girl_rails (4.7.0)
       factory_girl (~> 4.7.0)
       railties (>= 3.0.0)
+    fakeredis (0.6.0)
+      redis (~> 3.2)
     ffi (1.9.14)
     formatador (0.2.5)
     globalid (0.3.7)
@@ -239,6 +241,7 @@ DEPENDENCIES
   devise
   devise_token_auth
   factory_girl_rails (~> 4.0)
+  fakeredis
   guard-rspec
   listen (~> 3.1.5)
   mysql2 (~> 0.4.4)
@@ -259,4 +262,4 @@ DEPENDENCIES
   tzinfo-data
 
 BUNDLED WITH
-   1.13.2
+   1.13.5

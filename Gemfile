@@ -30,6 +30,7 @@ group :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'codeclimate-test-reporter', require: false
   gem 'guard-rspec', require: false
+  gem 'fakeredis', require: "fakeredis/rspec"
 end
 
 group :development do
