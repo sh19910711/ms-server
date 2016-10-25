@@ -8,7 +8,7 @@ class Logging
 
   def save
     @lines.each do |line|
-      Redis.current.lpush(@key, "#{@time}:#{line}")
+      Redis.current.rpush(@key, "#{@time}:#{line}")
     end
 
     Redis.current.ltrim(@key, 0, LOGGING_MAX_LINES - 1)
