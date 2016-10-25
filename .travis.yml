@@ -4,14 +4,28 @@ language: ruby
 
 services:
   - docker
+  - postgresql
 
 rvm:
   - 2.3.1
   - 2.2.5
 
+env:
+  - DB=sqlite
+  - DB=postgresql
+# FIXME: It doesn't work well.
+#  - DB=mysql
+
 cache:
   directories:
     - vendor/bundle
+
+before_install:
+  - sudo apt-get install -y mysql-server mysql-client
+  - cp ci/database.$DB.yml config/database.yml
+  - psql  -c 'create database travis_ci_test;' -U postgres
+# FIXME: It doesn't work well.
+#  - mysql -e 'create database travis_ci_test;'
 
 install:
   - bundle install --jobs 2 --path vendor/bundle
