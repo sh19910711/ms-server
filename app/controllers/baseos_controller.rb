@@ -7,7 +7,7 @@ class BaseosController < ApplicationController
     device_status = DeviceStatus.new(device_secret: device_secret,
                                      status: heartbeat_params[:status])
     logging = Logging.new(device_secret: device_secret,
-                          lines: request.body.read.split("\n"))
+                          lines: request.raw_post.split("\n"))
 
     unless [heartbeat.save, device_status.save, logging.save].all?
       logging.warn "failed to save to Redis"
