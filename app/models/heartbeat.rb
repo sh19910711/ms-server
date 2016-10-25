@@ -5,6 +5,6 @@ class Heartbeat
 
   def save
     Redis.current.set(@key, Time.now.to_i)
-    true # TODO: error handling
+    true
   end
 end

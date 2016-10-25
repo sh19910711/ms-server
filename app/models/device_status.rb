@@ -17,11 +17,10 @@ class DeviceStatus
     end
 
     Redis.current.set(@key, @status)
-    true # TODO: error handling
+    true
   end
 
-  def get!
+  def get
     Redis.current.get(@key)
-    # TODO: error handling
   end
 end

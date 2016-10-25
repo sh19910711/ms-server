@@ -32,20 +32,20 @@ RSpec.describe "Devices", type: :request do
 
       device_secret = r['device_secret']
       expect(Device.find_by_name(device_name)).to be_present
-      expect(DeviceStatus.new(device_secret: device_secret).get!).to eq('new')
+      expect(DeviceStatus.new(device_secret: device_secret).get).to eq('new')
 
       api(method: 'PUT', path: "devices/#{device_secret}/heartbeat", data: {
             status: 'ready'
           }, with_team_prefix: false)
 
-      expect(DeviceStatus.new(device_secret: device_secret).get!).to eq('ready')
+      expect(DeviceStatus.new(device_secret: device_secret).get).to eq('ready')
 
       api(method: 'PUT', path: "devices/#{device_secret}/heartbeat", data: {
             status: 'running'
           }, with_team_prefix: false)
 
       expect(response).to have_http_status(:ok)
-      expect(DeviceStatus.new(device_secret: device_secret).get!).to eq('running')
+      expect(DeviceStatus.new(device_secret: device_secret).get).to eq('running')
     end
   end
 

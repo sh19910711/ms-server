@@ -12,6 +12,6 @@ class Logging
     end
 
     Redis.current.ltrim(@key, 0, LOGGING_MAX_LINES - 1)
-    true # TODO: error handling
+    true
   end
 end
