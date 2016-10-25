@@ -1,5 +1,6 @@
 class DevicesController < ApplicationController
   before_action :auth
+  before_action :set_device, only: [:update, :logging]
 
   def index
     columns = ['device_secret', 'name', 'board', 'tag']
@@ -31,12 +32,19 @@ class DevicesController < ApplicationController
   end
 
   def update
-    device = current_team.devices.find_by_name!(params[:device_name])
-    device.update_attributes(device_params)
+    @device.update_attributes(device_params)
     resp :ok
   end
 
+  def logging
+    resp :ok, { logging: Logging.new(device_secret: @device.device_secret).get }
+  end
+
   private
+
+  def set_device
+    @device = current_team.devices.find_by_name!(params[:device_name])
+  end
 
   def device_params
     params.permit(:name, :board, :tag)

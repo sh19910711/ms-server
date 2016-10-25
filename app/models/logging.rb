@@ -14,4 +14,10 @@ class Logging
     Redis.current.ltrim(@key, 0, LOGGING_MAX_LINES - 1)
     true
   end
+
+
+  def get
+    # We assumes that the @key has been LTRIMed.
+    Redis.current.lrange(@key, 0, -1)
+  end
 end
