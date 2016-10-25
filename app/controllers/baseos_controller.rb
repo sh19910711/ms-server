@@ -2,9 +2,17 @@ class BaseosController < ApplicationController
   before_action :auth_device
 
   def heartbeat
-    @device.status = heartbeat_params[:status]
-    @device.heartbeated_at = Time.now
-    @device.save!
+    device_secret = @device.device_secret
+    heartbeat = Heartbeat.new(device_secret: device_secret)
+    device_status = DeviceStatus.new(device_secret: device_secret,
+                                     status: heartbeat_params[:status])
+    logging = Logging.new(device_secret: device_secret,
+                          lines: request.body.read.split("\n"))
+
+    unless [heartbeat.save, device_status.save, logging.save].all?
+      logging.warn "failed to save to Redis"
+      # ignore the error; BaseOS doesn't care about that
+    end
 
     deployment  = get_latest_deployment
     latest_version = deployment ? deployment.id.to_s : 'X'

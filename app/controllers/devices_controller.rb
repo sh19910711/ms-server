@@ -12,10 +12,11 @@ class DevicesController < ApplicationController
     device.name    = device_params[:name]
     device.device_secret = Digest::SHA1.hexdigest(SecureRandom.uuid)
     device.board   = device_params[:board]
-    device.status  = 'new'
     device.tag     = device_params[:tag]
+    device_status = DeviceStatus.new(device_secret: device.device_secret,
+                                     status: 'new')
 
-    if device.save
+    if device.save && device_status.save
       resp :ok, { device_secret: device.device_secret }
     else
       resp :unprocessable_entity, { error: 'validation failed', reasons: device.errors.full_messages }
