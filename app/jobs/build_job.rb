@@ -12,6 +12,7 @@ class BuildJob < ApplicationJob
     # Boot2docker in macOS cannot use directories in volumes
     # other than /Users. https://github.com/docker/compose/issues/1039
     tmp_base_dir = RUBY_PLATFORM.include?("darwin") ? "#{Dir.home}/.cs-build-tmp" : Dir.tmpdir
+    FileUtils.mkdir_p(tmp_base_dir)
 
     Dir.mktmpdir("cs-build-", tmp_base_dir) do |tmpdir|
       app_zip = File.join(tmpdir, 'app.zip')
