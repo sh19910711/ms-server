@@ -8,7 +8,7 @@ Glossary
 - **board type:** `esp8266`
 - **device tag:** A string can be set on each device used to deploy an app to
   only a part of devices.
-- **device secret:** The secret token written to devices. The mgmt authenticates
+- **device secret:** The secret token written to devices. The server authenticates
   a device by the token.
 - **group id:** The random (usually UUID) string for grouping deployments.
 - **device statuses:**
