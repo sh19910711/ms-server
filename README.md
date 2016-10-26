@@ -1,5 +1,5 @@
 Welcome to Codestand
-===========----======
+====================
 
 [![Build Status](https://travis-ci.org/codestand/codestand.svg?branch=master)](https://travis-ci.org/codestand/codestand)
 [![Code Climate](https://codeclimate.com/github/codestand/codestand/badges/gpa.svg)](https://codeclimate.com/github/codestand/codestand)
