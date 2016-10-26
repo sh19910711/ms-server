@@ -8,6 +8,5 @@ class Device < ApplicationRecord
   validates :device_secret, presence: true
   validates :name, uniqueness: { scope: :user }, presence: true,
             format: { with: DEVICE_NAME_REGEX }
-  validates :status, inclusion: { in: DEVICE_STATUSES }
   validates :board, inclusion: { in: SUPPORTED_BOARDS }
 end

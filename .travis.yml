@@ -5,6 +5,7 @@ language: ruby
 services:
   - docker
   - postgresql
+  - redis-server
 
 rvm:
   - 2.3.1

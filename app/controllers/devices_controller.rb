@@ -1,8 +1,16 @@
 class DevicesController < ApplicationController
   before_action :auth
+  before_action :set_device, only: [:update, :logging]
 
   def index
-    devices = current_team.devices.select("name", "board", "status", "tag").all
+    columns = ['device_secret', 'name', 'board', 'tag']
+    devices = []
+    current_team.devices.pluck('device_secret', *columns).each do |r|
+      device = Hash[columns.zip(r)]
+      device['status'] = DeviceStatus.new(device_secret: r[0]).get
+      devices << device
+    end
+
     resp :ok, { devices: devices }
   end
 
@@ -12,10 +20,11 @@ class DevicesController < ApplicationController
     device.name    = device_params[:name]
     device.device_secret = Digest::SHA1.hexdigest(SecureRandom.uuid)
     device.board   = device_params[:board]
-    device.status  = 'new'
     device.tag     = device_params[:tag]
+    device_status = DeviceStatus.new(device_secret: device.device_secret,
+                                     status: 'new')
 
-    if device.save
+    if device.save && device_status.save
       resp :ok, { device_secret: device.device_secret }
     else
       resp :unprocessable_entity, { error: 'validation failed', reasons: device.errors.full_messages }
@@ -23,12 +32,19 @@ class DevicesController < ApplicationController
   end
 
   def update
-    device = current_team.devices.find_by_name!(params[:device_name])
-    device.update_attributes(device_params)
+    @device.update_attributes(device_params)
     resp :ok
   end
 
+  def logging
+    resp :ok, { logging: Logging.new(device_secret: @device.device_secret).get }
+  end
+
   private
+
+  def set_device
+    @device = current_team.devices.find_by_name!(params[:device_name])
+  end
 
   def device_params
     params.permit(:name, :board, :tag)

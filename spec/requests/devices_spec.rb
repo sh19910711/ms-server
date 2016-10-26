@@ -23,7 +23,7 @@ RSpec.describe "Devices", type: :request do
     end
   end
 
-  describe "PUT /api/devices/:id/heartbeat" do
+  describe "PUT /api/devices/:device_secret/heartbeat" do
     it "updates the device status" do
       r = api(method: 'POST', path: 'devices', data: {
             name: device_name,
@@ -32,20 +32,20 @@ RSpec.describe "Devices", type: :request do
 
       device_secret = r['device_secret']
       expect(Device.find_by_name(device_name)).to be_present
-      expect(Device.find_by_name(device_name).status).to eq('new')
+      expect(DeviceStatus.new(device_secret: device_secret).get).to eq('new')
 
       api(method: 'PUT', path: "devices/#{device_secret}/heartbeat", data: {
             status: 'ready'
           }, with_team_prefix: false)
 
-      expect(Device.find_by_name(device_name).status).to eq('ready')
+      expect(DeviceStatus.new(device_secret: device_secret).get).to eq('ready')
 
       api(method: 'PUT', path: "devices/#{device_secret}/heartbeat", data: {
             status: 'running'
           }, with_team_prefix: false)
 
       expect(response).to have_http_status(:ok)
-      expect(Device.find_by_name(device_name).status).to eq('running')
+      expect(DeviceStatus.new(device_secret: device_secret).get).to eq('running')
     end
   end
 
@@ -112,6 +112,23 @@ RSpec.describe "Devices", type: :request do
 
         download_image(deployment_id,'bytes=-123234-16')
         expect(response).to have_http_status(:bad_request)
+      end
+    end
+  end
+
+  describe "GET /api/:team/devices/:device_name/logging" do
+    it "returns logging" do
+      device_secret = register_and_associate('iot-button', 'led-blinker')
+
+      lines = ['Hello', 'World!']
+      api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=running",
+          data: lines.join("\n"), with_team_prefix: false)
+
+      expect(response).to have_http_status(:ok)
+
+      r = api(method: 'GET', path: "devices/iot-button/logging")
+      lines.each_with_index do |l, i|
+        expect(r['logging'][i].split(':')[1]).to eq(l)
       end
     end
   end
