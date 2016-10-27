@@ -1,18 +1,20 @@
 os: linux
+dist: trusty
 sudo: required
 language: ruby
 
 services:
   - docker
+  - mysql
   - postgresql
   - redis-server
 
 addons:
   apt:
     packages:
-    - mysql-server-5.6
-    - mysql-client-core-5.6
-    - mysql-client-5.6
+    - mysql-server-5.5
+    - mysql-client-5.5
+    - mysql-client-core-5.5
 
 rvm:
   - 2.3.1
