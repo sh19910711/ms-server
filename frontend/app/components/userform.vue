@@ -27,7 +27,8 @@
     methods: {
       submit() {
         this.state = 'Processing...'
-        this.onSubmit(this.inputs.reduce((v, i) => { v[i.name] = i.value; return v }, {})).then(
+        const params = this.inputs.reduce((v, i) => { v[i.name] = i.value; return v }, {});
+        this.onSubmit(params).then(
           res => { this.state = 'OK'; },
           res => {
             this.inputErrors = res.body && res.body.errors || {};
