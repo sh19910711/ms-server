@@ -31,9 +31,12 @@
 <script>
   export default {
     name: 'navbar',
+    data() {
+      return { token: api.token };
+    },
     methods: {
       needLogin() {
-        return !api.token;
+        return !this.token;
       }
     }
   }
