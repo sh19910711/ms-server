@@ -4,6 +4,7 @@ module.exports = {
   entry: 'main',
   output: { path: __dirname + '/../public/js', filename: 'bundle.js' },
   resolve: {
+    extensions: ['', '.js'],
     root: [APP_PATH],
     alias: {
       'vue': 'vue/dist/vue.min.js',
@@ -17,6 +18,6 @@ module.exports = {
       { test: /\.sass$/, loader: 'style!css!sass' }
     ],
   },
-  babel: { presets: ['es2015'] },
-  vue: { loaders: { sass: 'style!css!sass?indentedSyntax' } }
+  babel: { presets: ['es2015'], plugins: ['transform-runtime'] },
+  vue: { loaders: { sass: 'style!css!sass' } }
 };
