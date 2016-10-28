@@ -104,7 +104,7 @@ class BaseosController < ApplicationController
         partial = true
         offset = offset.to_i
         offset_end =  (offset_end == "") ? filesize : offset_end.to_i
-        length = offset_end - offset
+        length = offset_end - offset + 1
 
         if offset < 0 || length < 0
           return head :bad_request
