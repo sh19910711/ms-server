@@ -1,6 +1,7 @@
 class Heartbeat
-  def initialize(device_secret)
-    @key = "devices:heartbeat:#{device_secret}"
+  def initialize(**args)
+    # TODO: add a validation
+    @key = "devices:heartbeat:#{args[:device_secret]}"
   end
 
   def save
