@@ -97,9 +97,9 @@ RSpec.describe "Devices", type: :request do
     context "valid Range is speicified" do
       it "returns the partial content" do
         deployment_id = deploy_it()
-        download_image(deployment_id,'bytes=7-16')
+        download_image(deployment_id,'bytes=7-9')
         expect(response).to have_http_status(:partial_content)
-        expect(response.body).to eq(IO.binread(@image_filepath, 9, 7))
+        expect(response.body).to eq(IO.binread(@image_filepath, 3, 7))
       end
     end
 
