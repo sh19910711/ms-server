@@ -1,7 +1,7 @@
 class Device < ApplicationRecord
   belongs_to :user
   belongs_to :app
-  has_many :envvars, class_name: 'Envvar'
+  has_many :envvars, class_name: 'Envvar', dependent: :destroy
 
   DEVICE_NAME_REGEX = /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/
   validates :user, presence: true
