@@ -16,12 +16,7 @@ class ApplicationController < ActionController::API
   protected
 
   def handle_500(e)
-    logger.error "Exception: #{e}"
-    logger.error "Backtrace:"
-    e.backtrace.each do |l|
-      logger.error "\t#{l}"
-    end
-
+    log_exception e
     head :internal_server_error
   end
 
@@ -30,6 +25,7 @@ class ApplicationController < ActionController::API
   end
 
   def handle_404
+    log_exception e
     head :not_found
   end
 
@@ -124,5 +120,13 @@ class ApplicationController < ActionController::API
 
   def resp(status, json={})
     render status: status, json: json
+  end
+
+  def log_exception(e)
+    logger.error "Exception: #{e}"
+    logger.error "Backtrace:"
+    e.backtrace.each do |l|
+      logger.error "\t#{l}"
+    end
   end
 end
