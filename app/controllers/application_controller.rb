@@ -15,7 +15,13 @@ class ApplicationController < ActionController::API
 
   protected
 
-  def handle_500
+  def handle_500(e)
+    logger.error "Exception: #{e}"
+    logger.error "Backtrace:"
+    e.backtrace.each do |l|
+      logger.error "\t#{l}"
+    end
+
     head :internal_server_error
   end
 
