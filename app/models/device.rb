@@ -1,7 +1,13 @@
 class Device < ApplicationRecord
+  include Redis::Objects
+
   belongs_to :user
   belongs_to :app
   has_many :envvars, class_name: 'Envvar', dependent: :destroy
+
+  value :heartbeat
+  value :status
+  list :log, maxlength: LOGGING_MAX_LINES
 
   DEVICE_NAME_REGEX = /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/
   validates :user, presence: true
@@ -9,8 +15,6 @@ class Device < ApplicationRecord
   validates :name, uniqueness: { scope: :user }, presence: true,
             format: { with: DEVICE_NAME_REGEX }
   validates :board, inclusion: { in: SUPPORTED_BOARDS }
-
-  after_save :save_status
 
   def self.index
     devices = []
@@ -21,16 +25,14 @@ class Device < ApplicationRecord
     devices
   end
 
-  def update_hearbeat(status, log)
+  def update_status(status, log)
     device_secret = self.device_secret
-    heartbeat = Heartbeat.new(device_secret: device_secret)
-    device_status = DeviceStatus.new(device_secret: device_secret, status: status)
-    logging = Logging.new(device_secret: device_secret,
-                          lines: log.split("\n"))
+    self.heartbeat = Time.now.to_i
+    self.status = status
 
-    unless [heartbeat.save, device_status.save, logging.save].all?
-      logger.warn "failed to save to Redis"
-      # ignore the error; BaseOS doesn't care about that
+    time = Time.now.to_i
+    log.split("\n").each do |line|
+      self.log << "#{time}:#{line}"
     end
   end
 
@@ -59,22 +61,5 @@ class Device < ApplicationRecord
 
   def envvars_index
     self.envvars.select('name', 'value').all
-  end
-
-  def status
-    DeviceStatus.new(device_secret: self.device_secret).get
-  end
-
-  def status=(status)
-    @new_status = status
-  end
-
-  private
-
-  def save_status
-    if @new_status
-      DeviceStatus.new(device_secret: self.device_secret,
-                       status: @new_status).save
-    end
   end
 end

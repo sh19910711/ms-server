@@ -2,7 +2,7 @@ class BaseosController < ApplicationController
   before_action :auth_device
 
   def heartbeat
-    @device.update_hearbeat(heartbeat_params[:status], request.raw_post)
+    @device.update_status(heartbeat_params[:status], request.raw_post)
     deployment = @device.get_deployment!
     render body: (deployment ? deployment.id.to_s : 'X')
   end

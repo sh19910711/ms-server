@@ -1,24 +1,23 @@
 class DevicesController < ApplicationController
   before_action :auth
-  before_action :set_devices, only: [:index, :update, :logging]
-  before_action :set_device, only: [:update, :logging]
+  before_action :set_devices, only: [:index]
+  before_action :set_device, only: [:update, :log]
 
   def index
     resp :ok, { devices: @devices.index }
   end
 
   def create
-    device_secret = Digest::SHA1.hexdigest(SecureRandom.uuid)
-    Device.create! do |device|
-      device.user          = current_team
-      device.name          = device_params[:name]
-      device.device_secret = device_secret
-      device.board         = device_params[:board]
-      device.tag           = device_params[:tag]
-      device.status        = 'new'
-    end
+    device = Device.new
+    device.user          = current_team
+    device.name          = device_params[:name]
+    device.device_secret = Digest::SHA1.hexdigest(SecureRandom.uuid)
+    device.board         = device_params[:board]
+    device.tag           = device_params[:tag]
+    device.save!
 
-    resp :ok, { device_secret: device_secret }
+    device.status.value = 'new'
+    resp :ok, { device_secret: device.device_secret }
   end
 
   def update
@@ -26,17 +25,18 @@ class DevicesController < ApplicationController
     resp :ok
   end
 
-  def logging
-    resp :ok, { logging: Logging.new(device_secret: @device.device_secret).get }
+  def log
+    resp :ok, { log: @device.log.values }
   end
 
   private
 
   def set_devices
-    @devices = current_team.devices
+    @devices ||= current_team.devices
   end
 
   def set_device
+    set_devices
     @device = @devices.find_by_name!(params[:device_name])
   end
 

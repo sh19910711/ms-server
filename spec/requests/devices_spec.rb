@@ -32,20 +32,19 @@ RSpec.describe "Devices", type: :request do
 
       device_secret = r['device_secret']
       expect(Device.find_by_name(device_name)).to be_present
-      expect(DeviceStatus.new(device_secret: device_secret).get).to eq('new')
+      device = Device.find_by_name(device_name)
+      expect(device.status.value).to eq('new')
 
-      api(method: 'PUT', path: "devices/#{device_secret}/heartbeat", data: {
-            status: 'ready'
-          }, with_team_prefix: false)
+      api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=ready",
+          with_team_prefix: false)
 
-      expect(DeviceStatus.new(device_secret: device_secret).get).to eq('ready')
+      expect(device.status.value).to eq('ready')
 
-      api(method: 'PUT', path: "devices/#{device_secret}/heartbeat", data: {
-            status: 'running'
-          }, with_team_prefix: false)
+      api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=running",
+          with_team_prefix: false)
 
       expect(response).to have_http_status(:ok)
-      expect(DeviceStatus.new(device_secret: device_secret).get).to eq('running')
+      expect(device.status.value).to eq('running')
     end
   end
 
@@ -126,9 +125,9 @@ RSpec.describe "Devices", type: :request do
 
       expect(response).to have_http_status(:ok)
 
-      r = api(method: 'GET', path: "devices/iot-button/logging")
+      r = api(method: 'GET', path: "devices/iot-button/log")
       lines.each_with_index do |l, i|
-        expect(r['logging'][i].split(':')[1]).to eq(l)
+        expect(r['log'][i].split(':')[1]).to eq(l)
       end
     end
   end
