@@ -26,7 +26,7 @@ RSpec.describe "Apps", type: :request do
 
     context "invalid name" do
       it "fails to create a new app" do
-        name = '0000'
+        name = '****'
         api(method: 'POST', path: 'apps', data: { app_name: name })
         expect(response).to have_http_status(:unprocessable_entity)
         expect(App.find_by_name(name)).not_to be_present
