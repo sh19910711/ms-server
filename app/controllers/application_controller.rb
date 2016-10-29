@@ -2,8 +2,11 @@ class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
   include CanCan::ControllerAdditions
 
-  unless Rails.env.development?
+  if not Rails.env.development? and not Rails.env.test?
     rescue_from Exception, with: :handle_500
+  end
+
+  if not Rails.env.development?
     rescue_from ActionController::RoutingError, with: :handle_routing_error
     rescue_from ActiveRecord::RecordNotFound, with: :handle_404
   end
