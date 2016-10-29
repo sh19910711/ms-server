@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     get    '/:team/devices', to: 'devices#index'
     post   '/:team/devices', to: 'devices#create'
     put    '/:team/devices/:device_name', to: 'devices#update'
-    get    '/:team/devices/:device_name/logging', to: 'devices#logging'
+    get    '/:team/devices/:device_name/log', to: 'devices#log'
     get    '/:team/devices/:device_name/envvars', to: 'envvars#index'
     put    '/:team/devices/:device_name/envvars/:name', to: 'envvars#update'
     delete '/:team/devices/:device_name/envvars/:name', to: 'envvars#destroy'
