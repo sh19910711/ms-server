@@ -15,7 +15,7 @@ class BaseosController < ApplicationController
   end
 
   def envvars
-    body = @device.envvars_index.inject("") {|b, v| b += "#{v.name}=#{v.value}\x04" }
+    body = @device.envvars_index.map{|v| "#{v.name}=#{v.value}" }.join("\x04")
     render status: :ok, body: body
   end
 
