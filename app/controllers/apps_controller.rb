@@ -1,6 +1,7 @@
 class AppsController < ApplicationController
   before_action :auth
-  before_action :set_apps, only: [:index, :add_device]
+  before_action :set_apps, only: [:index, :add_device, :build]
+  before_action :set_devices, only: [:add_device]
 
   def index
     resp :ok, { applications: @apps.index }
@@ -13,20 +14,18 @@ class AppsController < ApplicationController
 
   def add_device
     app = @apps.find_by_name!(add_device_params[:app_name])
-    device = Device.find_by_name!(add_device_params[:device_name])
-    device.app = app
+    device = @devices.find_by_name!(add_device_params[:device_name])
 
-    device.save!
+    app.add_device!(device)
     resp :ok
   end
 
   def build
-    app = App.find_by_name!(build_params[:app_name])
-    build = Build.new(status: 'queued', tag: build_params[:tag], app: app)
-    build.source_file = build_params[:source_file].read
+    source_filedata = build_params[:source_file].read
+    tag = build_params[:tag]
+    app = @apps.find_by_name!(build_params[:app_name])
 
-    build.save!
-    BuildJob.perform_later(build.id)
+    Build.new(app: app, tag: tag, source_file: source_filedata).save_and_enqueue!
     resp :accepted
   end
 
@@ -47,6 +46,10 @@ class AppsController < ApplicationController
 
   def set_apps
     @apps = current_team.apps
+  end
+
+  def set_devices
+    @devices = current_team.devices
   end
 
   def build_params

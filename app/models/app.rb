@@ -10,4 +10,9 @@ class App < ApplicationRecord
             format: { with: APP_NAME_REGEX }
 
   scope :index, -> { select('name') }
+
+  def add_device!(device)
+    device.app = self
+    device.save!
+  end
 end
