@@ -49,7 +49,13 @@ class BuildJob < ApplicationJob
       group_id = SecureRandom.uuid
       Dir["*.*.image"].each do |file|
         logger.info "build ##{build_id}: deploying #{file}"
-        DeployService.new.deploy(build.app, group_id, file, File.open(file), build.tag)
+        Deployment.create! do |d|
+          d.app      = build.app
+          d.group_id = group_id
+          d.board    = ImageFile.get_board_from_filename(file)
+          d.tag      = build.tag
+          d.image    = File.open(file).read
+        end
       end
     end
   end

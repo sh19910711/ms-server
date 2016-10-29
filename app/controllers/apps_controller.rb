@@ -31,17 +31,16 @@ class AppsController < ApplicationController
   end
 
   def deploy
-    app      = App.find_by_name!(deploy_params[:app_name])
-    group_id = deploy_params[:group_id]
     filename = deploy_params[:image].original_filename
-    file     = deploy_params[:image]
-    tag      = deploy_params[:tag]
+    Deployment.create! do |d|
+      d.app      = App.find_by_name!(deploy_params[:app_name])
+      d.group_id = deploy_params[:group_id]
+      d.board    = ImageFile.get_board_from_filename(filename)
+      d.tag      = deploy_params[:tag]
+      d.image    = deploy_params[:image].read
+    end
 
-    DeployService.new.deploy(app, group_id, filename, file, tag)
     resp :ok
-
-  rescue DeployError => e
-    resp :unprocessable_entity, { error: e.to_s, reasons: e.reasons }
   end
 
   private
