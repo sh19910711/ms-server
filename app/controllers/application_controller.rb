@@ -33,7 +33,7 @@ class ApplicationController < ActionController::API
     head :bad_request
   end
 
-  def handle_404
+  def handle_404(e)
     log_exception e
     head :not_found
   end
