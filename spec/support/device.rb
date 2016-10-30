@@ -7,7 +7,6 @@ def register_and_associate(device_name, app_name)
   r = api method: 'POST', path: 'devices', data: {
     name: device_name,
     board: 'esp8266',
-    status: 'ready'
   }
 
   device_secret = r['device_secret']

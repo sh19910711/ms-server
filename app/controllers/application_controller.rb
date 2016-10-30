@@ -4,9 +4,14 @@ class ApplicationController < ActionController::API
 
   if not Rails.env.development? and not Rails.env.test?
     rescue_from Exception, with: :handle_500
+  end
+
+  if not Rails.env.development?
     rescue_from ActionController::RoutingError, with: :handle_routing_error
     rescue_from ActiveRecord::RecordNotFound, with: :handle_404
   end
+
+  rescue_from ActiveRecord::RecordInvalid, with: :handle_validation_error
 
   prepend_around_action :handle_auth_token
   before_action :handle_api_version
@@ -20,11 +25,15 @@ class ApplicationController < ActionController::API
     head :internal_server_error
   end
 
+  def handle_validation_error(e)
+    resp :unprocessable_entity, { reasons: e.record.errors }
+  end
+
   def handle_routing_error
     head :bad_request
   end
 
-  def handle_404
+  def handle_404(e)
     log_exception e
     head :not_found
   end

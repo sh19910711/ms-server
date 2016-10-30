@@ -1,66 +1,56 @@
 class AppsController < ApplicationController
   before_action :auth
+  before_action :set_apps, only: [:index, :add_device, :build]
+  before_action :set_devices, only: [:add_device]
 
   def index
-    resp :ok, { applications: current_team.apps.select(:name) }
+    resp :ok, { applications: @apps.index }
   end
 
   def create
-    app = App.new
-    app.name = apps_params[:app_name]
-    app.user = current_team
-
-    if app.save
-      resp :ok
-    else
-      resp :unprocessable_entity, { error: 'validation failed', reasons: app.errors.full_messages }
-    end
+    App.create!(user: current_team, name: app_params[:app_name])
+    resp :ok
   end
 
   def add_device
-    device = current_team.devices.find_by_name(add_device_params[:device_name])
-    unless device
-      return resp :not_found, { error: 'device not found' }
-    end
+    app = @apps.find_by_name!(add_device_params[:app_name])
+    device = @devices.find_by_name!(add_device_params[:device_name])
 
-    app = current_team.apps.find_by_name!(add_device_params[:app_name])
-    unless app
-      return resp :not_found, { error: 'app not found' }
-    end
-
-    device.app = app
-    device.save!
+    app.add_device!(device)
     resp :ok
   end
 
   def build
-    build = Build.new
-    build.status = 'queued'
-    build.app = App.find_by_name!(build_params[:app_name])
-    build.source_file = build_params[:source_file].read
-    build.tag = build_params[:tag]
+    source_filedata = build_params[:source_file].read
+    tag = build_params[:tag]
+    app = @apps.find_by_name!(build_params[:app_name])
 
-    unless build.save
-      return resp :unprocessable_entity, { error: 'validation failed', reasons: app.errors.full_messages }
-    end
-
-    BuildJob.perform_later(build.id)
+    Build.new(app: app, tag: tag, source_file: source_filedata).save_and_enqueue!
     resp :accepted
   end
 
   def deploy
-    DeployService.new.deploy(App.find_by_name!(deploy_params[:app_name]),
-                             deploy_params[:group_id],
-                             deploy_params[:image].original_filename,
-                             deploy_params[:image],
-                             deploy_params[:tag])
+    filename = deploy_params[:image].original_filename
+    Deployment.create! do |d|
+      d.app      = App.find_by_name!(deploy_params[:app_name])
+      d.group_id = deploy_params[:group_id]
+      d.board    = ImageFile.get_board_from_filename(filename)
+      d.tag      = deploy_params[:tag]
+      d.image    = deploy_params[:image].read
+    end
 
     resp :ok
-  rescue DeployError => e
-    resp :unprocessable_entity, { error: e.to_s, reasons: e.reasons }
   end
 
   private
+
+  def set_apps
+    @apps = current_team.apps
+  end
+
+  def set_devices
+    @devices = current_team.devices
+  end
 
   def build_params
     params.permit(:app_name, :tag, :source_file)
@@ -70,7 +60,7 @@ class AppsController < ApplicationController
     params.permit(:group_id, :app_name, :tag, :image)
   end
 
-  def apps_params
+  def app_params
     params.permit(:app_name)
   end
 

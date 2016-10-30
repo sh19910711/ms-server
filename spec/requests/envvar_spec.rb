@@ -68,7 +68,7 @@ RSpec.describe "Envvars", type: :request do
           data: { value: '456' }, with_team_prefix: false)
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to eq("FOO=123\x04BAR=456\x04")
+      expect(response.body).to eq("FOO=123\x04BAR=456")
     end
   end
 end

@@ -30,6 +30,7 @@ module CodestandServer
       g.test_framework :rspec
     end
 
+    config.eager_load_paths.push("#{config.root}/lib")
     config.active_job.queue_adapter = :sidekiq
   end
 end
