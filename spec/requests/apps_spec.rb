@@ -34,6 +34,18 @@ RSpec.describe "Apps", type: :request do
     end
   end
 
+  describe "DELETE /api/:team/apps/:app_name" do
+    it "deletes a app" do
+      name = 'blah-app'
+      register_and_associate('foo-device', name)
+      expect(App.find_by_name(name)).to be_present
+
+      r = api(method: 'DELETE', path: "apps/#{name}")
+      expect(response).to have_http_status(:ok)
+      expect(App.find_by_name(name)).not_to be_present
+    end
+  end
+
   describe "POST /api/:team/apps/:name/deployments" do
     it "deploys an app" do
       register_and_associate('my-board', 'led-blink')

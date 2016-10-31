@@ -10,11 +10,12 @@ Rails.application.routes.draw do
     mount_devise_token_auth_for 'User', at: 'auth'
 
     # Apps API
-    get  '/:team/apps',                       to: 'apps#index'
-    post '/:team/apps',                       to: 'apps#create'
-    post '/:team/apps/:app_name/devices',     to: 'apps#add_device'
-    post '/:team/apps/:app_name/builds',      to: 'apps#build'
-    post '/:team/apps/:app_name/deployments', to: 'apps#deploy'
+    get    '/:team/apps',                       to: 'apps#index'
+    post   '/:team/apps',                       to: 'apps#create'
+    delete '/:team/apps/:app_name',             to: 'apps#destroy'
+    post   '/:team/apps/:app_name/devices',     to: 'apps#add_device'
+    post   '/:team/apps/:app_name/builds',      to: 'apps#build'
+    post   '/:team/apps/:app_name/deployments', to: 'apps#deploy'
 
     # Devices API
     get    '/:team/devices',                            to: 'devices#index'
