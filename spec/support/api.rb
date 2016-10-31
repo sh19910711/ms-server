@@ -35,5 +35,7 @@ def api(method: '', path: '', data: {}, headers: {}, with_team_prefix: true)
   if response.header['Content-Type'] and \
     response.header['Content-Type'].include?('json')
     return JSON.parse(response.body)
+  else
+    return response.body
   end
 end

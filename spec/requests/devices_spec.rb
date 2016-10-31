@@ -48,6 +48,23 @@ RSpec.describe "Devices", type: :request do
     end
   end
 
+  describe "GET /api/:team/devices/:device_name" do
+    it "changes the devise status properly" do
+      device_name = 'foo'
+      device_secret = register_and_associate(device_name, 'led-blinker')
+      device = Device.find_by_name(device_name)
+
+      api(method: 'PUT', path: "devices/#{device_name}/relaunch")
+      expect(device.status.value).to eq('relaunch')
+
+      r = api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=running",
+              with_team_prefix: false)
+
+      expect(r).to eq('R')
+      expect(device.status.value).to eq('running')
+    end
+  end
+
   describe "GET /api/devices/:device_secret/image" do
     before(:each) do
       @image_filepath = fixture('sample-images/example.esp8266.image')

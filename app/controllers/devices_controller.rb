@@ -1,7 +1,7 @@
 class DevicesController < ApplicationController
   before_action :auth
   before_action :set_devices, only: [:index]
-  before_action :set_device, only: [:update, :log]
+  before_action :set_device, only: [:update, :log, :relaunch]
 
   def index
     resp :ok, { devices: @devices.index }
@@ -16,12 +16,17 @@ class DevicesController < ApplicationController
     device.tag           = device_params[:tag]
     device.save!
 
-    device.status.value = 'new'
+    device.status = 'new'
     resp :ok, { device_secret: device.device_secret }
   end
 
   def update
     @device.update_attributes(device_params)
+    resp :ok
+  end
+
+  def relaunch
+    @device.status = 'relaunch'
     resp :ok
   end
 

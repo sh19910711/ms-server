@@ -2,9 +2,15 @@ class BaseosController < ApplicationController
   before_action :auth_device
 
   def heartbeat
+    old_status = @device.status.value
     @device.update_status(heartbeat_params[:status], request.raw_post)
-    deployment = @device.get_deployment!
-    render body: (deployment ? deployment.id.to_s : 'X')
+
+    if old_status == 'relaunch'
+      render body: 'R'
+    else
+      deployment = @device.get_deployment!
+      render body: (deployment ? deployment.id.to_s : 'X')
+    end
   end
 
   def image
