@@ -88,7 +88,7 @@ Registers a device.
 **Request:**
 ``` json
 {
-    "name":  "<device name>: /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/",
+    "device_name":  "<device name>: /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/",
     "board": "<board type>",
     "tag":   "<device tag>: string or null"
 }
@@ -108,14 +108,29 @@ Registers a device.
 - `422`: Validation error.
 
 
-`POST /<team>/devices/<device_secret>`
+`DELETE /<team>/devices/<device_name>`
 --------------------------------------
+Delete a device.
+
+**Request:**
+Empty.
+
+**Response:**
+```
+{}
+```
+
+**Status codes:**
+- `200`: Success.
+
+
+`POST /<team>/devices/<device_name>`
+------------------------------------
 Update device information.
 
 **Request:**
 ``` json
 {
-    "name":  "<device name>: /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/",
     "board": "<board type>",
     "tag":   "<device tag>: string or null"
 }
@@ -189,6 +204,22 @@ Creates an application.
 **Status codes:**
 - `200`: Success.
 - `404`: Validation error.
+
+
+`DELETE /<team>/apps/<app_name>`
+--------------------------------
+Delete an app.
+
+**Request:**
+Empty.
+
+**Response:**
+```
+{}
+```
+
+**Status codes:**
+- `200`: Success.
 
 
 `POST /<team>/apps/<app_name>/devices`
