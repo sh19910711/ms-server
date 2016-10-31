@@ -2,7 +2,7 @@ class App < ApplicationRecord
   belongs_to :user
   has_many :builds, dependent: :destroy
   has_many :deployments, dependent: :destroy
-  has_many :devices
+  has_many :devices, dependent: :nullify
 
   validates :user, presence: true
   APP_NAME_REGEX = /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/

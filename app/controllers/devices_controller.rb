@@ -1,7 +1,7 @@
 class DevicesController < ApplicationController
   before_action :auth
   before_action :set_devices, only: [:index]
-  before_action :set_device, only: [:update, :log, :relaunch]
+  before_action :set_device, only: [:update, :destroy, :log, :relaunch]
 
   def index
     resp :ok, { devices: @devices.index }
@@ -32,6 +32,11 @@ class DevicesController < ApplicationController
 
   def log
     resp :ok, { log: @device.log.values }
+  end
+
+  def destroy
+    @device.destroy
+    resp :ok
   end
 
   private

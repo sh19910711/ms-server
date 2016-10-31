@@ -1,6 +1,7 @@
 class AppsController < ApplicationController
   before_action :auth
   before_action :set_apps, only: [:index, :add_device, :build]
+  before_action :set_app, only: [:add_device, :destroy]
   before_action :set_devices, only: [:add_device]
 
   def index
@@ -12,11 +13,14 @@ class AppsController < ApplicationController
     resp :ok
   end
 
-  def add_device
-    app = @apps.find_by_name!(add_device_params[:app_name])
-    device = @devices.find_by_name!(add_device_params[:device_name])
+  def destroy
+    @app.destroy
+    resp :ok
+  end
 
-    app.add_device!(device)
+  def add_device
+    device = @devices.find_by_name!(add_device_params[:device_name])
+    @app.add_device!(device)
     resp :ok
   end
 
@@ -45,7 +49,12 @@ class AppsController < ApplicationController
   private
 
   def set_apps
-    @apps = current_team.apps
+    @apps ||= current_team.apps
+  end
+
+  def set_app
+    set_apps
+    @app = @apps.find_by_name!(add_device_params[:app_name])
   end
 
   def set_devices

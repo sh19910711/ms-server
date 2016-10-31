@@ -23,6 +23,18 @@ RSpec.describe "Devices", type: :request do
     end
   end
 
+  describe "DELETE /api/:team/devices/:device_name" do
+    it "deletes a device" do
+      name = 'blah-device'
+      register_and_associate(name, 'led-blinker')
+      expect(Device.find_by_name(name)).to be_present
+
+      r = api(method: 'DELETE', path: "devices/#{name}")
+      expect(response).to have_http_status(:ok)
+      expect(Device.find_by_name(name)).not_to be_present
+    end
+  end
+
   describe "PUT /api/devices/:device_secret/heartbeat" do
     it "updates the device status" do
       r = api(method: 'POST', path: 'devices', data: {
