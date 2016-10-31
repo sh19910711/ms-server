@@ -131,6 +131,22 @@ Update device information.
 - `422`: Validation error.
 
 
+`PUT /<team>/devices/<device_name>/relauch`
+-------------------------------------------
+Restart the app on the device.
+
+**Request:**
+Empty.
+
+**Response:**
+``` json
+{}
+```
+
+**Status codes:**
+- `200`: Success.
+
+
 `GET /<team>/apps`
 -----------------
 Returns all applications.
@@ -282,19 +298,25 @@ Image file data.
          or no deployments created for the device.
 
 
-`PUT /devices/<deivce_secret>/status`
--------------------------------------
+`PUT /devices/<deivce_secret>/heartbeat`
+---------------------------------------
 Updates the status of the device.
 
 **Notes:**
 This endpoint is for BaseOS to send heartbeat.
 
 **Request:**
-Parameters are speicified in query string or JSON.
+Parameters are speicified in query string. The request body contains
+the log messages.
 
 ```
 status = "<device status>"
 ```
+
+**Response:**
+- `<integer>`: The latest deployment ID for the device
+- `X`: No deployments.
+- `R`: Relaunch the app.
 
 **Status codes:**
 - `200`: Success
