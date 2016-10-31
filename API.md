@@ -17,6 +17,47 @@ Glossary
   - `running`: The device is running an app.
 
 
+`POST /auth`
+------------
+Create an user.
+
+**Request:**
+
+``` json
+{
+    "name": "<username>",
+    "email": "<email address>",
+    "password": "<password>",
+    "password_confirmation": "<password>",
+}
+```
+
+**Response:**
+``` json
+{}
+```
+
+
+**Status codes:**
+- `200`: Success.
+
+
+`DELETE /auth`
+--------------
+Delete the current user.
+
+**Request:**
+Empty.
+
+**Response:**
+``` json
+{}
+```
+
+**Status codes:**
+- `200`: Success.
+
+
 `GET /<team>/devices`
 -----------------------
 Returns all devices.
