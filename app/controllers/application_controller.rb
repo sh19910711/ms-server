@@ -80,7 +80,7 @@ class ApplicationController < ActionController::API
 
     yield
 
-    if response.headers['access-token']
+    if controller_name == 'sessions' and action_name == 'create'
       # It seems the client is about to sign in. Store and remove header fields
       # from device_token_auth and allocate a single auth token.
       auth_token = AuthToken.new
