@@ -85,9 +85,11 @@ RSpec.describe "Apps", type: :request do
 
       it "successfully builds an app" do
         perform_enqueued_jobs do
-          api method: 'POST', path: "apps/led-blinker/builds", data: {
-                source_file: Rack::Test::UploadedFile.new(valid_zip),
-              }
+          expect {
+            api method: 'POST', path: "apps/led-blinker/builds", data: {
+                  source_file: Rack::Test::UploadedFile.new(valid_zip),
+                }
+          }.to change(Deployment, :count).by(1)
 
           expect(Build.order('created_at').last.status).to eq('success')
         end
