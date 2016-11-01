@@ -33,7 +33,7 @@ class BaseosController < ApplicationController
       if /bytes=(?<offset>\d+)-(?<offset_end>\d*)/ =~ request.headers['Range']
         partial = true
         offset = offset.to_i
-        offset_end =  (offset_end == "") ? data.size : offset_end.to_i
+        offset_end =  (offset_end == "" || offset_end.to_i >= data.size) ? data.size - 1 : offset_end.to_i
         length = offset_end - offset + 1
 
         if offset < 0 || length < 0
