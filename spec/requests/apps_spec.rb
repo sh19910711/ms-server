@@ -49,7 +49,7 @@ RSpec.describe "Apps", type: :request do
   describe "POST /api/:team/apps/:name/deployments" do
     it "deploys an app" do
       register_and_associate('my-board', 'led-blink')
-      image_filepath = fixture('sample-images/example.esp8266.image')
+      image_filepath = Fixture.filepath('sample-images/example.esp8266.image')
 
       expect { deploy_app('led-blink', image_filepath) }.to change(Deployment, :count).by(1)
       expect(response).to have_http_status(:ok)
@@ -69,28 +69,19 @@ RSpec.describe "Apps", type: :request do
       end
     end
 
-    let(:valid_zip)   { fixture('sample-apps/led-blink.zip') }
-    let(:invalid_zip) { fixture('sample-apps/led-blink.corrupt.zip') }
+    let(:valid_zip)   { 'sample-apps/led-blink.zip' }
+    let(:invalid_zip) { 'sample-apps/led-blink.corrupt.zip' }
 
     context "valid source file" do
-      it "creates a build job" do
-        expect {
-          api method: 'POST', path: "apps/led-blinker/builds", data: {
-                source_file: Rack::Test::UploadedFile.new(valid_zip),
-              }
-        }.to have_enqueued_job(BuildJob).exactly(:once)
-
-        expect(response).to have_http_status(:accepted)
-      end
-
       it "successfully builds an app" do
         perform_enqueued_jobs do
           expect {
             api method: 'POST', path: "apps/led-blinker/builds", data: {
-                  source_file: Rack::Test::UploadedFile.new(valid_zip),
+                  source_file: Fixture.uploaded_file(valid_zip),
                 }
           }.to change(Deployment, :count).by(1)
 
+          expect(response).to have_http_status(:accepted)
           expect(Build.order('created_at').last.status).to eq('success')
         end
       end
@@ -100,7 +91,7 @@ RSpec.describe "Apps", type: :request do
       it "fails to build an app" do
         perform_enqueued_jobs do
           api method: 'POST', path: "apps/led-blinker/builds", data: {
-                source_file: Rack::Test::UploadedFile.new(invalid_zip),
+                source_file: Fixture.uploaded_file(invalid_zip),
               }
 
           expect(Build.order('created_at').last.status).to eq('failure')
