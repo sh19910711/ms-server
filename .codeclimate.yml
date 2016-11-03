@@ -13,12 +13,22 @@ engines:
     enabled: true
   rubocop:
     enabled: true
+  nodesecurity:
+    enabled: true
+  eslint:
+    enabled: true
+  scss-lint:
+    enabled: true
+  rubymotion:
+    enabled: true
 
 ratings:
   paths:
-  - Gemfile.lock
-  - "**.erb"
-  - "**.rb"
+    - Gemfile.lock
+    - "**.erb"
+    - "**.rb"
+    - "**.js"
+    - "**.scss"
 
 exclude_paths:
   - db/
