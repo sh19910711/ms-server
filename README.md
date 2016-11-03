@@ -1,4 +1,4 @@
-Welcome to Codestand
+Welcome to MakeStack
 ====================
 
 [![Build Status](https://travis-ci.org/codestand/codestand.svg?branch=master)](https://travis-ci.org/codestand/codestand)
