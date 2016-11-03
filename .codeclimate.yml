@@ -13,8 +13,6 @@ engines:
     enabled: true
   rubocop:
     enabled: true
-  nodesecurity:
-    enabled: true
   eslint:
     enabled: true
   scss-lint:
@@ -23,6 +21,9 @@ engines:
     enabled: true
   bundler-audit:
     enabled: true
+# FIXME: nodesecurity requires 'package.json' in the top directory
+#  nodesecurity:
+#    enabled: true
 
 ratings:
   paths:
