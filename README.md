@@ -1,11 +1,9 @@
 Welcome to MakeStack
 ====================
 
-[![Build Status](https://travis-ci.org/codestand/codestand.svg?branch=master)](https://travis-ci.org/codestand/codestand)
-[![Code Climate](https://codeclimate.com/github/codestand/codestand/badges/gpa.svg)](https://codeclimate.com/github/codestand/codestand)
-[![Test Coverage](https://codeclimate.com/github/codestand/codestand/badges/coverage.svg)](https://codeclimate.com/github/codestand/codestand/coverage)
-
-The codestand management server.
+[![Build Status](https://travis-ci.org/makestack/makestack.svg?branch=master)](https://travis-ci.org/makestack/makestack)
+[![Code Climate](https://codeclimate.com/github/makestack/makestack/badges/gpa.svg)](https://codeclimate.com/github/makestack/makestack)
+[![Test Coverage](https://codeclimate.com/github/makestack/makestack/badges/coverage.svg)](https://codeclimate.com/github/makestack/makestack/coverage)
 
 ## License
 MIT
