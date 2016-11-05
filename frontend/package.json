@@ -5,7 +5,6 @@
   "scripts": {
     "build": "$(npm bin)/webpack --config webpack.config-build.js",
     "watch": "$(npm bin)/webpack --watch",
-    "watch-poll": "$(npm bin)/webpack --watch --config webpack.config-watch-poll.js",
     "test": "$(npm bin)/karma start --single-run --browsers PhantomJS",
     "test-watch": "$(npm bin)/karma start"
   },

@@ -19,5 +19,6 @@ module.exports = {
     ],
   },
   babel: { presets: ['es2015'], plugins: ['transform-runtime'] },
-  vue: { loaders: { sass: 'style!css!sass' } }
+  vue: { loaders: { sass: 'style!css!sass' } },
+  watchOptions: { poll: 1000 }
 };
