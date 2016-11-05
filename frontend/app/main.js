@@ -1,4 +1,4 @@
-require('./styles/main.sass');
+require('./styles/main.scss');
 
 import API from 'lib/api';
 import Vue from 'vue';
