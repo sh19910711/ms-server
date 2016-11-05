@@ -1,13 +1,18 @@
-<template lang='pug'>
-  .page
-    .panel
-      .panel-header
-        .panel-title Sign out
-      .panel-body
-        .state {{state}}
-        .message.message-error(v-if='error') {{error}}
-      .panel-footer
-        router-link(to='/') Home
+<template>
+  <div class="page">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Sign out</div>
+      </div>
+      <div class="panel-body">
+        <div class="state">{{state}}</div>
+        <div class="message message-error" v-if="error">{{error}}</div>
+      </div>
+      <div class="panel-footer">
+        <router-link to="/">Home</router-link>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

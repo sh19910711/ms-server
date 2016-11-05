@@ -1,15 +1,20 @@
-<template lang='pug'>
-  form.form(v-on:submit.prevent='submit')
-    .form-control(v-for='input in inputs')
-      userform-input(:input='input')
-      .form-errors(v-if='inputErrors[input.name] && inputErrors[input.name].length')
-        .form-errors-message ERR: {{inputErrors[input.name]}}
+<template>
+  <form class="form" v-on:submit.prevent="submit">
+    <div class="form-control" v-for="input in inputs">
+      <userform-input :input="input"></userform-input>
+      <div class="form-errors" v-if="inputErrors[input.name] && inputErrors[input.name].length">
+        <div class="form-errors-message">ERR: {{inputErrors[input.name]}}</div>
+      </div>
+    </div>
 
-    .form-control
-      a.button.button-success(v-on:click='submit') {{state}}
+    <div class="form-control">
+      <a class="button button-success" v-on:click="submit">{{state}}</a>
+    </div>
 
-    .form-errors
-      .form-errors-message(v-if="serverErrors['status']") ERROR: {{serverErrors['status']}}
+    <div class="form-errors">
+      <div class="form-errors-message" v-if="serverErrors['status']">ERROR: {{serverErrors['status']}}</div>
+    </div>
+  </div>
 </template>
 
 <script>
