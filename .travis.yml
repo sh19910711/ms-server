@@ -15,6 +15,10 @@ addons:
     - mysql-server-5.5
     - mysql-client-5.5
     - mysql-client-core-5.5
+  code_climate:
+    repo_token:
+      secure: "RfEeqwNv3ZJQYz71VFOV9B6d/0fuDw6D7iQxuE7ytTF0zDeeQLrKrUeuwS6bf2Wv92UZX52ZVB/XLODR2bqfwP/4OLuFU2VUtPSd8yGvOHCI+VSsz93ebkg9KtczukUqf4uUSFIfqFVrZjpbvVPbUOJtWN293FahG/FYokBx4iP8rD1JAFevHEWnNxSGeyHmFiKQRIabEpzL16DcBVtRcvVo2xmeqe1Dgz67gnYpbOuqY9uQRD4QbdiXURPzpPmVpwPyTy6w1+DdIo1aYEGTrU5pX8xC/5B2mkDXknk7TtUC47/qSIALPJ0/QI+uzZjrD3hg5ZYJzQru8gH6c4fltTlBadfcgIw7yYy6o1j0u/lsq4I6W4/6+wzPN+yOyCp0Abo6xROlOUWlZNV/7msWr8YfF+KWfUidBTs12YcC3NaqAG1vH+iYicA5IksKsezpikrGD0vnTNqWDPeSrCVAyYIxEdulJv69sWcrX4P4oBjVxsvHZXeMrqlev32Z3mTNZhjKENc2haq860sSoIRkukjkn6ANU+opyCUCKY7r38UEV0UQj5vzmKzqre5/L8XxXSRGSxz5wGFdbZYHZ+dJ8mNUpz7kegSGetjxm498FhruPOD2i0f0/0ogg38XRQa8EeuMLqYCjjhOOX4o4fUyEAi02Vu/hMXjyxkiSmkmEvM="
+
 
 rvm:
   - 2.3.1
