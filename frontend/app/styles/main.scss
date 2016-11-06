@@ -13,6 +13,10 @@ $box-shadow-black: 0 0 12px rgba(0,0,0,0.125);
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  @include nomargin;
+}
+
 body {
   & {
     @include nomargin;
@@ -35,14 +39,16 @@ body {
 
 .container {
   padding: $side-padding;
+  margin-top: 32px;
 }
 
 .block {
   & {
-    margin-bottom: 32px;
+    margin: 32px 0;
   }
   &-header {
     color: $color-main-dark;
+    margin: 6px 0;
   }
   &-body {
     code {
@@ -61,6 +67,7 @@ body {
     height: $height;
     padding: $side-padding;
     background: $color-white;
+    border-bottom: 3px solid $color-main-light;
     * {
       display: inline-block;
     }
@@ -87,8 +94,7 @@ body {
   & {
     text-align: center;
     background: $color-main-dark;
-    border: 0 solid $color-main-light;
-    border-width: 3px 0;
+    border-bottom: 3px solid $color-main-light;
     color: $color-main-text;
     padding: $padding 0;
   }
@@ -192,5 +198,45 @@ body {
     background: $color-positive;
     border: 1px solid $color-positive-dark;
     color: $color-positive-text;
+  }
+}
+
+.app {
+  $size: 72px;
+  & {
+    border: 1px solid $color-sub-light;
+    color: $color-sub-dark;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  &-name {
+    font-weight: normal;
+    padding: 0 12px;
+    line-height: $size;
+  }
+  &-right {
+    display: flex;
+    flex-direction: row;
+    height: $size;
+    &-box {
+      & {
+        width: $size;
+        border-left: 1px solid $color-sub-light;
+        text-align: center;
+        display: flex;
+        flex-direction: column-reverse;
+      }
+      &-header {
+        background: $color-sub-dark;
+        color: $color-white;
+        line-height: 20px;
+        font-size: 14px;
+      }
+      &-body {
+        line-height: $size - 6px - 20px;
+        font-size: 32px;
+      }
+    }
   }
 }

@@ -11,7 +11,8 @@ function createRouter() {
     route('/', 'index'),
     route('/signin', 'signin'),
     route('/signup', 'signup'),
-    route('/signout', 'signout')
+    route('/signout', 'signout'),
+    route('/apps', 'apps')
   ];
   return new VueRouter({ routes, mode: 'history' });
 }

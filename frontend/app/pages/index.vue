@@ -22,6 +22,7 @@
             $ brew install codestand/codestand/codestand
           </code>
         </div>
+      </div>
 
       <div class="block">
         <div class="block-header">

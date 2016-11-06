@@ -1,6 +1,7 @@
 import 'whatwg-fetch';
 
-const TOKEN_KEY = 'api-token';
+const USER_KEY = 'username';
+const API_TOKEN_KEY = 'api-token';
 
 function handleContent(res) {
   const contentType = res.headers.get('Content-Type');
@@ -12,40 +13,46 @@ function handleContent(res) {
 }
 
 class API {
-  constructor(token) {
+  constructor(token, user) {
     this.token = token;
+    this.user = user;
   }
 
   signup(params) {
     return this.send('post', '/api/auth', params).then(res => {
-      localStorage.setItem(TOKEN_KEY, JSON.stringify(this.token = res.response.headers.get('token')));
+      localStorage.setItem(USER_KEY, JSON.stringify(this.user = res.response.headers.get('username')));
+      localStorage.setItem(API_TOKEN_KEY, JSON.stringify(this.token = res.response.headers.get('token')));
     });
   }
 
   signin(params) {
     return this.send('post', '/api/auth/sign_in', params).then(res => {
-      localStorage.setItem(TOKEN_KEY, JSON.stringify(this.token = res.response.headers.get('token')));
+      localStorage.setItem(USER_KEY, JSON.stringify(this.user = res.response.headers.get('username')));
+      localStorage.setItem(API_TOKEN_KEY, JSON.stringify(this.token = res.response.headers.get('token')));
     });
   }
 
   signout() {
     return this.send('delete', '/api/auth/sign_out').then(res => {
-      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+      localStorage.removeItem(API_TOKEN_KEY);
+      this.user = null;
       this.token = null;
     });
   }
 
   apps(team) {
-    return this.send('get', `/api/${team}/apps`)
+    return this.send('get', `/api/${team}/apps`);
   }
 
   send(method, url, params) {
     return new Promise((resolve, reject) => {
-      const body = JSON.stringify(params || {});
       const headers = {'Content-Type': 'application/json'};
       if (this.token) headers['Authorization'] = `token ${this.token}`;
+      const request = {method, headers};
+      if (params) request['body'] = JSON.stringify(params);
       let response;
-      fetch(url, {method, headers, body})
+      fetch(url, request)
         .then(res => response = res)
         .then(handleContent)
         .then(content => {
@@ -59,4 +66,6 @@ class API {
   }
 };
 
-export default new API(JSON.parse(localStorage.getItem(TOKEN_KEY)));
+const user = JSON.parse(localStorage.getItem(USER_KEY));
+const token = JSON.parse(localStorage.getItem(API_TOKEN_KEY));
+export default new API(token, user);

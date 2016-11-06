@@ -19,7 +19,7 @@
       <div class="nav-right">
         <ul class="nav-list">
           <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/applications">Applications</router-link></li>
+          <li><router-link to="/apps">Applications</router-link></li>
           <li><router-link to="/devises">Devises</router-link></li>
           <li><router-link to="/signout">Sign out</router-link></li>
         </ul>
