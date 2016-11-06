@@ -30,7 +30,6 @@
       };
     },
     mounted() {
-      console.log('hello');
       api.apps(api.user).then(res => {
         this.apps = res.content.applications;
       });

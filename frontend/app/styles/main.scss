@@ -240,3 +240,36 @@ body {
     }
   }
 }
+
+.table {
+  $height: 32px;
+  &-filter {
+    margin-bottom: 6px;
+  }
+  & {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid $color-sub-light;
+    background: $color-white;
+    color: $color-sub-dark;
+  }
+  &-header {
+    background: $color-main-dark;
+    color: $color-white;
+    line-height: $height + 6px;
+    text-align: left;
+  }
+  &-body {
+    tr {
+      border-bottom: 1px solid $color-sub-light;
+    }
+    td {
+      line-height: $height;
+    }
+
+  }
+}
+
+.text-left {
+  text-align: left;
+}

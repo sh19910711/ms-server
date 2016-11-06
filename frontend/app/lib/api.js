@@ -45,6 +45,10 @@ class API {
     return this.send('get', `/api/${team}/apps`);
   }
 
+  devices(team) {
+    return this.send('get', `/api/${team}/devices`);
+  }
+
   send(method, url, params) {
     return new Promise((resolve, reject) => {
       const headers = {'Content-Type': 'application/json'};
