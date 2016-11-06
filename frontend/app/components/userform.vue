@@ -34,10 +34,10 @@
         this.state = 'Processing...'
         const params = this.inputs.reduce((v, i) => { v[i.name] = i.value; return v }, {});
         this.onSubmit(params).then(
-          res => { this.state = 'OK'; },
-          res => {
-            this.inputErrors = res.body && res.body.errors || {};
-            this.serverErrors = {status: res.statusText};
+          res => { this.state = 'OK'; return res; },
+          err => {
+            this.inputErrors = err.content && err.content.errors || {};
+            this.serverErrors = {status: err.response.statusText};
             this.state = 'Retry';
           }
         );

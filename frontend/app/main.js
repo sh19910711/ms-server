@@ -1,6 +1,5 @@
 require('./styles/main.scss');
 
-import API from 'lib/api';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
@@ -18,7 +17,7 @@ function createRouter() {
 }
 
 Vue.use(VueRouter);
-window.api = new API(localStorage.getItem('cs-token'));
+
 window.onload = _ => {
   const router = createRouter();
   router.beforeEach((nextPage, _, done) => {

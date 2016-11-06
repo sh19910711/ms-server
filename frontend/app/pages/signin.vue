@@ -18,6 +18,8 @@
 </template>
 
 <script>
+  import api from 'lib/api';
+
   export default {
     name: 'signin',
     components: { 'userform': require('components/userform.vue') },
@@ -32,7 +34,6 @@
     methods: {
       formSubmit(user) {
         return api.signin(user).then(res => {
-          localStorage.setItem('cs-token', api.token = res.headers['token']);
           this.$router.push('/');
         })
       }

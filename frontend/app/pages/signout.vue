@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import API from 'lib/api';
+  import api from 'lib/api';
 
   export default {
     data() {
@@ -25,14 +25,10 @@
     mounted() {
       api.signout().then(
         res => {
-          api.token = null;
-          localStorage.removeItem('cs-token');
           this.state = 'OK, see you';
           this.$router.push('/');
         },
         res => {
-          api.token = null;
-          localStorage.removeItem('cs-token');
           this.state = 'Error';
           this.error = res.statusText;
         }

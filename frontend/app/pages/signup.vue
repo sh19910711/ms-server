@@ -18,6 +18,8 @@
 </template>
 
 <script>
+  import api from 'lib/api';
+
   export default {
     name: 'signup',
     components: { 'userform': require('components/userform.vue') },
@@ -33,7 +35,6 @@
     methods: {
       formSubmit(params) {
         return api.signup(params).then(res => {
-          api.toekn = res.headers['token']
           this.$router.push('/signin');
         });
       }
