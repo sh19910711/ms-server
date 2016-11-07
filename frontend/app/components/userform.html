@@ -1,0 +1,16 @@
+<form class="form" v-on:submit.prevent="submit">
+  <div class="form-control" v-for="input in inputs">
+    <userform-input :input="input"></userform-input>
+    <div class="form-errors" v-if="inputErrors[input.name] && inputErrors[input.name].length">
+      <div class="form-errors-message">ERR: {{inputErrors[input.name]}}</div>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <a class="button button-success" v-on:click="submit">{{state}}</a>
+  </div>
+
+  <div class="form-errors">
+    <div class="form-errors-message" v-if="serverErrors['status']">ERROR: {{serverErrors['status']}}</div>
+  </div>
+</form>
