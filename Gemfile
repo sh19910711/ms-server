@@ -22,7 +22,6 @@ group :development, :test do
   gem 'sqlite3'
   gem 'pry-rails'
   gem 'active_record_query_trace'
-  gem 'rb-readline', require: false
   gem 'byebug', platform: :mri
 end
 
