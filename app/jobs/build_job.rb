@@ -27,9 +27,10 @@ class BuildJob < ApplicationJob
           end
         end
       rescue Zip::Error
+        stdout  = 'invalid zip file'
         success = false
       else
-        stdout = %x[docker run --rm -v #{tmpdir}:/app -t makestack/deviceos 2>&1]
+        stdout  = %x[docker run --rm -v #{tmpdir}:/app -t makestack/deviceos 2>&1]
         success = $?.success?
       end
 
