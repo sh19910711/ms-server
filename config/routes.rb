@@ -28,9 +28,9 @@ Rails.application.routes.draw do
     put    '/:team/devices/:device_name/envvars/:name', to: 'envvars#update'
     delete '/:team/devices/:device_name/envvars/:name', to: 'envvars#destroy'
 
-    # API for BaseOS
-    put  '/devices/:device_secret/heartbeat', to: 'baseos#heartbeat'
-    get  '/devices/:device_secret/image',    to: 'baseos#image'
-    get  '/devices/:device_secret/envvars',  to: 'baseos#envvars'
+    # API for DeviceOS
+    put  '/devices/:device_secret/heartbeat', to: 'deviceos#heartbeat'
+    get  '/devices/:device_secret/image',    to: 'deviceos#image'
+    get  '/devices/:device_secret/envvars',  to: 'deviceos#envvars'
   end
 end

@@ -1,4 +1,4 @@
-class BaseosController < ApplicationController
+class DeviceosController < ApplicationController
   before_action :auth_device
 
   def heartbeat

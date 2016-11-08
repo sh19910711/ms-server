@@ -310,7 +310,7 @@ This endpoints *partially* supports [Range header](https://tools.ietf.org/html/r
 acceptable forms are: `Range: bytes=<start>-<end>` and `Range: bytes=<start>-`.
 
 **Notes:**
-This endpoint is for BaseOS.
+This endpoint is for DeviceOS.
 
 **Request:**
 Parameters are speicified in query string or JSON.
@@ -334,7 +334,7 @@ Image file data.
 Updates the status of the device.
 
 **Notes:**
-This endpoint is for BaseOS to send heartbeat.
+This endpoint is for DeviceOS to send heartbeat.
 
 **Request:**
 Parameters are speicified in query string. The request body contains
