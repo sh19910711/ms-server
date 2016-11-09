@@ -1,8 +1,8 @@
 const APP_PATH = require('path').join(__dirname, 'app');
 module.exports = {
   context: APP_PATH,
-  entry: 'main',
-  output: { path: __dirname + '/../public/js', filename: 'bundle.js' },
+  entry: ['main'],
+  output: { path: __dirname + '/public/js', publicPath: 'js/', filename: 'bundle.js' },
   resolve: {
     extensions: ['', '.js'],
     root: [APP_PATH],

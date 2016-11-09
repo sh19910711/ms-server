@@ -37,6 +37,8 @@
     "karma-sinon": "^1.0.5",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "^1.8.0",
-    "sinon": "^1.17.6"
+    "sinon": "^1.17.6",
+    "vue-hot-reload-api": "^2.0.6",
+    "webpack-dev-server": "^1.16.2"
   }
 }
