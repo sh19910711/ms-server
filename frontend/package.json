@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "$(npm bin)/webpack --config webpack.config-build.js",
-    "watch": "$(npm bin)/webpack --watch",
+    "build": "$(npm bin)/webpack",
+    "watch": "node dev-server.js",
     "test": "$(npm bin)/karma start --single-run --browsers PhantomJS",
     "test-watch": "$(npm bin)/karma start"
   },
