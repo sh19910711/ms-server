@@ -2,12 +2,23 @@
 
 ## Build
 
+Bundle is generated into `public/js/bundle.js`.
+
     $ npm run build
+
 
 ## Watch
 
-    $ npm run watch
+The dev-server is avaialable on `http://localhost:<PORT>`.
 
-For some environments in the docker, virutalbox or something:
+    $ SERVER_URL=<endpoint> PORT=<dev-server-port> npm run watch
 
-    $ npm run watch-poll
+## Test
+
+single-run:
+
+    $ npm run test
+
+watch:
+
+    $ npm run test-watch
