@@ -1,6 +1,7 @@
 export default {
   name: 'userform',
-  components: { userformInput: require('./userform/input.vue') },
+  template: require('./userform.html'),
+  components: { userformInput: require('./userform/input').default },
   props: ['on-submit', 'first-state', 'inputs'],
   data() {
     return {
@@ -11,8 +12,8 @@ export default {
   },
   methods: {
     submit() {
-      this.state = 'Processing...'
-      const params = this.inputs.reduce((v, i) => { v[i.name] = i.value; return v }, {});
+      this.state = 'Processing...';
+      const params = this.inputs.reduce((v, i) => { v[i.name] = i.value; return v; }, {});
       this.onSubmit(params).then(
         res => { this.state = 'OK'; return res; },
         err => {
@@ -23,4 +24,4 @@ export default {
       );
     }
   }
-}
+};

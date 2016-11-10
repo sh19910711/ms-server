@@ -2,7 +2,8 @@ import api from 'lib/api';
 
 export default {
   name: 'signin',
-  components: { 'userform': require('components/userform.vue') },
+  template: require('./signin.html'),
+  components: { 'userform': require('components/userform').default },
   data: () => {
     return {
       formInputs: [

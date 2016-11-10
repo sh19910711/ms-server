@@ -1,7 +1,8 @@
 import api from 'lib/api';
 
 export default {
-  components: { navbar: require('components/navbar.vue') },
+  components: { navbar: require('components/navbar').default },
+  template: require('apps.html'),
   data() {
     return {
       apps: []

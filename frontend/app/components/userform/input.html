@@ -1,5 +1,4 @@
 <div class="form-input">
-  <label :for="input.name">{{input.name}}</label>
   <div v-if="isPassword()">
     <input v-model="input.value" type="password" :name="input.name" :placeholder="input.placeholder">
   </div>

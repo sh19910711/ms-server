@@ -1,11 +1,11 @@
-require('./styles/main.scss');
+require('./main.scss');
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 function createRouter() {
   function route(path, name) {
-    return { name: name, path: path, component: require(`./pages/${name}.vue`) };
+    return { name: name, path: path, component: Vue.extend(require(`./${name}`).default) };
   }
   const routes = [
     route('/', 'index'),
