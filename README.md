@@ -5,5 +5,12 @@ Welcome to MakeStack
 [![Code Climate](https://codeclimate.com/github/makestack/makestack/badges/gpa.svg)](https://codeclimate.com/github/makestack/makestack)
 [![Test Coverage](https://codeclimate.com/github/makestack/makestack/badges/coverage.svg)](https://codeclimate.com/github/makestack/makestack/coverage)
 
+## Development
+
+```
+$ bundle install
+$ bundle exec foreman start
+```
+
 ## License
 MIT
