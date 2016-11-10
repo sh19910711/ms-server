@@ -1,9 +1,10 @@
 import 'spec_helper';
+var Vue = require('vue');
 
 describe('navbar', function() {
   describe('.token', function() {
     beforeEach(function() {
-      this.vm = new Vue(require('components/navbar.vue')).$mount();
+      this.vm = new Vue(require('components/navbar').default).$mount();
     });
 
     it('shows link to signin if not defined', function(done) {
@@ -29,3 +30,4 @@ describe('navbar', function() {
     });
   });
 });
+

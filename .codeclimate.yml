@@ -19,9 +19,8 @@ engines:
     enabled: true
   bundler-audit:
     enabled: true
-# FIXME: nodesecurity requires 'package.json' in the top directory
-#  nodesecurity:
-#    enabled: true
+  nodesecurity:
+    enabled: true
 
 ratings:
   paths:

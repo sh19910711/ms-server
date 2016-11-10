@@ -15,10 +15,21 @@ Welcome to MakeStack
 ## Development
 We recommend to use PostgreSQL.
 
-```
+```sh
 $ bundle install
 $ bundle exec foreman start
 ```
+
+
+## Testing
+
+```sh
+$ bundle exec rspec    # backend test
+$ bundle exec guard
+$ npm run test         # frontend test
+$ npm run test-watch
+```
+
 
 ## License
 MIT

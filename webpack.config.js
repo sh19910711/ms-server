@@ -1,6 +1,6 @@
 var path = require('path');
 
-const APP_PATH = path.join(__dirname, 'app');
+const APP_PATH = path.join(__dirname, 'frontend');
 
 module.exports = {
   context: APP_PATH,
@@ -16,8 +16,8 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.html$/,  loader: 'html-loader'},
-      { test: /\.js$/,  loader: 'babel', exclude: /node_modules/ },
+      { test: /\.html$/, loader: 'html-loader'},
+      { test: /\.js$/,   loader: 'babel', exclude: /node_modules/ },
       { test: /\.scss$/, loader: 'style!css!sass' }
     ],
     preLoaders: [
@@ -28,6 +28,6 @@ module.exports = {
   vue: { loaders: { sass: 'style!css!sass' } },
   watchOptions: { poll: 1000 },
   sassLoader: {
-    includePaths: [path.resolve(__dirname, 'app',  'css')]
+    includePaths: [path.resolve(APP_PATH,  'css')]
   }
 };
