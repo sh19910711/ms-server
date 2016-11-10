@@ -2,7 +2,7 @@
   <div class="form-control" v-for="input in inputs">
     <userform-input :input="input"></userform-input>
     <div class="form-errors" v-if="inputErrors[input.name] && inputErrors[input.name].length">
-      <div class="form-errors-message">ERR: {{inputErrors[input.name]}}</div>
+      <div class="form-errors-message">{{inputErrors[input.name]}}</div>
     </div>
   </div>
 

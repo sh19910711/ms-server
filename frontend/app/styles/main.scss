@@ -6,8 +6,6 @@ $font-size-large: 32px;
 $font-size-medium: 18px;
 $font-size-small: 12px;
 $side-padding: 0 32px;
-$text-shadow-black: 1px 1px 3px rgba(0,0,0,0.25);
-$box-shadow-black: 0 0 12px rgba(0,0,0,0.125);
 
 * {
   font-family: 'Source Sans Pro', sans-serif;
@@ -94,7 +92,6 @@ body {
   & {
     text-align: center;
     background: $color-main-dark;
-    border-bottom: 3px solid $color-main-light;
     color: $color-main-text;
     padding: $padding 0;
   }
@@ -107,7 +104,6 @@ body {
   &-title {
     @include nomargin;
     font-size: $font-size-large;
-    text-shadow: $text-shadow-black;
   }
 }
 
@@ -118,7 +114,6 @@ body {
     color: $color-white-text;
     border: 1px solid $color-white-border;
     box-sizing: border-box;
-    box-shadow: $box-shadow-black;
   }
   &-header {
     background: $color-whiny-grey;
@@ -154,9 +149,6 @@ body {
 }
 
 .form {
-  label {
-    color: #999;
-  }
   &-errors {
     color: #c66;
     margin-bottom: 12px;
@@ -174,12 +166,12 @@ body {
       padding: 0 12px;
     }
     input {
-      border: 0;
+      padding: 27px 0 27px 18px;
       & {
-        border-bottom: 1px solid $color-sub-light;
+        border: 1px solid $color-sub-light;
       }
       &:focus {
-        border-bottom: 1px solid $color-sub-dark;
+        border: 1px solid $color-sub-dark;
       }
     }
   }

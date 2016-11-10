@@ -6,8 +6,8 @@ export default {
   data: () => {
     return {
       formInputs: [
-        { name: 'username', type: 'text', placeholder: 'username', },
-        { name: 'password', type: 'password', placeholder: 'password' }
+        { name: 'username', type: 'text', placeholder: 'Username', },
+        { name: 'password', type: 'password', placeholder: 'Password' }
       ]
     };
   },
