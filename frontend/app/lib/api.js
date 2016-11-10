@@ -5,7 +5,7 @@ const API_TOKEN_KEY = 'api-token';
 
 function handleContent(res) {
   const contentType = res.headers.get('Content-Type');
-  if (contentType && contentType.indexOf('application/json') != -1) {
+  if (contentType && contentType.indexOf('application/json') !== -1) {
     return res.json();
   } else {
     return res;
@@ -33,7 +33,7 @@ class API {
   }
 
   signout() {
-    return this.send('delete', '/api/auth/sign_out').then(res => {
+    return this.send('delete', '/api/auth/sign_out').then(() => {
       localStorage.removeItem(USER_KEY);
       localStorage.removeItem(API_TOKEN_KEY);
       this.user = null;
@@ -57,7 +57,7 @@ class API {
       if (params) request['body'] = JSON.stringify(params);
       let response;
       fetch(url, request)
-        .then(res => response = res)
+        .then(res => (response = res))
         .then(handleContent)
         .then(content => {
           if (response.ok) {
@@ -68,7 +68,7 @@ class API {
         });
     });
   }
-};
+}
 
 const user = JSON.parse(localStorage.getItem(USER_KEY));
 const token = JSON.parse(localStorage.getItem(API_TOKEN_KEY));

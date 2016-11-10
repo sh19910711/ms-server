@@ -20,7 +20,7 @@ function createRouter() {
 
 Vue.use(VueRouter);
 
-window.onload = _ => {
+window.onload = () => {
   const router = createRouter();
   router.beforeEach((nextPage, _, done) => {
     document.body.dataset.pageName = nextPage.name;

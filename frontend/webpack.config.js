@@ -17,6 +17,9 @@ module.exports = {
       { test: /\.js$/,  loader: 'babel', exclude: /node_modules/ },
       { test: /\.scss$/, loader: 'style!css!sass' }
     ],
+    preLoaders: [
+      { test: /\.js$/, loader: 'eslint', exclude: /node_modules/ }
+    ]
   },
   babel: { presets: ['es2015'], plugins: ['transform-runtime'] },
   vue: { loaders: { sass: 'style!css!sass' } },

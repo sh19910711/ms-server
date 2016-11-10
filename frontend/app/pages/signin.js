@@ -13,9 +13,9 @@ export default {
   },
   methods: {
     formSubmit(user) {
-      return api.signin(user).then(res => {
+      return api.signin(user).then(() => {
         this.$router.push('/');
-      })
+      });
     }
   }
-}
+};

@@ -2,11 +2,11 @@ import api from 'lib/api';
 
 export default {
   data() {
-    return { state: 'Processing now...', error: null }
+    return { state: 'Processing now...', error: null };
   },
   mounted() {
     api.signout().then(
-      res => {
+      () => {
         this.state = 'OK, see you';
         this.$router.push('/');
       },
@@ -14,6 +14,6 @@ export default {
         this.state = 'Error';
         this.error = res.statusText;
       }
-    )
+    );
   }
-}
+};

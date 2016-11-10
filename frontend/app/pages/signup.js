@@ -3,7 +3,7 @@ import api from 'lib/api';
 export default {
   name: 'signup',
   components: { 'userform': require('components/userform.vue') },
-  data: _=> {
+  data: () => {
     return {
       formInputs: [
         { name: 'email', type: 'text', placeholder: 'e.g., brine@example.com' },
@@ -14,9 +14,9 @@ export default {
   },
   methods: {
     formSubmit(params) {
-      return api.signup(params).then(res => {
+      return api.signup(params).then(() => {
         this.$router.push('/signin');
       });
     }
   }
-}
+};
