@@ -1,0 +1,7 @@
+production:
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  database: makestack
+  username: makestack
+  password: # EDIT ME

@@ -1,0 +1,71 @@
+---
+- hosts: servers
+  become: yes
+  tasks:
+    - name: Update APT cache
+      apt: update_cache=yes cache_valid_time=8600
+    - name: Upgrade packages
+      apt: upgrade=dist
+    - name: Install packages
+      apt: name={{ item }} state=latest
+      with_items:
+        - docker.io
+        - postgresql-9.5
+        - postgresql-client-9.5
+        - libpq-dev
+        - ruby-bundler
+        - ruby-dev
+        - nginx
+        - postfix
+        - build-essential
+        - redis-server
+        - python-psycopg2
+
+    - name: Clone MakeStack Server
+      git: "repo=https://github.com/makestack/makestack dest=/opt/makestack"
+      args:
+        force: yes
+    - name: bundle install
+      command: bundle install --jobs 4 --without mysql development test
+      args:
+        chdir: /opt/makestack
+    - name: Upload database.yml
+      copy: src=database.yml dest=/opt/makestack/config/database.yml
+    - name: Upload secrets.yml
+      copy: src=secrets.yml dest=/opt/makestack/config/secrets.yml
+
+    - name: "Create 'makestack' user"
+      user: name=makestack state=present system=yes
+
+    - name: chown /opt/makestack
+      file: path=/opt/makestack state=directory owner=makestack recurse=yes
+
+    - name: "PostgreSQL: create 'makestack' database"
+      postgresql_db:
+        name: makestack
+        encoding: UTF-8
+        login_user: postgres
+      become_user: postgres
+
+    - name: "PostgreSQL: create 'makestack' user"
+      postgresql_user:
+        db: makestack
+        name: makestack
+        password: "{{ DB_PASSWORD }}"
+        priv: ALL
+        state: present
+        login_user: postgres
+      become_user: postgres
+
+    - name: DB migration
+      command: bundle exec rails db:migrate
+      args:
+        chdir: /opt/makestack
+      environment:
+        RAILS_ENV: production
+      become_user: makestack
+
+    - name: Upload makestack.service
+      copy: src=makestack.service dest=/etc/systemd/system/makestack.service
+    - name: Upload sidekiq.service
+      copy: src=sidekiq.service dest=/etc/systemd/system/sidekiq.service
