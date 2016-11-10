@@ -13,7 +13,7 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.vue$/, loader: 'vue' },
+      { test: /\.html$/,  loader: 'html-loader'},
       { test: /\.js$/,  loader: 'babel', exclude: /node_modules/ },
       { test: /\.scss$/, loader: 'style!css!sass' }
     ],
