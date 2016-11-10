@@ -83,6 +83,12 @@ class ApplicationController < ActionController::API
     if controller_name == 'sessions' and action_name == 'create'
       # It seems the client is about to sign in. Store and remove header fields
       # from device_token_auth and allocate a single auth token.
+
+      unless response.headers.include?('access-token')
+        head :unauthorized
+        return
+      end
+
       auth_token = AuthToken.new
       auth_token.token        = Digest::SHA1.hexdigest(SecureRandom.base64(128))
       auth_token.uid          = response.headers['uid']
