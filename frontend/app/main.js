@@ -1,6 +1,5 @@
-require('./styles/main.sass');
+require('./styles/main.scss');
 
-import API from 'lib/api';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
@@ -12,14 +11,16 @@ function createRouter() {
     route('/', 'index'),
     route('/signin', 'signin'),
     route('/signup', 'signup'),
-    route('/signout', 'signout')
+    route('/signout', 'signout'),
+    route('/apps', 'apps'),
+    route('/devices', 'devices')
   ];
   return new VueRouter({ routes, mode: 'history' });
 }
 
 Vue.use(VueRouter);
-window.api = new API(localStorage.getItem('cs-token'));
-window.onload = _ => {
+
+window.onload = () => {
   const router = createRouter();
   router.beforeEach((nextPage, _, done) => {
     document.body.dataset.pageName = nextPage.name;
