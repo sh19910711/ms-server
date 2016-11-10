@@ -1,6 +1,7 @@
 import api from 'lib/api';
 
 export default {
+  template: require('signout.html'),
   data() {
     return { state: 'Processing now...', error: null };
   },
