@@ -1,4 +1,7 @@
-const APP_PATH = require('path').join(__dirname, 'app');
+var path = require('path');
+
+const APP_PATH = path.join(__dirname, 'app');
+
 module.exports = {
   context: APP_PATH,
   entry: ['main'],
@@ -23,5 +26,8 @@ module.exports = {
   },
   babel: { presets: ['es2015'], plugins: ['transform-runtime'] },
   vue: { loaders: { sass: 'style!css!sass' } },
-  watchOptions: { poll: 1000 }
+  watchOptions: { poll: 1000 },
+  sassLoader: {
+    includePaths: [path.resolve(__dirname, 'app',  'css')]
+  }
 };
