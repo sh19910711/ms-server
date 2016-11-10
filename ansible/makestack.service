@@ -4,12 +4,11 @@ After=network.target sidekiq.service
 
 [Service]
 WorkingDirectory=/opt/makestack
-Environment=RAILS_ENV=production
 User=makestack
 RestartSec=1
 Restart=on-failure
 PIDFile=/opt/makestack/tmp/puma.pid
-ExecStart=/usr/local/bin/bundle exec puma -C config/puma.rb
+ExecStart=/usr/bin/bundle exec puma -C config/puma.rb -e production
 
 [Install]
 WantedBy=multi-user.target
