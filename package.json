@@ -1,7 +1,5 @@
 {
-  "name": "makestack-frontend",
-  "version": "0.0.1",
-  "description": "",
+  "private": true,
   "scripts": {
     "build": "$(npm bin)/webpack",
     "watch": "node dev-server.js",
