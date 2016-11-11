@@ -41,7 +41,7 @@ before_install:
 
 install:
   - bundle install --jobs 2 --path vendor/bundle
-  - NPM_CONFIG_PROGRESS=false npm install --no-spin
+  - NPM_CONFIG_PROGRESS=false npm install --no-spin --no-optional
 
 before_script:
   - bundle exec rails db:migrate RAILS_ENV=test
