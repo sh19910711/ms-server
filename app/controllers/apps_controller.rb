@@ -1,11 +1,15 @@
 class AppsController < ApplicationController
   before_action :auth
   before_action :set_apps, only: [:index, :add_device, :build]
-  before_action :set_app, only: [:add_device, :destroy]
+  before_action :set_app, only: [:add_device, :destroy, :show]
   before_action :set_devices, only: [:add_device]
 
   def index
     resp :ok, { applications: @apps.index }
+  end
+
+  def show
+    resp :ok, { application: @app }
   end
 
   def create

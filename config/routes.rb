@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     # Apps API
     get    '/:team/apps',                       to: 'apps#index'
     post   '/:team/apps',                       to: 'apps#create'
+    get    '/:team/apps/:app_name',             to: 'apps#show'
     delete '/:team/apps/:app_name',             to: 'apps#destroy'
     post   '/:team/apps/:app_name/devices',     to: 'apps#add_device'
     post   '/:team/apps/:app_name/builds',      to: 'apps#build'
