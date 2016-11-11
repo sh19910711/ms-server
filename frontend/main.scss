@@ -33,6 +33,9 @@ body {
 .container {
   padding: $side-padding;
   margin-top: 32px;
+  &-title {
+    margin-bottom: 12px;
+  }
 }
 
 .block {
@@ -151,6 +154,7 @@ body {
     margin-bottom: 12px;
   }
   &-name {
+    color: $color-sub-dark;
     font-weight: normal;
     padding: 0 12px;
     line-height: $size;
@@ -223,7 +227,14 @@ body {
     td {
       line-height: $height;
     }
-
+  }
+  &-header, &-body {
+    tr :first-child {
+      padding-left: 12px;
+    }
+    tr :last-child {
+      padding-right: 12px;
+    }
   }
 }
 
@@ -234,5 +245,11 @@ body {
     background: $color-accent;
     color: $color-accent-text;
     border: 1px solid $color-accent-border;
+  }
+}
+
+.text {
+  &-right {
+    text-align: right;
   }
 }

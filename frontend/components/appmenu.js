@@ -1,6 +1,6 @@
 export default {
   template: require('./appmenu.html'),
-  props: ['active'],
+  props: ['active', 'base'],
   mounted() {
     if (this.active) {
       if (this.lastActiveElement) this.lastActiveElement.dataset.active = 'false';
@@ -11,7 +11,9 @@ export default {
   },
   methods: {
     show(ev) {
-      this.$router.push(ev.target.dataset.href);
+      let href = ev.target.dataset.href;
+      if (this.base) href = this.base + href;
+      this.$router.push(href);
     }
   }
 };
