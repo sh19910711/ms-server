@@ -226,3 +226,13 @@ body {
 
   }
 }
+
+.build {
+  &-log {
+    display: block;
+    padding: 12px;
+    background: $color-accent;
+    color: $color-accent-text;
+    border: 1px solid $color-accent-border;
+  }
+}

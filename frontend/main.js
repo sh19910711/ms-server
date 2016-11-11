@@ -14,6 +14,8 @@ function createRouter() {
     route('/signout', 'signout'),
     route('/apps', 'apps'),
     route('/apps/:name/overview', 'app_overview'),
+    route('/apps/:name/deployments', 'app_deployments'),
+    route('/apps/:name/builds', 'app_builds'),
     route('/devices', 'devices')
   ];
   return new VueRouter({ routes, mode: 'history' });
