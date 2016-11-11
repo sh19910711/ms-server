@@ -38,7 +38,7 @@ before_install:
   - cp ci/database.$DB.yml config/database.yml
   - psql  -c 'create database travis_ci_test;' -U postgres
   - mysql -e 'create database travis_ci_test;' -u root
-  - PATH=$PWD/node_modules/.bin:$PATH npm install npm@4.0.0 # refer https://github.com/npm/npm/pull/14117
+  - sudo npm install -g npm@4.0.0 # refer https://github.com/npm/npm/pull/14117
 
 install:
   - bundle install --jobs 2 --path vendor/bundle
@@ -49,4 +49,4 @@ before_script:
 
 script:
   - "CODECLIMATE=true bundle exec rspec"
-  - "PATH=$PWD/node_modules/.bin:$PATH run test" # TODO: send test converage
+  - "npm run test" # TODO: send test converage
