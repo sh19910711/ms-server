@@ -38,14 +38,15 @@ before_install:
   - cp ci/database.$DB.yml config/database.yml
   - psql  -c 'create database travis_ci_test;' -U postgres
   - mysql -e 'create database travis_ci_test;' -u root
+  - PATH=$PWD/node_modules/.bin:$PATH npm install npm@4.0.0 # refer https://github.com/npm/npm/pull/14117
 
 install:
   - bundle install --jobs 2 --path vendor/bundle
-  - NPM_CONFIG_PROGRESS=false npm install --no-spin --no-optional
+  - NPM_CONFIG_PROGRESS=false npm install --no-spin
 
 before_script:
   - bundle exec rails db:migrate RAILS_ENV=test
 
 script:
   - "CODECLIMATE=true bundle exec rspec"
-  - npm run test # TODO: send test converage
+  - "PATH=$PWD/node_modules/.bin:$PATH run test" # TODO: send test converage
