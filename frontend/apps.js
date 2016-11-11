@@ -10,7 +10,15 @@ export default {
   },
   mounted() {
     api.apps(api.user).then(res => {
-      this.apps = res.content.applications;
+      this.apps = res.content.applications.map(app => {
+        app.url = `/apps/${app.name}/overview`;
+        return app;
+      });
     });
+  },
+  methods: {
+    show(ev) {
+      this.$router.push(ev.target.dataset.href);
+    }
   }
 };

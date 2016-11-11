@@ -7,6 +7,7 @@
 
 h1, h2, h3, h4, h5, h6 {
   @include nomargin;
+  color: $color-main-dark;
 }
 
 body {
@@ -144,6 +145,7 @@ body {
   & {
     border: 1px solid $color-sub-light;
     color: $color-sub-dark;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
     margin-bottom: 12px;
@@ -174,6 +176,23 @@ body {
       &-body {
         line-height: $size - 6px - 20px;
         font-size: 32px;
+      }
+    }
+  }
+  &-menu {
+    & {
+      border-bottom: 1px solid $color-sub-light;
+      text-align: center;
+      color: $color-sub-dark;
+    }
+    &-item {
+      display: inline-block;
+      margin: 0 12px;
+      padding: 3px 6px;
+      cursor: pointer;
+      &[data-active="true"] {
+        color: $color-main-dark;
+        border-bottom: 3px solid $color-main-dark;
       }
     }
   }

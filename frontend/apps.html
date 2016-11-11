@@ -2,7 +2,7 @@
   <navbar></navbar>
 
   <div class="container apps">
-    <div class="app" v-for="app in apps">
+    <div class="app" :data-href="app.url" @click="show" v-for="app in apps">
       <h2 class="app-name">{{app.name}}</h2>
       <div class="app-right">
         <div class="app-right-box app-status">

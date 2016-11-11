@@ -1,0 +1,55 @@
+<div class="page">
+  <navbar></navbar>
+
+  <appmenu active="overview"></appmenu>
+
+  <div class="container">
+    <h2 class="container-title">Builds</h2>
+    <table class="table">
+      <thead class="table-header">
+        <tr>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr class="build">
+          <td class="build-description">Faster and faster</td>
+          <td class="build-status">Queued</td>
+          <td class="build-created-at">30 seconds ago</td>
+        </tr>
+        <tr class="build">
+          <td class="build-description">Post a message to slack</td>
+          <td class="build-status">Running</td>
+          <td class="build-created-at">3 minutes ago</td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <button disabled>Show all builds</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2 class="container-title">Deployments</h2>
+    <table class="table">
+      <thead class="table-header">
+        <tr>
+          <th>ID</th>
+          <th>Description</th>
+          <th>Deployed</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="deployment">
+          <td class="deployment-id">2</td>
+          <td class="deployment-description">2</td>
+          <td class="deployment-deployed-at">3 days ago</td>
+          <td class="deployment-restore"><button disabled>Restore</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
