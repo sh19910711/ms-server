@@ -1,9 +1,10 @@
 import 'spec_helper';
+var Vue = require('vue');
 
 describe('userform', function() {
   describe('.inputs', function() {
     beforeEach(function() {
-      const Form = Vue.extend(require('components/userform.vue'));
+      const Form = Vue.extend(require('components/userform').default);
       const inputs = [
         { type: 'text', name: 'this-is-text' },
         { type: 'password', name: 'this-is-password' }
@@ -24,7 +25,7 @@ describe('userform', function() {
 
   describe('.firstState', function() {
     beforeEach(function() {
-      const Form = Vue.extend(require('components/userform.vue'));
+      const Form = Vue.extend(require('components/userform').default);
       this.vm = new Form({ propsData: { firstState: 'this-is-state' } }).$mount();
     });
 
@@ -35,7 +36,7 @@ describe('userform', function() {
 
   describe('.onSubmit', function() {
     beforeEach(function() {
-      const Form = Vue.extend(require('components/userform.vue'));
+      const Form = Vue.extend(require('components/userform').default);
       this.spy = sinon.spy(() => new Promise(resolve => resolve()));
       this.vm = new Form({ propsData: { inputs: [], onSubmit: this.spy } }).$mount();
     });

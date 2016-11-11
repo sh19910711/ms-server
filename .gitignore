@@ -6,7 +6,9 @@
 
 /vendor
 /public/uploads
+/node_modules
 *.rdb
+*.log
 
 # Ignore bundler config.
 /.bundle

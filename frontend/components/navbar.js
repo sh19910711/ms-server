@@ -1,4 +1,6 @@
-import api from 'lib/api';
+import api from 'js/api';
+
+require('./navbar.scss');
 
 export default {
   template: require('./navbar.html'),

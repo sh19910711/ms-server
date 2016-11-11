@@ -16,5 +16,5 @@ const devServer = new WebpackDevServer(webpack(config), {
   publicPath: '/js',
   proxy: { '/api/*': process.env['SERVER_URL'] }
 });
-devServer.use('*', (req, res) => res.sendFile(__dirname + '/app/main.html'));
+devServer.use('*', (req, res) => res.sendFile(__dirname + '/frontend/main.html'));
 devServer.listen(port);

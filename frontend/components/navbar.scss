@@ -1,0 +1,30 @@
+@import "scheme";
+@import "mixin";
+
+.nav {
+  $height: 32px;
+  & {
+    height: $height;
+    padding: $side-padding;
+    background: $color-white;
+    border-bottom: 3px solid $color-main-light;
+    * {
+      display: inline-block;
+    }
+    &, a {
+      color: #666;
+    }
+  }
+  &-brand, &-list {
+    @include nomargin;
+    font-size: $height/2.15;
+    line-height: $height;
+  }
+  &-list li {
+    display: inline;
+    margin-left: 12px;
+  }
+  &-left { float: left; }
+  &-right { float: right; }
+  &:after { @include clearfix; }
+}

@@ -1,4 +1,4 @@
-import api from 'lib/api';
+import api from 'js/api';
 
 export default {
   components: { navbar: require('components/navbar').default },

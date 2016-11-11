@@ -1,10 +1,5 @@
-@import "./mixin";
-@import "./color";
-
-$font-size-large: 32px;
-$font-size-medium: 18px;
-$font-size-small: 12px;
-$side-padding: 0 32px;
+@import "scheme";
+@import "mixin";
 
 * {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Meiryo', 'Ubuntu', sans-serif;
@@ -55,54 +50,6 @@ body {
       color: $color-accent-text;
       border: 1px solid $color-accent-border;
     }
-  }
-}
-
-.nav {
-  $height: 32px;
-  & {
-    height: $height;
-    padding: $side-padding;
-    background: $color-white;
-    border-bottom: 3px solid $color-main-light;
-    * {
-      display: inline-block;
-    }
-    &, a {
-      color: #666;
-    }
-  }
-  &-brand, &-list {
-    @include nomargin;
-    font-size: $height/2.15;
-    line-height: $height;
-  }
-  &-list li {
-    display: inline;
-    margin-left: 12px;
-  }
-  &-left { float: left; }
-  &-right { float: right; }
-  &:after { @include clearfix; }
-}
-
-.leading {
-  $padding: 32px;
-  & {
-    text-align: center;
-    background: $color-main-dark;
-    color: $color-main-text;
-    padding: $padding 0;
-  }
-  &-header {
-    padding-top: $padding;
-  }
-  &-body {
-    padding: 12px 0;
-  }
-  &-title {
-    @include nomargin;
-    font-size: $font-size-large;
   }
 }
 
