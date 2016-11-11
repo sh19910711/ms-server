@@ -5,7 +5,7 @@ const APP_PATH = path.join(__dirname, 'frontend');
 module.exports = {
   context: APP_PATH,
   entry: ['main'],
-  output: { path: __dirname + '/public/js', publicPath: 'js/', filename: 'bundle.js' },
+  output: { path: __dirname + '/public/js', publicPath: '/js/', filename: 'bundle.js' },
   resolve: {
     extensions: ['', '.js'],
     root: [APP_PATH],
