@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 
 function createRouter() {
   function route(path, name) {
-    return { name: name, path: path, component: Vue.extend(require(`./${name}`).default) };
+    return { path, name, component: Vue.extend(require(`./${name}`).default) };
   }
   const routes = [
     route('/', 'index'),
@@ -13,7 +13,7 @@ function createRouter() {
     route('/signup', 'signup'),
     route('/signout', 'signout'),
     route('/apps', 'apps'),
-    route('/apps/:name/overview', 'app_overview'),
+    route('/apps/:name', 'app_overview'),
     route('/apps/:name/deployments', 'app_deployments'),
     route('/apps/:name/builds', 'app_builds'),
     route('/apps/:name/builds/:build_id', 'app_build_detail'),

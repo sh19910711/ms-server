@@ -11,7 +11,7 @@ export default {
   mounted() {
     api.apps(api.user).then(res => {
       this.apps = res.content.applications.map(app => {
-        app.url = `/apps/${app.name}/overview`;
+        app.url = `/apps/${app.name}`;
         return app;
       });
     });
