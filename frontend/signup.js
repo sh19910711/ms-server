@@ -4,7 +4,7 @@ export default {
   name: 'signup',
   template: require('signup.html'),
   components: { 'apiform': require('components/apiform').default },
-  data: () => {
+  data() {
     return {
       formInputs: [
         { name: 'email', type: 'text', placeholder: 'E-mail (e.g. brine@example.com)' },

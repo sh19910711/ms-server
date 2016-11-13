@@ -9,16 +9,17 @@ export default {
     };
   },
   mounted() {
-    api.apps(api.user).then(res => {
-      this.apps = res.content.applications.map(app => {
-        app.url = `/apps/${app.name}`;
-        return app;
-      });
-    });
+    api.apps(api.user).then(this.updateApps);
   },
   methods: {
     show(ev) {
       this.$router.push(ev.target.dataset.href);
+    },
+    updateApps(res) {
+      this.apps = res.content.applications.map(app => {
+        app.url = `/apps/${app.name}`;
+        return app;
+      });
     }
   }
 };
