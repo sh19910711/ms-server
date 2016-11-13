@@ -14,15 +14,12 @@
         </tr>
       </thead>
       <tbody class="table-body">
-        <tr class="build">
-          <td class="build-description">Faster and faster</td>
-          <td class="build-status">Queued</td>
-          <td class="build-created-at">30 seconds ago</td>
-        </tr>
-        <tr class="build">
-          <td class="build-description">Post a message to slack</td>
-          <td class="build-status">Running</td>
-          <td class="build-created-at">3 minutes ago</td>
+        <tr class="build" v-for="build in builds">
+          <td class="build-description">
+            <router-link :to="`/apps/${$route.params['name']}/builds/${build.id}`">Here is a message</router-link>
+          </td>
+          <td class="build-status">{{build.status}}</td>
+          <td class="build-created-at">{{build.created_at}}</td>
         </tr>
       </tbody>
     </table>
@@ -43,10 +40,10 @@
         </tr>
       </thead>
       <tbody class="table-body">
-        <tr class="deployment">
-          <td class="deployment-id">2</td>
-          <td class="deployment-description">2</td>
-          <td class="deployment-deployed-at">3 days ago</td>
+        <tr class="deployment" v-for="deployment in deployments">
+          <td class="deployment-id">{{deployment.id}}</td>
+          <td class="deployment-description">Here is a description</td>
+          <td class="deployment-deployed-at">{{deployment.created_at}}</td>
           <td class="deployment-restore"><button disabled>Restore</button></td>
         </tr>
       </tbody>

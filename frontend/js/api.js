@@ -50,6 +50,14 @@ class API {
     return this.send('get', `/api/${team}/devices`);
   }
 
+  appBuilds(team, appName) {
+    return this.send('get', `/api/${team}/apps/${appName}/builds`);
+  }
+
+  appDeployments(team, appName) {
+    return this.send('get', `/api/${team}/apps/${appName}/deployments`);
+  }
+
   deviceEnvvars({team, deviceName}) {
     return this.send('get', `/api/${team}/devices/${deviceName}/envvars`);
   }
