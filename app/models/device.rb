@@ -25,6 +25,10 @@ class Device < ApplicationRecord
     devices
   end
 
+  def log_messages(since=0)
+    self.log.rangebyscore(since, Float::INFINITY) || []
+  end
+
   def update_status(status, log)
     device_secret = self.device_secret
     self.heartbeat = Time.now.to_i

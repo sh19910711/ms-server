@@ -31,7 +31,7 @@ class DevicesController < ApplicationController
   end
 
   def log
-    resp :ok, { log: @device.log.members }
+    resp :ok, { log: @device.log_messages(since=log_params[:since] || 0) }
   end
 
   def destroy
@@ -52,5 +52,9 @@ class DevicesController < ApplicationController
 
   def device_params
     params.permit(:name, :board, :tag)
+  end
+
+  def log_params
+    params.permit(:since)
   end
 end
