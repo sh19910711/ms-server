@@ -156,7 +156,7 @@ RSpec.describe "Devices", type: :request do
 
       r = api(method: 'GET', path: "devices/iot-button/log")
       lines.each_with_index do |l, i|
-        expect(r['log'][i].split(':')[1]).to eq(l)
+        expect(r['log'][i].split(':')[2]).to eq(l)
       end
     end
   end

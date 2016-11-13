@@ -31,7 +31,7 @@ class DevicesController < ApplicationController
   end
 
   def log
-    resp :ok, { log: @device.log.values }
+    resp :ok, { log: @device.log.members }
   end
 
   def destroy

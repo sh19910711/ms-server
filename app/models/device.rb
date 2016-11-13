@@ -7,7 +7,7 @@ class Device < ApplicationRecord
 
   value :heartbeat
   value :status
-  list :log, maxlength: LOGGING_MAX_LINES
+  sorted_set :log
 
   DEVICE_NAME_REGEX = /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/
   validates :user, presence: true
@@ -30,10 +30,12 @@ class Device < ApplicationRecord
     self.heartbeat = Time.now.to_i
     self.status = status
 
-    time = Time.now.to_i
-    log.split("\n").each do |line|
-      self.log << "#{time}:#{line}"
+    time = Time.now.to_f
+    log.split("\n").each_with_index do |line, index|
+      self.log["#{time}:#{index}:#{line}"] = time
     end
+
+    self.log.remrangebyrank(0, -LOGGING_MAX_LINES)
   end
 
   def get_deployment!(deployment_id = nil)
