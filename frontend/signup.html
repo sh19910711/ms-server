@@ -4,7 +4,7 @@
       <div class="panel-title">Sign up</div>
     </div>
     <div class="panel-body">
-      <userform firstState="Sign up" :inputs="formInputs" :on-submit="formSubmit"></userform>
+      <apiform action="signup" success-callback="/signin" submit-text="Sign up" :inputs="formInputs"></apiform>
     </div>
     <div class="panel-footer">
       <ul>

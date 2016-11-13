@@ -1,0 +1,10 @@
+<form class="form" @submit.prevent="submit">
+  <div class="form-input" v-for="input in inputs">
+    <input :type="input.type" :name="input.name" :placeholder="input.placeholder">
+    <errors :errors="inputErrors[input.name]"></error>
+  </div>
+  <div class="form-control">
+    <input type="submit" class="button button-success" :value="state"></a>
+    <errors :errors="serverErrors['status']"></error>
+  </div>
+</form>

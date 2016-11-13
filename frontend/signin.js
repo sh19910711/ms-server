@@ -1,22 +1,16 @@
 import api from 'js/api';
+import User from 'stores/user';
 
 export default {
   name: 'signin',
   template: require('./signin.html'),
-  components: { 'userform': require('components/userform').default },
-  data: () => {
+  components: { 'apiform': require('components/apiform').default },
+  data() {
     return {
       formInputs: [
-        { name: 'username', type: 'text', placeholder: 'Username' },
-        { name: 'password', type: 'password', placeholder: 'Password' }
+        { type: 'text', name: 'username' },
+        { type: 'password', name: 'password' }
       ]
     };
-  },
-  methods: {
-    formSubmit(user) {
-      return api.signin(user).then(() => {
-        this.$router.push('/');
-      });
-    }
   }
 };

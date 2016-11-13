@@ -3,7 +3,7 @@ import api from 'js/api';
 export default {
   name: 'signup',
   template: require('signup.html'),
-  components: { 'userform': require('components/userform').default },
+  components: { 'apiform': require('components/apiform').default },
   data: () => {
     return {
       formInputs: [
