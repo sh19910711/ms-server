@@ -45,6 +45,11 @@ class AppsController < ApplicationController
     resp :ok
   end
 
+  # TODO: correct me
+  def deployments
+    resp :ok, { deployments: Deployment.select(:id, :created_at).all }
+  end
+
   private
 
   def set_apps

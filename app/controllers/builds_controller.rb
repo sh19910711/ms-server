@@ -1,7 +1,11 @@
 class BuildsController < ApplicationController
   before_action :auth
-  before_action :set_app, only: [:create]
+  before_action :set_app, only: [:index, :create]
   before_action :set_build, only: [:show]
+
+  def index
+    resp :ok, { builds: Build.where(app: @app).select(:id, :status, :created_at).all }
+  end
 
   def create
     source_filedata = build_params[:source_file].read

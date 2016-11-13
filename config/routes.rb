@@ -10,8 +10,10 @@ Rails.application.routes.draw do
     post   '/:team/apps/:app_name/devices',     to: 'apps#add_device'
     get    '/:team/apps/:app_name/log',         to: 'apps#log'
     post   '/:team/apps/:app_name/deployments', to: 'apps#deploy'
+    get    '/:team/apps/:app_name/deployments', to: 'apps#deployments'
 
     post   '/:team/apps/:app_name/builds',      to: 'builds#create'
+    get    '/:team/apps/:app_name/builds',      to: 'builds#index'
     get    '/:team/apps/:app_name/builds/:build_id', to: 'builds#show'
 
     # Devices API
