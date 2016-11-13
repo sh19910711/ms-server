@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get    '/:team/apps/:app_name',             to: 'apps#show'
     delete '/:team/apps/:app_name',             to: 'apps#destroy'
     post   '/:team/apps/:app_name/devices',     to: 'apps#add_device'
+    get    '/:team/apps/:app_name/log',         to: 'apps#log'
     post   '/:team/apps/:app_name/builds',      to: 'apps#build'
     post   '/:team/apps/:app_name/deployments', to: 'apps#deploy'
 

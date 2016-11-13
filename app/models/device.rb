@@ -34,12 +34,24 @@ class Device < ApplicationRecord
     self.heartbeat = Time.now.to_i
     self.status = status
 
+    app = self.app
     time = Time.now.to_f
-    log.split("\n").each_with_index do |line, index|
+    lines = log.split("\n")
+
+    lines.each_with_index do |line, index|
       self.log["#{time}:#{index}:#{line}"] = time
     end
 
     self.log.remrangebyrank(0, -LOGGING_MAX_LINES)
+
+    if app
+      device_name = self.name
+      lines.each_with_index do |line, index|
+        app.log["#{time}:#{index}:#{device_name}:#{line}"] = time
+      end
+
+      app.log.remrangebyrank(0, -LOGGING_MAX_LINES)
+    end
   end
 
   def get_deployment!(deployment_id = nil)

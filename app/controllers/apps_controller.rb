@@ -28,6 +28,10 @@ class AppsController < ApplicationController
     resp :ok
   end
 
+  def log
+    resp :ok, { log: @app.log_messages(since=log_params[:since] || 0) }
+  end
+
   def build
     source_filedata = build_params[:source_file].read
     tag = build_params[:tag]
@@ -79,5 +83,9 @@ class AppsController < ApplicationController
 
   def add_device_params
     params.permit(:app_name, :device_name)
+  end
+
+  def log_params
+    params.permit(:log)
   end
 end
