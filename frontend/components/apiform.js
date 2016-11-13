@@ -19,14 +19,17 @@ export default {
       });
       return params;
     },
-    submit() {
+    submit(ev) {
       this.state = 'Processing...';
       api[this.action](this.getParams()).then(this.onSuccess).catch(this.onError);
     },
     onSuccess(res) {
-      if (this.successCallback) {
+      if (this.successCallback instanceof Function) {
+        this.successCallback(res);
+      } else if (this.successCallback) {
         this.$router.push(this.successCallback);
       }
+      this.state = this.submitText;
     },
     onError(err) {
       this.inputErrors = err.content && err.content.errors || {};
