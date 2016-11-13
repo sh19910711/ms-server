@@ -1,7 +1,7 @@
 class BuildsController < ApplicationController
   before_action :auth
   before_action :set_app, only: [:create]
-  before_action :set_build, only: [:log]
+  before_action :set_build, only: [:show]
 
   def create
     source_filedata = build_params[:source_file].read
@@ -14,8 +14,8 @@ class BuildsController < ApplicationController
     resp :accepted, { build_id: build.id }
   end
 
-  def log
-    resp :ok, { log: @build.log }
+  def show
+    resp :ok, @build.slice(:id, :log, :created_at, :status, :tag)
   end
 
   private

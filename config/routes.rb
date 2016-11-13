@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     post   '/:team/apps/:app_name/deployments', to: 'apps#deploy'
 
     post   '/:team/apps/:app_name/builds',      to: 'builds#create'
-    get    '/:team/apps/:app_name/builds/:build_id/log', to: 'builds#log'
+    get    '/:team/apps/:app_name/builds/:build_id', to: 'builds#show'
 
     # Devices API
     get    '/:team/devices',                            to: 'devices#index'
