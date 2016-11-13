@@ -18,7 +18,8 @@ function createRouter() {
     route('/apps/:name/builds', 'app_builds'),
     route('/apps/:name/builds/:build_id', 'app_build_detail'),
     route('/apps/:name/devices', 'app_devices'),
-    route('/devices', 'devices')
+    route('/devices', 'devices'),
+    route('/devices/:name', 'device_detail')
   ];
   return new VueRouter({ routes, mode: 'history' });
 }

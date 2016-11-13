@@ -1,0 +1,53 @@
+<div class="page">
+  <navbar></navbar>
+
+  <div class="container">
+    <h2>Environment Variables</h2>
+    <table class="table">
+      <thead class="table-header">
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <tr v-for="env in envvars">
+          <td>{{env.name}}</td>
+          <td>{{env.value}}</td>
+          <td><button disabled>Delete</button></td>
+        </tr>
+        <apiform inline-template action="deviceSetEnvvar" :success-callback="onEnvUpdated">
+          <tr>
+            <td class="form-input">
+              <input type="hidden" name="team" :value="team">
+              <input type="hidden" name="device_name" :value="$route.params['name']">
+              <input type="text" name="name" placeholder="new-name (e.g., FOO)">
+            </td>
+            <td class="form-input"><input type="text" name="value" placeholder="new-value"></td>
+            <td><input type="submit" value="Update or Add" @click="submit"></td>
+          </tr>
+        </apiform>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container">
+    <h2>Log</h2>
+    <code>{{device.log}}</code>
+  </div>
+
+  <div class="container">
+    <h2>Application</h2>
+    <apiform inline-template action="deviceApp" :success-callback="onAppCreated">
+      <form @submit.prevent="submit">
+        <span class="form-input">
+          <input type="hidden" name="team" :value="team">
+          <input type="hidden" name="device_name" :value="$route.params['name']">
+          <input type="text" name="app_name" placeholder="app name">
+        </span>
+        <input type="submit">
+      </form>
+    </apiform>
+  </div>
+</div>

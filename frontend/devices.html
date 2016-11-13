@@ -22,7 +22,7 @@
       <tbody class="table-body">
         <tr class="device" v-for="device in devices">
           <td><input type="checkbox" disabled></td>
-          <td class="device-name">{{device.name}}</td>
+          <td class="device-name"><router-link :to="`/devices/${device.name}`">{{device.name}}</router-link></td>
           <td class="device-board">{{device.board}}</td>
           <td class="device-status">{{device.status}}</td>
           <td class="device-app">iot-button</td>

@@ -50,6 +50,22 @@ class API {
     return this.send('get', `/api/${team}/devices`);
   }
 
+  deviceEnvvars({team, deviceName}) {
+    return this.send('get', `/api/${team}/devices/${deviceName}/envvars`);
+  }
+
+  deviceSetEnvvar({team, device_name, name, value}) {
+    return this.send('put', `/api/${team}/devices/${device_name}/envvars/${name}`, { value });
+  }
+
+  deviceLog({team, deviceName}) {
+    return this.send('get', `/api/${team}/devices/${deviceName}/log`);
+  }
+
+  deviceApp({team, app_name, device_name}) {
+    return this.send('post', `/api/${team}/apps/${app_name}/devices`, {'device_name': device_name});
+  }
+
   send(method, url, params) {
     return new Promise((resolve, reject) => {
       const headers = {'Content-Type': 'application/json'};
