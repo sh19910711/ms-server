@@ -14,7 +14,7 @@ export default {
   methods: {
     getParams() {
       const params = {};
-      this.$el.querySelectorAll('.form-input input').forEach(input => {
+      Array.prototype.forEach.call(this.$el.querySelectorAll('.form-input input'), input => {
         params[input.name] = input.value;
       });
       return params;
