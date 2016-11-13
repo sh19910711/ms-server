@@ -32,15 +32,6 @@ class AppsController < ApplicationController
     resp :ok, { log: @app.log_messages(since=log_params[:since] || 0) }
   end
 
-  def build
-    source_filedata = build_params[:source_file].read
-    tag = build_params[:tag]
-    app = @apps.find_by_name!(build_params[:app_name])
-
-    Build.new(app: app, tag: tag, source_file: source_filedata).save_and_enqueue!
-    resp :accepted
-  end
-
   def deploy
     filename = deploy_params[:image].original_filename
     Deployment.create! do |d|

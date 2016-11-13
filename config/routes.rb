@@ -9,8 +9,10 @@ Rails.application.routes.draw do
     delete '/:team/apps/:app_name',             to: 'apps#destroy'
     post   '/:team/apps/:app_name/devices',     to: 'apps#add_device'
     get    '/:team/apps/:app_name/log',         to: 'apps#log'
-    post   '/:team/apps/:app_name/builds',      to: 'apps#build'
     post   '/:team/apps/:app_name/deployments', to: 'apps#deploy'
+
+    post   '/:team/apps/:app_name/builds',      to: 'builds#create'
+    get    '/:team/apps/:app_name/builds/:build_id/log', to: 'builds#log'
 
     # Devices API
     get    '/:team/devices',                            to: 'devices#index'
