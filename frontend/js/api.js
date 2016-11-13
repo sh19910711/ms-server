@@ -33,12 +33,13 @@ class API {
   }
 
   signout() {
-    return this.send('delete', '/api/auth/sign_out').then(() => {
+    const clear = () => {
       localStorage.removeItem(USER_KEY);
       localStorage.removeItem(API_TOKEN_KEY);
       this.user = null;
       this.token = null;
-    });
+    };
+    return this.send('delete', '/api/auth/sign_out').then(clear).catch(clear);
   }
 
   apps(team) {
