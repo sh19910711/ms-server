@@ -62,15 +62,11 @@ class AppsController < ApplicationController
 
   def set_app
     set_apps
-    @app = @apps.find_by_name!(add_device_params[:app_name])
+    @app ||= @apps.find_by_name!(params[:app_name])
   end
 
   def set_devices
-    @devices = current_team.devices
-  end
-
-  def build_params
-    params.permit(:app_name, :tag, :source_file)
+    @devices ||= current_team.devices
   end
 
   def deploy_params
