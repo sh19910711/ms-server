@@ -14,6 +14,7 @@
   <div class="nav" v-else>
     <div class="nav-left">
       <h1 class="nav-brand"><router-link to="/">makestack</router-link></h1>
+      <breadcrumbs :teams="[team]"></breadcrumbs>
     </div>
     <div class="nav-right">
       <ul class="nav-list">

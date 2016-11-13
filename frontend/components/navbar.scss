@@ -17,8 +17,11 @@
   }
   &-brand, &-list {
     @include nomargin;
-    font-size: $height/2.15;
+    font-size: $height/2.5;
     line-height: $height;
+  }
+  &-breadcrumbs {
+    margin-left: 12px;
   }
   &-list li {
     display: inline;

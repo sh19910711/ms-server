@@ -4,9 +4,13 @@ require('./navbar.scss');
 
 export default {
   template: require('./navbar.html'),
+  components: { breadcrumbs: require('./navbar/breadcrumbs').default },
   name: 'navbar',
   data() {
-    return { token: api.token };
+    return {
+      team: api.user,
+      token: api.token
+    };
   },
   methods: {
     needLogin() {
