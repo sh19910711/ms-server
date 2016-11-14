@@ -15,7 +15,7 @@ class BuildsController < ApplicationController
     build = Build.new(app: app, tag: tag, source_file: source_filedata)
     build.save_and_enqueue!
 
-    resp :accepted, { build_id: build.id }
+    resp :accepted, { id: build.id }
   end
 
   def show
