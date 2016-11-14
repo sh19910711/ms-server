@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     # Devices API
     get    '/:team/devices',                            to: 'devices#index'
     post   '/:team/devices',                            to: 'devices#create'
+    get    '/:team/devices/:device_name',               to: 'devices#show'
     put    '/:team/devices/:device_name',               to: 'devices#update'
     delete '/:team/devices/:device_name',               to: 'devices#destroy'
     put    '/:team/devices/:device_name/relaunch',      to: 'devices#relaunch'

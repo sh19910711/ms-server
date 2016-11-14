@@ -1,10 +1,14 @@
 class DevicesController < ApplicationController
   before_action :auth
   before_action :set_devices, only: [:index]
-  before_action :set_device, only: [:update, :destroy, :log, :relaunch]
+  before_action :set_device, only: [:show, :update, :destroy, :log, :relaunch]
 
   def index
     resp :ok, { devices: @devices.index }
+  end
+
+  def show
+    resp :ok, { device_secret: @device.device_secret }
   end
 
   def create
