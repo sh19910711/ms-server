@@ -79,7 +79,7 @@ RSpec.describe "Apps", type: :request do
             r = api method: 'POST', path: "apps/led-blinker/builds", data: {
                     source_file: Fixture.uploaded_file(valid_zip),
                 }
-            expect(r['build_id']).to eq(1)
+            expect(r['id']).to eq(1)
           }.to change(Deployment, :count).by(1)
 
           expect(response).to have_http_status(:accepted)
