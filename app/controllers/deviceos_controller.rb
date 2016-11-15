@@ -21,7 +21,9 @@ class DeviceosController < ApplicationController
   end
 
   def envvars
-    body = @device.envvars_index.map{|v| "#{v.name}=#{v.value}" }.join("\x04")
+    envvars = @device.envvars_index.map{|v| "#{v.name}=#{v.value}" }
+    envvars << "device_name=#{@device.name}"
+    body = envvars.join("\x04")
     render status: :ok, body: body
   end
 
