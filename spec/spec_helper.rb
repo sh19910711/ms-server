@@ -21,6 +21,7 @@ require 'support/api'
 require 'support/device'
 require 'support/fixture'
 require 'support/factory_girl'
+require 'support/database_cleaner'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

@@ -31,6 +31,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: false
   gem 'guard-rspec', require: false
   gem 'fakeredis', require: "fakeredis/rspec"
+  gem 'database_cleaner'
 end
 
 group :development do
