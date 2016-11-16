@@ -1,5 +1,6 @@
 if (!process.env['SERVER_URL']) throw 'SERVER_URL is empty';
 const port = process.env['PORT'] || 8080;
+const host = process.env['HOST'] || process.env['IP'] || 'localhost';
 
 const webpack = require('webpack');
 const config = require('./webpack.config');
@@ -17,4 +18,4 @@ const devServer = new WebpackDevServer(webpack(config), {
   proxy: { '/api/*': process.env['SERVER_URL'] }
 });
 devServer.use('*', (req, res) => res.sendFile(__dirname + '/frontend/main.html'));
-devServer.listen(port);
+devServer.listen(port, host);
