@@ -17,7 +17,7 @@ export default {
       this.envvars = res.content.envvars;
     });
     api.deviceLog({team: api.user, deviceName}).then(res => {
-      this.log = res.content;
+      this.log = res.content.log.join("<br>");
     });
   },
   methods: {
