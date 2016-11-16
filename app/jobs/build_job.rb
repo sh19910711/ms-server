@@ -9,9 +9,7 @@ class BuildJob < ApplicationJob
     logger.info "build ##{build_id}: starting"
     build.update!(status: 'building')
 
-    # Boot2docker in macOS cannot use directories in volumes
-    # other than /Users. https://github.com/docker/compose/issues/1039
-    tmp_base_dir = RUBY_PLATFORM.include?("darwin") ? "#{Dir.home}/.cs-build-tmp" : Dir.tmpdir
+    tmp_base_dir = "#{Dir.home}/.ms-build-tmp"
     FileUtils.mkdir_p(tmp_base_dir)
 
     stdout = ''
