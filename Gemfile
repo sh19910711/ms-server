@@ -28,7 +28,7 @@ end
 group :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', '~> 4.0'
-  gem 'codeclimate-test-reporter', require: false
+  gem 'codeclimate-test-reporter', '~> 0.6', require: false
   gem 'guard-rspec', require: false
   gem 'fakeredis', require: "fakeredis/rspec"
   gem 'database_cleaner'
