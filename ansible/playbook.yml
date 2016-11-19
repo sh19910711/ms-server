@@ -22,7 +22,7 @@
         - python-psycopg2
 
     - name: Clone MakeStack Server
-      git: "repo=https://github.com/makestack/makestack dest=/opt/makestack"
+      git: "repo=https://github.com/makestack/server dest=/opt/makestack"
       args:
         force: yes
     - name: bundle install
