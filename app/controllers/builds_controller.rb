@@ -12,7 +12,8 @@ class BuildsController < ApplicationController
     tag = build_params[:tag]
     app = @apps.find_by_name!(build_params[:app_name])
 
-    build = Build.new(app: app, tag: tag, source_file: source_filedata)
+    build = Build.new(app: app, tag: tag, source_file: source_filedata,
+                      comment: build_params[:comment])
     build.save_and_enqueue!
 
     resp :accepted, { id: build.id }
@@ -30,6 +31,6 @@ class BuildsController < ApplicationController
   end
 
   def build_params
-    params.permit(:app_name, :tag, :source_file)
+    params.permit(:app_name, :tag, :source_file, :comment)
   end
 end

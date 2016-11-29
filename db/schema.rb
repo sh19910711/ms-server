@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129055356) do
+ActiveRecord::Schema.define(version: 20161129060728) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20161129055356) do
     t.datetime "updated_at",                   null: false
     t.string   "tag"
     t.binary   "source_file", limit: 16777216
+    t.string   "comment"
     t.index ["app_id"], name: "index_builds_on_app_id"
   end
 

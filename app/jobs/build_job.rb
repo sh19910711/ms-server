@@ -52,6 +52,7 @@ class BuildJob < ApplicationJob
         image_files.each do |file|
           logger.info "build ##{build_id}: deploying #{file}"
           Deployment.create! do |d|
+            d.comment  = build.comment
             d.app      = build.app
             d.group_id = group_id
             d.board    = ImageFile.get_board_from_filename(file)
