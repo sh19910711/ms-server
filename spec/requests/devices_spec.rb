@@ -48,13 +48,13 @@ RSpec.describe "Devices", type: :request do
       expect(device.status).to eq('new')
 
       api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=ready",
-          with_team_prefix: false)
+          with_team_prefix: false, raw: true)
 
       device.reload
       expect(device.status).to eq('ready')
 
       api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=running",
-          with_team_prefix: false)
+          with_team_prefix: false, raw: true)
 
       expect(response).to have_http_status(:ok)
       device.reload
@@ -73,7 +73,7 @@ RSpec.describe "Devices", type: :request do
       expect(device.status).to eq('relaunch')
 
       r = api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=running",
-              with_team_prefix: false)
+              with_team_prefix: false, raw: true)
 
       device.reload
       expect(r).to eq('R')
@@ -97,7 +97,7 @@ RSpec.describe "Devices", type: :request do
     def download_image(deployment_id=nil, range=nil)
         api(method: 'GET', path: "devices/#{@device_secret}/image",
             data: { deployment_id: deployment_id },
-            headers: { Range: range }, with_team_prefix: false)
+            headers: { Range: range }, with_team_prefix: false, raw: true)
     end
 
     context "deployment id is not speicified" do
@@ -121,7 +121,7 @@ RSpec.describe "Devices", type: :request do
       it "returns :not_found if the specified deployment does not exist" do
         device_secret = register_and_associate('my-board', 'led-blinker')
         api(method: 'GET', path: "devices/#{device_secret}/image",
-            data: { deployment_id: 1 }, with_team_prefix: false)
+            data: { deployment_id: 1 }, with_team_prefix: false, raw: true)
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -154,7 +154,7 @@ RSpec.describe "Devices", type: :request do
 
       lines = ['Hello', 'World!']
       api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=running",
-          data: lines.join("\n"), with_team_prefix: false)
+          data: lines.join("\n"), with_team_prefix: false, raw: true)
 
       expect(response).to have_http_status(:ok)
 

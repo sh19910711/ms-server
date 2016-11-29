@@ -65,7 +65,7 @@ RSpec.describe "Envvars", type: :request do
       expect(response).to have_http_status(:ok)
 
       api(method: 'GET', path: "devices/#{device_secret}/envvars",
-          data: { value: '456' }, with_team_prefix: false)
+          data: { value: '456' }, with_team_prefix: false, raw: true)
 
       expect(response).to have_http_status(:ok)
       expect(response.body).to eq("FOO=123\x04BAR=456\x04device_name=my-board")

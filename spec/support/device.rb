@@ -14,7 +14,7 @@ def register_and_associate(device_name, app_name)
   expect(Device.find_by_name(device_name)).to be_present
 
   api method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=ready",
-      with_team_prefix: false
+      with_team_prefix: false, raw: true
 
   expect(response).to have_http_status(:ok)
 

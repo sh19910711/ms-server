@@ -10,7 +10,7 @@ RSpec.describe "Apps", type: :request do
     it "returns a list of applications" do
       json = api(method: 'GET', path: 'apps')
       expect(response).to have_http_status(:ok)
-      expect(json['applications'].pluck('name')).to eq(['iot-button'])
+      expect(json['apps'].pluck('name')).to eq(['iot-button'])
     end
   end
 
