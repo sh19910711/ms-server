@@ -144,4 +144,18 @@ class ApplicationController < ActionController::API
       logger.error "\t#{l}"
     end
   end
+
+
+  def set_apps
+    @apps ||= current_team.apps
+  end
+
+  def set_app
+    set_apps
+    @app ||= @apps.find_by_name!(params[:app_name])
+  end
+
+  def set_devices
+    @devices ||= current_team.devices
+  end
 end

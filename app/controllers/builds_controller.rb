@@ -24,15 +24,6 @@ class BuildsController < ApplicationController
 
   private
 
-  def set_apps
-    @apps ||= current_team.apps
-  end
-
-  def set_app
-    set_apps
-    @app ||= @apps.find_by_name!(params[:app_name])
-  end
-
   def set_build
     set_app
     @build = Build.where(app: @app, id: params[:build_id]).first
