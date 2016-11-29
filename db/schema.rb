@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161025030051) do
+ActiveRecord::Schema.define(version: 20161129055356) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20161025030051) do
     t.string   "board"
     t.string   "group_id"
     t.binary   "image",      limit: 33554432
+    t.string   "comment"
     t.index ["app_id"], name: "index_deployments_on_app_id"
     t.index ["group_id"], name: "index_deployments_on_group_id"
   end
