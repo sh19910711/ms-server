@@ -4,44 +4,39 @@ class DevicesController < ApplicationController
   before_action :set_device, only: [:show, :update, :destroy, :log, :relaunch]
 
   def index
-    resp :ok, { devices: @devices.index }
   end
 
   def show
-    resp :ok, { device_secret: @device.device_secret }
   end
 
   def create
-    device = Device.new
-    device.user          = current_team
-    device.name          = device_params[:name]
-    device.device_secret = Digest::SHA1.hexdigest(SecureRandom.uuid)
-    device.board         = device_params[:board]
-    device.tag           = device_params[:tag]
-    device.status        = 'new'
-    device.save!
+    @device = Device.new
+    @device.user          = current_team
+    @device.name          = device_params[:name]
+    @device.device_secret = Digest::SHA1.hexdigest(SecureRandom.uuid)
+    @device.board         = device_params[:board]
+    @device.tag           = device_params[:tag]
+    @device.status        = 'new'
+    @device.save!
 
-    resp :ok, { device_secret: device.device_secret }
+    render :show
   end
 
   def update
     @device.update_attributes(device_params)
-    resp :ok
   end
 
   def relaunch
     @device.status = 'relaunch'
     @device.save!
-    resp :ok
   end
 
   def log
-    resp :ok, { log: @device.log_messages(since=log_params[:since] || 0) }
+    @log = @device.log_messages(since=log_params[:since] || 0)
   end
 
   def destroy
     @device.destroy
-    resp :ok
   end
 
   private

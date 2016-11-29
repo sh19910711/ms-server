@@ -4,23 +4,20 @@ class EnvvarsController < ApplicationController
   before_action :set_envvars
 
   def index
-    resp :ok, { envvars: @envvars.select("name", "value").all }
   end
 
   def update
     envvar = @envvars.where(name: envvar_params[:name]).first_or_create
     envvar.value = envvar_params[:value]
 
-    if envvar.save
-      resp :ok
-    else
-      resp :unprocessable_entity, { error: 'validation failed', reasons: envvar.errors.full_messages }
+    unless envvar.save
+      render status: :unprocessable_entity, json: { error: 'validation failed', reasons: envvar.errors.full_messages }
+      return
     end
   end
 
   def destroy
     @envvars.find_by_name!(envvar_params[:name]).destroy
-    resp :ok
   end
 
   private

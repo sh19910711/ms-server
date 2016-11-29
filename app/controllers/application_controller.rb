@@ -26,7 +26,7 @@ class ApplicationController < ActionController::API
   end
 
   def handle_validation_error(e)
-    resp :unprocessable_entity, { reasons: e.record.errors }
+    render status: :unprocessable_entity, json: { reasons: e.record.errors }
   end
 
   def handle_routing_error
@@ -133,10 +133,6 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password])
   end
 
-  def resp(status, json={})
-    render status: status, json: json
-  end
-
   def log_exception(e)
     logger.error "Exception: #{e}"
     logger.error "Backtrace:"
@@ -144,7 +140,6 @@ class ApplicationController < ActionController::API
       logger.error "\t#{l}"
     end
   end
-
 
   def set_apps
     @apps ||= current_team.apps

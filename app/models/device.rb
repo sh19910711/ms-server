@@ -14,15 +14,6 @@ class Device < ApplicationRecord
   validates :board, inclusion: { in: SUPPORTED_BOARDS }
   validates :status, inclusion: { in: DEVICE_STATUSES }
 
-  def self.index
-    devices = []
-    self.find_each do |device|
-      devices << device.slice(*%i[device_secret name board tag status])
-    end
-
-    devices
-  end
-
   def log_messages(since=0)
     self.log.rangebyscore(since, Float::INFINITY) || []
   end

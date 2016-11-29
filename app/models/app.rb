@@ -13,8 +13,6 @@ class App < ApplicationRecord
   validates :name, uniqueness: { scope: :user }, presence: true,
             format: { with: APP_NAME_REGEX }
 
-  scope :index, -> { select('name') }
-
   def add_device!(device)
     device.app = self
     device.save!

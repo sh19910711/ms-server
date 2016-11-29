@@ -1,6 +1,7 @@
 class DeploymentsController < ApplicationController
+  before_action :app, only: [:index]
   def index
-    resp :ok, { deployments: Deployment.select(:id, :created_at).all }
+    @deployments = @app.deployments
   end
 
   def create
@@ -13,8 +14,6 @@ class DeploymentsController < ApplicationController
       d.tag      = deployment_params[:tag]
       d.image    = deployment_params[:image].read
     end
-
-    resp :ok
   end
 
   private

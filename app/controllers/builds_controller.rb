@@ -4,23 +4,21 @@ class BuildsController < ApplicationController
   before_action :set_build, only: [:show]
 
   def index
-    resp :ok, { builds: Build.where(app: @app).select(:id, :status, :created_at).all }
+    @builds = @app.builds
   end
 
   def create
     source_filedata = build_params[:source_file].read
     tag = build_params[:tag]
-    app = @apps.find_by_name!(build_params[:app_name])
 
-    build = Build.new(app: app, tag: tag, source_file: source_filedata,
-                      comment: build_params[:comment])
-    build.save_and_enqueue!
+    @build = Build.new(app: @app, tag: tag, source_file: source_filedata,
+                       comment: build_params[:comment])
+    @build.save_and_enqueue!
 
-    resp :accepted, { id: build.id }
+    render :show, status: :accepted
   end
 
   def show
-    resp :ok, @build.slice(:id, :log, :created_at, :status, :tag)
   end
 
   private
