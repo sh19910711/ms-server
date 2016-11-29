@@ -23,6 +23,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'active_record_query_trace'
   gem 'byebug', platform: :mri
+  gem 'whenever-test'
 end
 
 group :test do

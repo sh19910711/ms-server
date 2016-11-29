@@ -236,6 +236,8 @@ GEM
     websocket-extensions (0.1.2)
     whenever (0.9.7)
       chronic (>= 0.6.3)
+    whenever-test (1.0.1)
+      whenever
 
 PLATFORMS
   ruby
@@ -270,6 +272,7 @@ DEPENDENCIES
   sqlite3
   tzinfo-data
   whenever
+  whenever-test
 
 BUNDLED WITH
    1.13.6
