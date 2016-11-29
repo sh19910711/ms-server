@@ -18,9 +18,9 @@ class DevicesController < ApplicationController
     device.device_secret = Digest::SHA1.hexdigest(SecureRandom.uuid)
     device.board         = device_params[:board]
     device.tag           = device_params[:tag]
+    device.status        = 'new'
     device.save!
 
-    device.status = 'new'
     resp :ok, { device_secret: device.device_secret }
   end
 
@@ -31,6 +31,7 @@ class DevicesController < ApplicationController
 
   def relaunch
     @device.status = 'relaunch'
+    @device.save!
     resp :ok
   end
 

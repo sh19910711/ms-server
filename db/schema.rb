@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129060728) do
+ActiveRecord::Schema.define(version: 20161129071604) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "user_id"
+    t.integer  "max_heartbeat_interval"
     t.index ["user_id"], name: "index_apps_on_user_id"
   end
 
@@ -59,13 +60,15 @@ ActiveRecord::Schema.define(version: 20161129060728) do
 
   create_table "devices", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "board"
     t.integer  "user_id"
     t.string   "tag"
     t.string   "device_secret"
     t.integer  "app_id"
+    t.string   "status"
+    t.datetime "heartbeated_at"
     t.index ["app_id"], name: "index_devices_on_app_id"
     t.index ["device_secret"], name: "index_devices_on_device_secret"
     t.index ["user_id"], name: "index_devices_on_user_id"

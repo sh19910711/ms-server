@@ -45,6 +45,7 @@ GEM
     byebug (9.0.6)
     cancancan (1.15.0)
     choice (0.2.0)
+    chronic (0.10.2)
     codeclimate-test-reporter (0.6.0)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.1)
@@ -233,6 +234,8 @@ GEM
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
@@ -266,6 +269,7 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sqlite3
   tzinfo-data
+  whenever
 
 BUNDLED WITH
    1.13.6

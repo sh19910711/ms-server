@@ -9,7 +9,7 @@ gem 'cancancan', '~> 1.10'
 gem 'sidekiq'
 gem 'slim'
 gem 'redis-objects'
-
+gem 'whenever', require: false
 gem 'mysql2', '~> 0.4.4', group: :mysql
 gem 'pg', '~> 0.18.2', group: :postgres
 

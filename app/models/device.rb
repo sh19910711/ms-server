@@ -4,9 +4,6 @@ class Device < ApplicationRecord
   belongs_to :user
   belongs_to :app
   has_many :envvars, class_name: 'Envvar', dependent: :destroy
-
-  value :heartbeat
-  value :status
   sorted_set :log
 
   DEVICE_NAME_REGEX = /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/
@@ -15,6 +12,7 @@ class Device < ApplicationRecord
   validates :name, uniqueness: { scope: :user }, presence: true,
             format: { with: DEVICE_NAME_REGEX }
   validates :board, inclusion: { in: SUPPORTED_BOARDS }
+  validates :status, inclusion: { in: DEVICE_STATUSES }
 
   def self.index
     devices = []
@@ -31,8 +29,9 @@ class Device < ApplicationRecord
 
   def update_status(status, log)
     device_secret = self.device_secret
-    self.heartbeat = Time.now.to_i
+    self.heartbeated_at = Time.now.to_i
     self.status = status
+    self.save!
 
     app = self.app
     time = Time.now.to_f

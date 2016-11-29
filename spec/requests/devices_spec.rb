@@ -45,18 +45,20 @@ RSpec.describe "Devices", type: :request do
       device_secret = r['device_secret']
       expect(Device.find_by_name(device_name)).to be_present
       device = Device.find_by_name(device_name)
-      expect(device.status.value).to eq('new')
+      expect(device.status).to eq('new')
 
       api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=ready",
           with_team_prefix: false)
 
-      expect(device.status.value).to eq('ready')
+      device.reload
+      expect(device.status).to eq('ready')
 
       api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=running",
           with_team_prefix: false)
 
       expect(response).to have_http_status(:ok)
-      expect(device.status.value).to eq('running')
+      device.reload
+      expect(device.status).to eq('running')
     end
   end
 
@@ -67,13 +69,15 @@ RSpec.describe "Devices", type: :request do
       device = Device.find_by_name(device_name)
 
       api(method: 'PUT', path: "devices/#{device_name}/relaunch")
-      expect(device.status.value).to eq('relaunch')
+      device.reload
+      expect(device.status).to eq('relaunch')
 
       r = api(method: 'PUT', path: "devices/#{device_secret}/heartbeat?status=running",
               with_team_prefix: false)
 
+      device.reload
       expect(r).to eq('R')
-      expect(device.status.value).to eq('running')
+      expect(device.status).to eq('running')
     end
   end
 

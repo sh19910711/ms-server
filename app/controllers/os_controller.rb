@@ -2,7 +2,7 @@ class OsController < ApplicationController
   before_action :auth_device
 
   def heartbeat
-    old_status = @device.status.value
+    old_status = @device.status
     @device.update_status(heartbeat_params[:status], request.raw_post)
 
     if old_status == 'relaunch'
