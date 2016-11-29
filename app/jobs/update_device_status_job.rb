@@ -8,7 +8,7 @@ class UpdateDeviceStatusJob < ApplicationJob
         .where(app: app)
         .where(status: %w(ready running))
         .where('heartbeated_at < ?', before)
-        .find_each |device|
+        .find_each do |device|
         device.status = 'down'
       end
     end
