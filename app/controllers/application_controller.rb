@@ -25,8 +25,11 @@ class ApplicationController < ActionController::API
     head :internal_server_error
   end
 
-  def handle_validation_error(e)
-    render status: :unprocessable_entity, json: { reasons: e.record.errors }
+  def handle_validation_error(m)
+    render status: :unprocessable_entity, json: {
+                 error: 'validation error',
+                 validation_errors: m.record.errors.messages
+             }
   end
 
   def handle_routing_error
@@ -120,6 +123,7 @@ class ApplicationController < ActionController::API
   end
 
   def current_team
+    auth
     @current_team
   end
 
@@ -147,10 +151,29 @@ class ApplicationController < ActionController::API
 
   def set_app
     set_apps
-    @app ||= @apps.find_by_name!(params[:app_name])
+
+    @app ||= @apps.find_by_name(params[:app_name])
+    unless @app
+      render_error :not_found, "No such app."
+      return false
+    end
   end
 
   def set_devices
     @devices ||= current_team.devices
+  end
+
+  def set_device
+    set_devices
+
+    @device ||= @devices.find_by_name(params[:device_name])
+    unless @device
+      render_error :not_found, "No such device."
+      return false
+    end
+  end
+
+  def render_error(status, message)
+    render status: status, json: { error: message }
   end
 end

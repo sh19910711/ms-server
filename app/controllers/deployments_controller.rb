@@ -1,5 +1,6 @@
 class DeploymentsController < ApplicationController
-  before_action :app, only: [:index]
+  before_action :set_app, only: [:index, :create]
+
   def index
     @deployments = @app.deployments
   end
@@ -8,7 +9,7 @@ class DeploymentsController < ApplicationController
     filename = deployment_params[:image].original_filename
     Deployment.create! do |d|
       d.comment  = deployment_params[:comment]
-      d.app      = App.find_by_name!(deployment_params[:app_name])
+      d.app      = @app
       d.group_id = deployment_params[:group_id]
       d.board    = ImageFile.get_board_from_filename(filename)
       d.tag      = deployment_params[:tag]

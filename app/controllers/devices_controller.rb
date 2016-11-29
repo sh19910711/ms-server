@@ -41,15 +41,6 @@ class DevicesController < ApplicationController
 
   private
 
-  def set_devices
-    @devices ||= current_team.devices
-  end
-
-  def set_device
-    set_devices
-    @device = @devices.find_by_name!(params[:device_name])
-  end
-
   def device_params
     params.permit(:name, :board, :tag)
   end

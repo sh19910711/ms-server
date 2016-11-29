@@ -9,22 +9,19 @@ class EnvvarsController < ApplicationController
   def update
     envvar = @envvars.where(name: envvar_params[:name]).first_or_create
     envvar.value = envvar_params[:value]
-
-    unless envvar.save
-      render status: :unprocessable_entity, json: { error: 'validation failed', reasons: envvar.errors.full_messages }
-      return
-    end
+    envvar.save!
   end
 
   def destroy
-    @envvars.find_by_name!(envvar_params[:name]).destroy
+    envvar = @envvars.find_by_name(envvar_params[:name])
+    unless envvar
+      render_error :not_found, "No such envvar."
+    end
+
+    envvar.destroy
   end
 
   private
-
-  def set_device
-    @device = current_team.devices.find_by_name!(params[:device_name])
-  end
 
   def set_envvars
     @envvars = @device.envvars
