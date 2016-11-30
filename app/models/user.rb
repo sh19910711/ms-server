@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
           :recoverable, :rememberable, :trackable, :validatable,
           :confirmable, :omniauthable
   include DeviseTokenAuth::Concerns::User
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true,
+            exclusion: { in: RESERVED_USER_NAMES, message: "%{value} is not available." }
+
   validates :email, presence: true
   has_many :apps, dependent: :destroy
   has_many :devices, dependent: :destroy

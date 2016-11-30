@@ -3,3 +3,4 @@ SUPPORTED_BOARDS = %w(esp8266)
 BUILD_STATUSES = %w(queued building success failure)
 DEVICE_STATUSES = %w(new ready running down relaunch)
 LOGGING_MAX_LINES = 128
+RESERVED_USER_NAMES = %w(auth blog documentation support easter-egg admin)
