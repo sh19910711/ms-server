@@ -30,7 +30,7 @@ class BuildJob < ApplicationJob
         stdout  = 'invalid zip file'
         success = false
       else
-        stdout  = %x[docker run --rm -v #{tmpdir}:/app -t makestack/deviceos 2>&1]
+        stdout  = %x[docker run --rm -v #{tmpdir}:/app -t makestack/os 2>&1]
         success = $?.success?
 
         unless success
