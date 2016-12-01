@@ -19,7 +19,6 @@ class Device < ApplicationRecord
   end
 
   def update_status(status, log)
-    device_secret = self.device_secret
     self.heartbeated_at = Time.now.to_i
     self.status = status
     self.save!

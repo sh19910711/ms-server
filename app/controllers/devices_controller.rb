@@ -32,7 +32,7 @@ class DevicesController < ApplicationController
   end
 
   def log
-    @log = @device.log_messages(since=log_params[:since] || 0)
+    @log = @device.log_messages(log_params[:since] || 0)
   end
 
   def destroy

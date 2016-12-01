@@ -32,7 +32,7 @@ class AppsController < ApplicationController
   end
 
   def log
-    @log = @app.log_messages(since=log_params[:since] || 0)
+    @log = @app.log_messages(log_params[:since] || 0)
   end
 
   private

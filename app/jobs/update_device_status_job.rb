@@ -1,7 +1,7 @@
 class UpdateDeviceStatusJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
+  def perform(*_)
     App.find_each do |app|
       before = Time.now - app.max_heartbeat_interval.seconds
       Device
