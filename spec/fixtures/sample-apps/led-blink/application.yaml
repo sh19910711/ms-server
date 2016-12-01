@@ -2,6 +2,9 @@ api: 1
 name: hello
 lang: c++
 
+plugins:
+  - LED
+
 sources:
   - main.cpp
 
