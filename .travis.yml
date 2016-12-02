@@ -22,9 +22,9 @@ rvm:
   - 2.2.5
 
 env:
-  - DB=sqlite DATABASE_SOCKET=/run/mysql-5.6/mysqld.sock
+  - DB=sqlite
   - DB=postgresql
-  - DB=mysql
+  - DB=mysql DATABASE_SOCKET=/run/mysql-5.6/mysqld.sock
 
 cache:
   directories:
