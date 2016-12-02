@@ -31,6 +31,7 @@ cache:
     - vendor/bundle
 
 before_install:
+  - mysql_config
   - cp ci/database.$DB.yml config/database.yml
   - psql  -c 'create database travis_ci_test;' -U postgres
   - mysql -e 'create database travis_ci_test;' -u root
