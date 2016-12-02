@@ -31,6 +31,8 @@ cache:
     - vendor/bundle
 
 before_install:
+  - cat /etc/mysql/my.cnf
+  - ls -lha /run/mysql-5.6/mysqld.sock
   - mysql_config
   - cp ci/database.$DB.yml config/database.yml
   - psql  -c 'create database travis_ci_test;' -U postgres
