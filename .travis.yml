@@ -31,6 +31,7 @@ cache:
     - vendor/bundle
 
 before_install:
+  - cat /etc/my.cnf
   - cat /etc/mysql/my.cnf
   - ls -lha /run/mysql-5.6/mysqld.sock
   - mysql_config
