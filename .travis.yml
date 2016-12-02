@@ -22,7 +22,7 @@ rvm:
   - 2.2.5
 
 env:
-  - DB=sqlite
+  - DB=sqlite DATABASE_SOCKET=/run/mysql-5.6/mysqld.sock
   - DB=postgresql
   - DB=mysql
 
@@ -31,10 +31,6 @@ cache:
     - vendor/bundle
 
 before_install:
-  - cat /etc/my.cnf
-  - cat /etc/mysql/my.cnf
-  - ls -lha /run/mysql-5.6/mysqld.sock
-  - mysql_config
   - cp ci/database.$DB.yml config/database.yml
   - psql  -c 'create database travis_ci_test;' -U postgres
   - mysql -e 'create database travis_ci_test;' -u root
