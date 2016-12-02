@@ -12,9 +12,9 @@ services:
 addons:
   apt:
     packages:
-    - mysql-server-5.5
-    - mysql-client-5.5
-    - mysql-client-core-5.5
+    - mysql-server-5.6
+    - mysql-client-5.6
+    - mysql-client-core-5.6
   code_climate:
     repo_token:
       secure: "gYffGb/iRfEfRlcuP7WwvIbKqHZ+VDuq8WfGNuV+L+gA7pDlgAn3mlbzuSY+TVcbMaxPejjrBUqEpHl7zxU5djLeKJL0m4SJTEHgGLUYAV4LpWEF2/Gic59V/IRf8IwBQ5PMgvlL7T/0+hdsa5EVM2WyIzet3YgGql+1EbJRXA/tOTUsZb6PcWA6fQJxck1Uve5CrNVBWUByChBc4Uh97b33KVlkEtyxbLb0Vf8r6wgCLpZDGvwBm6ayNhNTqXGb90zcSecivywhoJMhAzOBYiQYITLwhVrrhrQDNTCbwq/sey4nmPRDBHrFTE8u7puHTqiCH2Qf3gCIAR/yXfn60RxexQ8Fult7EgLiW5jPpX05hWgTyHxfqy6+5PnSug6Xq/Sl+kwKAqnU1/SO50EwlY9pasgY18xMXc7ILq87HiQL1A31xNOqob3ICM5GMhYvLSNoisBG0Fka3LIpC3WIhk6SqDqKgtq49BopEpRda8kqWStfFjWIHz2ns5aEjiL5W1ZOVi0eOJiOtlg1WVdTu3EtNASKfqd+jBOuT32poA9su8BIYHpDBfXt5ROoHIpduSKIiV/Sndpz7/h/pTDvMMEAJOEzrLyINF2ixdieMDhsyZeZt9QyS3ItiCjseykepae52Vj+t6ztt0JELJYzfD2Ve3JAVmSVLp7OwzkZNEw="
@@ -33,7 +33,6 @@ cache:
     - vendor/bundle
 
 before_install:
-  - sudo apt-get install -y mysql-server mysql-client
   - cp ci/database.$DB.yml config/database.yml
   - psql  -c 'create database travis_ci_test;' -U postgres
   - mysql -e 'create database travis_ci_test;' -u root
