@@ -29,11 +29,13 @@ end
 
 group :test do
   gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-json_expectations'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'codeclimate-test-reporter', '~> 0.6', require: false
   gem 'guard-rspec', require: false
   gem 'fakeredis', require: "fakeredis/rspec"
   gem 'database_cleaner'
+  gem 'ffaker'
 end
 
 group :development do
