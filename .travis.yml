@@ -28,7 +28,6 @@ cache:
     - vendor/bundle
 
 before_install:
-  - sudo apt-get install -y mysql-server mysql-client
   - cp ci/database.$DB.yml config/database.yml
   - psql  -c 'create database travis_ci_test;' -U postgres
   - mysql -e 'create database travis_ci_test;' -u root
