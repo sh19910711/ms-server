@@ -19,7 +19,7 @@ RSpec.describe OsController, type: :controller do
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq('X')
         expect(device.status).to eq(status)
-        expect(device.heartbeated_at).to be > before_heartbeat
+        expect(device.heartbeated_at).to be >= before_heartbeat
       end
     end
 
