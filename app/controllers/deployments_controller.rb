@@ -20,6 +20,6 @@ class DeploymentsController < ApplicationController
   private
 
   def deployment_params
-    params.permit(:group_id, :app_name, :tag, :image, :comment)
+    params.permit(:group_id, :tag, :image, :comment)
   end
 end
