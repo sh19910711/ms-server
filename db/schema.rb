@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161129071604) do
+ActiveRecord::Schema.define(version: 20161203120357) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
@@ -19,18 +19,6 @@ ActiveRecord::Schema.define(version: 20161129071604) do
     t.integer  "user_id"
     t.integer  "max_heartbeat_interval"
     t.index ["user_id"], name: "index_apps_on_user_id"
-  end
-
-  create_table "auth_tokens", force: :cascade do |t|
-    t.string   "client"
-    t.string   "uid"
-    t.string   "access_token"
-    t.datetime "expires_at"
-    t.string   "description"
-    t.string   "token"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["token"], name: "index_auth_tokens_on_token", unique: true
   end
 
   create_table "builds", force: :cascade do |t|
