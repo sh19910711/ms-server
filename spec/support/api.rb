@@ -11,3 +11,9 @@ def api(method, path, params: {}, headers: {})
 
   send(method, path, params: params)
 end
+
+def device_api(method, path, body: "", params: {}, headers: {})
+  @request.env['RAW_POST_DATA'] = body
+  send(method, path, params: params)
+  @request.env.delete('RAW_POST_DATA')
+end
