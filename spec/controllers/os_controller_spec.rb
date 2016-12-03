@@ -9,11 +9,13 @@ RSpec.describe OsController, type: :controller do
 
     context "no deployments" do
       it "saves device status" do
-        before_heartbeat = Time.now
-        device_api(:put, :heartbeat, body: log, params: {
-              device_secret: device.device_secret,
-              status: status,
-            })
+        before_heartbeat = Time.current
+        travel 3.seconds do
+          device_api(:put, :heartbeat, body: log, params: {
+                device_secret: device.device_secret,
+                status: status,
+              })
+        end
 
         device.reload
         expect(response).to have_http_status(:ok)
