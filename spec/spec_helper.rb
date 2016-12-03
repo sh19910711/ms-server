@@ -10,5 +10,7 @@ require 'support/api'
 
 RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include ActiveJob::TestHelper
+
   config.render_views = true
 end
