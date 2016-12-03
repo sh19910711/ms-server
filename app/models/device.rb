@@ -19,7 +19,7 @@ class Device < ApplicationRecord
   end
 
   def update_status(status, log)
-    self.heartbeated_at = Time.now.to_i
+    self.heartbeated_at = Time.now
     self.status = status
     self.save!
 
