@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'support/api'
 
 
 RSpec.describe AppsController, type: :controller do
@@ -29,7 +28,7 @@ RSpec.describe AppsController, type: :controller do
   describe 'POST create' do
     let(:name) { FFaker::Internet.domain_word }
 
-    it 'returns the detail of a app' do
+    it 'creates a new app' do
       expect do
         api(:post, :create, params: { app_name: name })
         expect(response).to have_http_status(:ok)
