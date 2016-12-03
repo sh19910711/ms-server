@@ -1,8 +1,8 @@
 FactoryGirl.define do
-  factory :chandler, class: 'User' do
-    name   'chandler'
-    uid    'chandler@example.com'
-    email  'chandler@example.com'
+  factory :user do
+    name     { FFaker::Internet.user_name }
+    email    { FFaker::Internet.email }
+    confirmed_at { Time.now }
     password '12345678'
   end
 end
