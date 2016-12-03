@@ -52,13 +52,17 @@ class ApplicationController < ActionController::API
   def auth
     authenticate_user!
 
-    team = User.find_by_name(params[:team])
-    if team != current_user
+    unless current_user
+      head :unauthorized
+      return false
+    end
+
+    if params[:team] != current_user.name
       head :forbidden
       return false
     end
 
-    @current_team = team
+    @current_team = User.find_by_name(params[:team])
   end
 
   def current_team
