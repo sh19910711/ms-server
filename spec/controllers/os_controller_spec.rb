@@ -9,7 +9,6 @@ RSpec.describe OsController, type: :controller do
 
     context "no deployments" do
       it "saves device status" do
-        before_heartbeat = Time.now
         device_api(:put, :heartbeat, body: log, params: {
               device_secret: device.device_secret,
               status: status,
@@ -19,7 +18,7 @@ RSpec.describe OsController, type: :controller do
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq('X')
         expect(device.status).to eq(status)
-        expect(device.heartbeated_at).to be >= before_heartbeat
+        expect(device.heartbeated_at).not_to eq(nil)
       end
     end
 
@@ -29,7 +28,6 @@ RSpec.describe OsController, type: :controller do
       let!(:deployment) { create(:deployment, app: app) }
 
       it "saves device status" do
-        before_heartbeat = Time.now
         device_api(:put, :heartbeat, body: log, params: {
               device_secret: device.device_secret,
               status: status,
@@ -39,7 +37,7 @@ RSpec.describe OsController, type: :controller do
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq(deployment.id.to_s)
         expect(device.status).to eq(status)
-        expect(device.heartbeated_at).to be > before_heartbeat
+        expect(device.heartbeated_at).not_to eq(nil)
       end
     end
   end
