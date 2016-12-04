@@ -13,6 +13,6 @@ class User < ActiveRecord::Base
   validates :email, presence: true
   has_many :apps, dependent: :destroy
   has_many :devices, dependent: :destroy
-  # disable email confirmation in the development mode
-  before_save { skip_confirmation! } if Rails.env.development?
+  # disable email confirmation in test and development
+  before_save { skip_confirmation! } unless Rails.env.production?
 end
