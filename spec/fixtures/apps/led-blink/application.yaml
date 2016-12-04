@@ -1,5 +1,5 @@
 api: 1
-name: hello
+name: led-blink
 lang: c++
 
 plugins:

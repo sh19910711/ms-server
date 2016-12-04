@@ -18,18 +18,56 @@ RSpec.describe BuildsController, type: :controller do
   describe 'POST create' do
     let!(:app) { create(:app, user: user) }
 
-    it 'creates and enqueues a new build' do
-      perform_enqueued_jobs do
-        expect do
-          api(:post, :create, params: {
-              app_name: app.name,
-              source_file: Fixture.uploaded_file('apps/led-blink.zip')
-            })
+    context 'valid zip file' do
+      it 'creates and build the app successfully' do
+        perform_enqueued_jobs do
+          expect do
+            api(:post, :create, params: {
+                app_name: app.name,
+                source_file: Fixture.uploaded_file('apps/led-blink.zip')
+              })
 
-          build = Build.all.last
-          expect(response).to have_http_status(:accepted)
-          expect(build.status).to eq('success'), "build log:\n#{build.log}"
-        end.to change(Deployment, :count).by(1)
+            build = Build.all.last
+            expect(response).to have_http_status(:accepted)
+            expect(build.status).to eq('success'), "build log:\n#{build.log}"
+          end.to change(Deployment, :count).by(1)
+        end
+      end
+    end
+
+    context 'invalid zip file' do
+      it 'fails to build' do
+        perform_enqueued_jobs do
+          expect do
+            api(:post, :create, params: {
+                app_name: app.name,
+                source_file: Fixture.uploaded_file('apps/led-blink/application.yaml')
+              })
+
+            build = Build.all.last
+            expect(response).to have_http_status(:accepted)
+            expect(build.log).to include('invalid zip file')
+            expect(build.status).to eq('failure'), "build log:\n#{build.log}"
+          end.to change(Deployment, :count).by(0)
+        end
+      end
+    end
+
+    context 'invalid zip file' do
+      it 'fails to build' do
+        perform_enqueued_jobs do
+          expect do
+            api(:post, :create, params: {
+                app_name: app.name,
+                source_file: Fixture.uploaded_file('apps/broken.zip')
+              })
+
+            build = Build.all.last
+            expect(response).to have_http_status(:accepted)
+            expect(build.log).to include('failed to build')
+            expect(build.status).to eq('failure'), "build log:\n#{build.log}"
+          end.to change(Deployment, :count).by(0)
+        end
       end
     end
   end

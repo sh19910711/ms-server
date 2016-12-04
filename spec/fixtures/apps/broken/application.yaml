@@ -1,0 +1,11 @@
+api: 1
+name: broken-app
+lang: c++
+
+plugins:
+  - LED
+
+sources:
+  - main.cpp
+
+config:
