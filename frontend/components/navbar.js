@@ -8,13 +8,12 @@ export default {
   name: 'navbar',
   data() {
     return {
-      team: api.user,
-      token: api.token
+      team: api.user
     };
   },
   methods: {
     needLogin() {
-      return !this.token;
+      return !this.team;
     }
   }
 };

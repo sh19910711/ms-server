@@ -16,7 +16,7 @@ export default {
       this.$router.push(ev.target.dataset.href);
     },
     updateApps(res) {
-      this.apps = res.content.applications.map(app => {
+      this.apps = res.content.apps.map(app => {
         app.url = `/apps/${app.name}`;
         return app;
       });

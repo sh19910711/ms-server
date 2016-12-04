@@ -1,8 +1,5 @@
 import 'whatwg-fetch';
 
-const USER_KEY = 'username';
-const API_TOKEN_KEY = 'api-token';
-
 function handleContent(res) {
   const contentType = res.headers.get('Content-Type');
   if (contentType && contentType.indexOf('application/json') !== -1) {
@@ -13,31 +10,30 @@ function handleContent(res) {
 }
 
 class API {
-  constructor(token, user) {
-    this.token = token;
-    this.user = user;
+  constructor() {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.headers = JSON.parse(localStorage.getItem('headers'));
   }
 
   signup(params) {
-    return this.send('post', '/api/auth', params).then(res => {
-      localStorage.setItem(USER_KEY, JSON.stringify(this.user = res.response.headers.get('username')));
-      localStorage.setItem(API_TOKEN_KEY, JSON.stringify(this.token = res.response.headers.get('token')));
-    });
+    return this.send('post', '/api/auth', params);
   }
 
   signin(params) {
     return this.send('post', '/api/auth/sign_in', params).then(res => {
-      localStorage.setItem(USER_KEY, JSON.stringify(this.user = res.response.headers.get('username')));
-      localStorage.setItem(API_TOKEN_KEY, JSON.stringify(this.token = res.response.headers.get('token')));
+      this.headers = this.headers || {};
+      ['uid', 'client', 'access-token'].forEach(k => (this.headers[k] = res.response.headers.get(k)));
+      localStorage.setItem('user', JSON.stringify(this.user = params.name));
+      localStorage.setItem('headers', JSON.stringify(this.headers));
     });
   }
 
   signout() {
     const clear = () => {
-      localStorage.removeItem(USER_KEY);
-      localStorage.removeItem(API_TOKEN_KEY);
+      localStorage.removeItem('user');
+      localStorage.removeItem('headers');
       this.user = null;
-      this.token = null;
+      this.headers = null;
     };
     return this.send('delete', '/api/auth/sign_out').then(clear).catch(clear);
   }
@@ -77,7 +73,7 @@ class API {
   send(method, url, params) {
     return new Promise((resolve, reject) => {
       const headers = {'Content-Type': 'application/json'};
-      if (this.token) headers['Authorization'] = `token ${this.token}`;
+      if (this.headers) Object.assign(headers, this.headers);
       const request = {method, headers};
       if (params) request['body'] = JSON.stringify(params);
       let response;
@@ -95,6 +91,4 @@ class API {
   }
 }
 
-const user = JSON.parse(localStorage.getItem(USER_KEY));
-const token = JSON.parse(localStorage.getItem(API_TOKEN_KEY));
-export default new API(token, user);
+export default new API();

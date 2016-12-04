@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       formInputs: [
-        { type: 'text', name: 'username' },
+        { type: 'text', name: 'name' },
         { type: 'password', name: 'password' }
       ]
     };

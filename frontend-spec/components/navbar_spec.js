@@ -2,13 +2,13 @@ import 'spec_helper';
 var Vue = require('vue');
 
 describe('navbar', function() {
-  describe('.token', function() {
+  describe('.team', function() {
     beforeEach(function() {
       this.vm = new Vue(require('components/navbar').default).$mount();
     });
 
     it('shows link to signin if not defined', function(done) {
-      this.vm.token = false; // TODO: use yet another state
+      this.vm.team = false; // TODO: use yet another state
       expect(this.vm.needLogin()).toBeTruthy();
 
       Vue.nextTick(() => {
@@ -19,7 +19,7 @@ describe('navbar', function() {
     });
 
     it('shows link to signout if defined', function(done) {
-      this.vm.token = true;
+      this.vm.team = true;
       expect(this.vm.needLogin()).toBeFalsy();
 
       Vue.nextTick(() => {
