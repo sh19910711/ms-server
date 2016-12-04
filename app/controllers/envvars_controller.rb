@@ -16,6 +16,7 @@ class EnvvarsController < ApplicationController
     envvar = @envvars.find_by_name(envvar_params[:name])
     unless envvar
       render_error :not_found, "No such envvar."
+      return
     end
 
     envvar.destroy

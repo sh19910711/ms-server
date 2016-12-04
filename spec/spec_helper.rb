@@ -12,5 +12,6 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include ActiveJob::TestHelper
 
+  config.infer_base_class_for_anonymous_controllers = false
   config.render_views = true
 end

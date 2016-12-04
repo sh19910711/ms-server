@@ -2,15 +2,9 @@ class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
   include CanCan::ControllerAdditions
 
-  if not Rails.env.development? and not Rails.env.test?
-    rescue_from Exception, with: :handle_500
-  end
-
-  if not Rails.env.development?
-    rescue_from ActionController::RoutingError, with: :handle_routing_error
-    rescue_from ActiveRecord::RecordNotFound, with: :handle_404
-  end
-
+  rescue_from Exception, with: :handle_uncaught_exception
+  rescue_from ActionController::RoutingError, with: :handle_routing_error
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
   rescue_from ActiveRecord::RecordInvalid, with: :handle_validation_error
 
   before_action :handle_api_version
@@ -18,7 +12,7 @@ class ApplicationController < ActionController::API
 
   protected
 
-  def handle_500(e)
+  def handle_uncaught_exception(e)
     log_exception e
     head :internal_server_error
   end
@@ -34,7 +28,7 @@ class ApplicationController < ActionController::API
     head :bad_request
   end
 
-  def handle_404(e)
+  def handle_record_not_found(e)
     log_exception e
     head :not_found
   end

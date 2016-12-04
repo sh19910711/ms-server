@@ -2,6 +2,6 @@ FactoryGirl.define do
   factory :deployment do
     app
     board 'esp8266'
-    image 'abcd'
+    image 'abcdefghijklmn'
   end
 end

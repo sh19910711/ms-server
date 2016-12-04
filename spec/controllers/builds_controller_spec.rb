@@ -38,12 +38,25 @@ RSpec.describe BuildsController, type: :controller do
     let!(:app)   { create(:app, user: user) }
     let!(:build) { create(:build, app: app) }
 
-    it 'returns the details of a build' do
-      api(:get, :show, params: { app_name: build.app.name, build_id: build.id })
+    context 'valid build id' do
+      it 'returns the details of a build' do
+        api(:get, :show, params: { app_name: build.app.name, build_id: build.id })
 
-      build.reload
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include_json(build.slice(:id, :status))
+        build.reload
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include_json(build.slice(:id, :status))
+      end
+    end
+
+    context 'invalid build id' do
+      let!(:invalid_build) { create(:build) }
+
+      it 'returns :not_found' do
+        api(:get, :show, params: { app_name: build.app.name, build_id: invalid_build.id })
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.body).to include_json(error: 'No such build.')
+      end
     end
   end
 end

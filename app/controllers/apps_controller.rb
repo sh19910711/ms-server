@@ -26,6 +26,7 @@ class AppsController < ApplicationController
     device = @devices.find_by_name(add_device_params[:device_name])
     unless device
       render_error :not_found, "No such device."
+      return
     end
 
     @app.add_device!(device)

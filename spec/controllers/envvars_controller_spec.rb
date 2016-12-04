@@ -49,14 +49,28 @@ RSpec.describe EnvvarsController, type: :controller do
     let!(:device){ create(:device, user: user) }
     let!(:var)   { create(:envvar, device: device) }
 
-    it "removes an envvar" do
-      api(:delete, :destroy, params: {
-            device_name: device.name,
-            name: var.name
-          })
+    context "envvar which exists" do
+      it "removes an envvar" do
+        api(:delete, :destroy, params: {
+              device_name: device.name,
+              name: var.name
+            })
 
-      expect(response).to have_http_status(:ok)
-      expect(Envvar.where(device: device, name: var.name)).not_to exist
+        expect(response).to have_http_status(:ok)
+        expect(Envvar.where(device: device, name: var.name)).not_to exist
+      end
+    end
+
+    context "envvar that it does not exist" do
+      it "returns :not_found" do
+        api(:delete, :destroy, params: {
+              device_name: device.name,
+              name: 'FOO'
+            })
+
+        expect(response).to have_http_status(:not_found)
+        expect(response.body).to include_json(error: 'No such envvar.')
+      end
     end
   end
 end

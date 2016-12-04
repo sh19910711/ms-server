@@ -28,14 +28,27 @@ RSpec.describe AppsController, type: :controller do
   describe 'POST create' do
     let(:name) { FFaker::Internet.domain_word }
 
-    it 'creates a new app' do
-      expect do
-        api(:post, :create, params: { app_name: name })
-        expect(response).to have_http_status(:ok)
-      end.to change { App.count }.by(1)
+    context 'valid app name' do
+      it 'creates a new app' do
+        expect do
+          api(:post, :create, params: { app_name: name })
+          expect(response).to have_http_status(:ok)
+        end.to change { App.count }.by(1)
 
-      app = App.find_by_name(name)
-      expect(response.body).to include_json(app.slice(:name))
+        app = App.find_by_name(name)
+        expect(response.body).to include_json(app.slice(:name))
+      end
+    end
+
+    context 'invalid app name' do
+      it 'returns validation error message' do
+        expect do
+          api(:post, :create, params: { app_name: 'b@d name' })
+          expect(response).to have_http_status(:unprocessable_entity)
+        end.to change { App.count }.by(0)
+
+        expect(response.body).to include_json(error: 'validation error')
+      end
     end
   end
 
@@ -57,12 +70,26 @@ RSpec.describe AppsController, type: :controller do
     let!(:app) { create(:app, user: user) }
     let!(:device) { create(:device, user: user) }
 
-    it 'associates a device to an app' do
-      api(:post, :add_device, params: { app_name: app.name, device_name: device.name })
+    context "valid device" do
+      it 'associates a device to an app' do
+        api(:post, :add_device, params: { app_name: app.name, device_name: device.name })
 
-      device.reload
-      expect(response).to have_http_status(:ok)
-      expect(device.app).to eq(app)
+        device.reload
+        expect(response).to have_http_status(:ok)
+        expect(device.app).to eq(app)
+      end
+    end
+
+    context "invalid device" do
+      let!(:invalid_device) { create(:device) }
+      it 'returns :not_found' do
+        api(:post, :add_device, params: { app_name: app.name, device_name: invalid_device.name })
+
+        device.reload
+        expect(response).to have_http_status(:not_found)
+        expect(response.body).to include_json(error: "No such device.")
+        expect(device.app).to eq(nil)
+      end
     end
   end
 
