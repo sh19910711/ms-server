@@ -11,4 +11,6 @@ Dir[Rails.root.join('spec/factories/*.rb')].each do |factory|
   require factory
 end
 
-FactoryGirl.create(:user, name: "luke", email: "luke@example.com")
+user = FactoryGirl.create(:user, name: "luke", email: "luke@example.com")
+app = FactoryGirl.create(:app, name: "starwars", user: user)
+FactoryGirl.create(:device, name: "x-wing", device_secret: "abc", user: user)
