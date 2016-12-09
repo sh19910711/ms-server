@@ -11,7 +11,7 @@ class BuildsController < ApplicationController
     tag = build_params[:tag]
 
     @build = Build.new(app: @app, tag: tag, source_file: source_filedata,
-                       status: 'queued', comment: build_params[:comment])
+                       comment: build_params[:comment])
     @build.save_and_enqueue!
 
     render :show, status: :accepted
