@@ -46,7 +46,7 @@ RSpec.describe BuildsController, type: :controller do
 
             build = Build.all.last
             expect(response).to have_http_status(:accepted)
-            expect(build.log).to include('invalid zip file')
+            expect(build.log).to include('failed to build')
             expect(build.status).to eq('failure'), "build log:\n#{build.log}"
           end.to change(Deployment, :count).by(0)
         end

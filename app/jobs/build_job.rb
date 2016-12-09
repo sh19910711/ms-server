@@ -1,53 +1,55 @@
 require 'rubygems' # rubyzip uses it
 require 'zip'
 
+class BuildError < StandardError
+end
+
 class BuildJob < ApplicationJob
   queue_as :build
 
   def perform(build_id)
     build = Build.find(build_id)
-    start_build(build)
 
-    success = false
-    stdout = ''
-    tmp_base_dir = prepare_tmp_base_dir
-    Dir.mktmpdir("makestack-app-build-", tmp_base_dir) do |tmpdir|
-      app_zip = File.join(tmpdir, 'app.zip')
-      IO.binwrite(app_zip, build.source_file)
+    begin
+      start_build(build)
 
-      success, stdout = extract_zip(app_zip, tmpdir)
-      break unless success
-
-      success, stdout = build(tmpdir)
-      break unless success
-
-      group_id = SecureRandom.uuid
-      image_files = Dir[File.join(tmpdir, "*.*.image")]
-      if image_files == []
-        stdout += "\nno image files to deploy\n"
-        success = false
-        break
+      tmp_base_dir = prepare_tmp_base_dir
+      Dir.mktmpdir("makestack-app-build-", tmp_base_dir) do |tmpdir|
+        IO.binwrite(File.join(tmpdir, 'app.zip'), build.source_file)
+        build(build, tmpdir)
+        deploy_images(build, generate_group_id(), get_image_files())
       end
 
-      success, stdout = deploy_images(build, group_id, image_files)
-      break unless success
+      finish_build(build)
+    rescue BuildError => e
+      build.status = 'failure'
+      build.log += "\n#{e}\n"
+      build.save!
     end
-
-    finish_build(build, success, stdout)
   end
 
   private
 
+  def generate_group_id
+    SecureRandom.uuid
+  end
+
+  def get_image_files
+    image_files = Dir[File.join(tmpdir, "*.*.image")]
+    if image_files == []
+      raise BuildError, "no image files to deploy"
+    end
+  end
+
   def start_build(build)
     logger.info "build ##{build.id}: starting"
     build.update!(status: 'building')
+    build.log = ""
     build
   end
 
-  def finish_build(build, success, stdout)
-    logger.info "build ##{build.id}: #{success ? 'success' : 'failure'}"
-    build.status = success ? 'success' : 'failure'
-    build.log = stdout
+  def finish_build(build)
+    logger.info "build ##{build.id}: #{build.status}"
     build.source_file = nil
     build.save!
   end
@@ -58,28 +60,13 @@ class BuildJob < ApplicationJob
     tmp_base_dir
   end
 
-  def extract_zip(app_zip, tmpdir)
-    begin
-      Zip::File.open(app_zip) do |zip_file|
-        zip_file.each do |f|
-          if [:file, :directory].include?(f.ftype)
-            f.extract(File.join(tmpdir, f.name))
-          end
-        end
-      end
-    rescue Zip::Error
-      return false, 'invalid zip file'
-    end
-
-    return true, ''
-  end
-
-  def build(appdir)
-    stdout  = %x[docker run --rm -v #{appdir}:/app -t makestack/os 2>&1]
+  def build(build, appdir)
+    build.log += %x[docker run --rm -v #{appdir}:/app -t makestack/os 2>&1]
     if $?.success?
-      return true, stdout
+      build.status = 'success'
     else
-      return false, stdout + "\nfailed to build\n"
+      build.status = 'failure'
+      raise BuildError, "failed to build"
     end
   end
 
@@ -95,7 +82,5 @@ class BuildJob < ApplicationJob
         d.image    = File.open(file, 'rb').read
       end
     end
-
-    return true, ''
   end
 end
