@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+require 'factory_girl'
+Dir[Rails.root.join('spec/factories/*.rb')].each do |factory|
+  require factory
+end
+
+FactoryGirl.create(:user, name: "luke", email: "luke@example.com")
