@@ -1,6 +1,3 @@
-require 'rubygems' # rubyzip uses it
-require 'zip'
-
 class BuildError < StandardError
 end
 
