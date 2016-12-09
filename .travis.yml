@@ -3,6 +3,10 @@ dist: trusty
 sudo: required
 language: ruby
 
+notifications:
+  on_success: change
+  on_failure: change
+
 services:
   - docker
   - mysql
