@@ -14,10 +14,10 @@ ActiveRecord::Schema.define(version: 20161203120357) do
 
   create_table "apps", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "user_id"
-    t.integer  "max_heartbeat_interval"
+    t.integer  "max_heartbeat_interval", default: 180
     t.index ["user_id"], name: "index_apps_on_user_id"
   end
 
