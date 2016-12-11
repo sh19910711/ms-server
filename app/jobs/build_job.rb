@@ -14,7 +14,7 @@ class BuildJob < ApplicationJob
       Dir.mktmpdir("makestack-app-build-", tmp_base_dir) do |tmpdir|
         IO.binwrite(File.join(tmpdir, 'app.zip'), build.source_file)
         build(build, tmpdir)
-        deploy_images(build, generate_group_id(), get_image_files())
+        deploy_images(build, generate_group_id(), get_image_files(tmpdir))
       end
 
       finish_build(build)
@@ -31,11 +31,13 @@ class BuildJob < ApplicationJob
     SecureRandom.uuid
   end
 
-  def get_image_files
+  def get_image_files(tmpdir)
     image_files = Dir[File.join(tmpdir, "*.*.image")]
     if image_files == []
       raise BuildError, "no image files to deploy"
     end
+
+    image_files
   end
 
   def start_build(build)
