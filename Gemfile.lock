@@ -44,7 +44,6 @@ GEM
     builder (3.2.2)
     byebug (9.0.6)
     cancancan (1.15.0)
-    choice (0.2.0)
     chronic (0.10.2)
     codeclimate-test-reporter (0.6.0)
       simplecov (>= 0.7.1, < 1.0.0)
@@ -154,11 +153,6 @@ GEM
     rails-dom-testing (2.0.1)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6.0)
-    rails-erd (1.5.0)
-      activerecord (>= 3.2)
-      activesupport (>= 3.2)
-      choice (~> 0.2.0)
-      ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
     railties (5.0.0.1)
@@ -198,7 +192,6 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
-    ruby-graphviz (1.2.2)
     ruby_dep (1.5.0)
     shellany (0.0.1)
     sidekiq (4.2.7)
@@ -263,7 +256,6 @@ DEPENDENCIES
   pry-rails
   puma (~> 3.0)
   rails (= 5.0.0.1)
-  rails-erd
   redis-objects
   rspec-json_expectations
   rspec-rails (~> 3.5)
