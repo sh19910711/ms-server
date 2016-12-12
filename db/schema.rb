@@ -12,38 +12,41 @@
 
 ActiveRecord::Schema.define(version: 20161203120357) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "apps", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.integer  "user_id"
     t.integer  "max_heartbeat_interval", default: 180
-    t.index ["user_id"], name: "index_apps_on_user_id"
+    t.index ["user_id"], name: "index_apps_on_user_id", using: :btree
   end
 
   create_table "builds", force: :cascade do |t|
     t.integer  "app_id"
     t.string   "status"
     t.text     "log"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.string   "tag"
-    t.binary   "source_file", limit: 16777216
+    t.binary   "source_file"
     t.string   "comment"
-    t.index ["app_id"], name: "index_builds_on_app_id"
+    t.index ["app_id"], name: "index_builds_on_app_id", using: :btree
   end
 
   create_table "deployments", force: :cascade do |t|
     t.integer  "app_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string   "tag"
     t.string   "board"
     t.string   "group_id"
-    t.binary   "image",      limit: 33554432
+    t.binary   "image"
     t.string   "comment"
-    t.index ["app_id"], name: "index_deployments_on_app_id"
-    t.index ["group_id"], name: "index_deployments_on_group_id"
+    t.index ["app_id"], name: "index_deployments_on_app_id", using: :btree
+    t.index ["group_id"], name: "index_deployments_on_group_id", using: :btree
   end
 
   create_table "devices", force: :cascade do |t|
@@ -57,9 +60,9 @@ ActiveRecord::Schema.define(version: 20161203120357) do
     t.integer  "app_id"
     t.string   "status"
     t.datetime "heartbeated_at"
-    t.index ["app_id"], name: "index_devices_on_app_id"
-    t.index ["device_secret"], name: "index_devices_on_device_secret"
-    t.index ["user_id"], name: "index_devices_on_user_id"
+    t.index ["app_id"], name: "index_devices_on_app_id", using: :btree
+    t.index ["device_secret"], name: "index_devices_on_device_secret", using: :btree
+    t.index ["user_id"], name: "index_devices_on_user_id", using: :btree
   end
 
   create_table "envvars", force: :cascade do |t|
@@ -68,7 +71,7 @@ ActiveRecord::Schema.define(version: 20161203120357) do
     t.integer  "device_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["device_id"], name: "index_envvars_on_device_id"
+    t.index ["device_id"], name: "index_envvars_on_device_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -94,9 +97,15 @@ ActiveRecord::Schema.define(version: 20161203120357) do
     t.text     "tokens"
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
-    t.index ["email"], name: "index_users_on_email"
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
+    t.index ["email"], name: "index_users_on_email", using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
   end
 
+  add_foreign_key "apps", "users"
+  add_foreign_key "builds", "apps"
+  add_foreign_key "deployments", "apps"
+  add_foreign_key "devices", "apps"
+  add_foreign_key "devices", "users"
+  add_foreign_key "envvars", "devices"
 end
