@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: makestack_server_dev
+
+test:
+  <<: *default
+  database: makestack_server_test
+
+production:
+  <<: *default
+  database: makestack_server
