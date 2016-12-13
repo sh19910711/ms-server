@@ -2,11 +2,17 @@
 @import "form";
 
 
-body {
-  background: $grey-background-color;
+.login {
+  padding-top: 100px;
+  height:      100%;
+  width:       100%;
+  position:    absolute;
+  top:         0;
+  left:        0;
+  background:  $grey-background-color;
 }
 
-.login {
+.login-form {
   width: $short-input-width + 20px;
   margin: 0 auto 0;
 
