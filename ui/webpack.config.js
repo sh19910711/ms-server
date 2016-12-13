@@ -35,6 +35,9 @@ module.exports = {
     presets: ['es2015'],
     plugins: ['transform-runtime']
   },
+  sassLoader: {
+    includePaths: [path.resolve("ui/css")]
+  },
   devServer: {
     contentBase: 'public',
     port: 8080,
