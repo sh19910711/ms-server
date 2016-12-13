@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -19,6 +20,12 @@ module.exports = {
       { test: /\.html$/, loader: "html-loader"},
     ]
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./ui/index.html",
+      inject: true
+    })
+  ],
   devServer: {
     contentBase: 'public',
     port: 8080
