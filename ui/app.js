@@ -1,5 +1,3 @@
-import api from "api";
-
 require("./app.scss");
 
 export default {
