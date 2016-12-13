@@ -19,4 +19,8 @@ module.exports = {
       { test: /\.html$/, loader: "html-loader"},
     ]
   },
+  devServer: {
+    contentBase: 'public',
+    port: 8080
+  }
 }
