@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: {
     app: "./ui/main.js",
+    vendor: ["vue", "vue-router"]
   },
   output: {
     path: "public",
@@ -14,8 +15,8 @@ module.exports = {
     extensions: ["", ".js"],
     root: path.resolve("ui"),
     alias: {
-      api: "js/api",
-      vue: "vue/dist/vue.js"
+      api:  "js/api",
+      vue:  "vue/dist/vue.js"
     }
   },
   module: {
