@@ -3,6 +3,10 @@
 @import "card";
 @import "form";
 
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Meiryo', 'Ubuntu', sans-serif;
   color: #333333;
