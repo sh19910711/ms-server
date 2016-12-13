@@ -5,10 +5,19 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 /config/database.yml
+
 /vendor
-/public/app.*.*js
-/public/index.html
 /node_modules
+
+/public/app.*.*js
+/public/vendor.*.*js
+/public/*.eot
+/public/*.svg
+/public/*.ttf
+/public/*.woff
+/public/*.woff2
+/public/index.html
+
 *.rdb
 *.log
 
