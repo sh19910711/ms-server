@@ -26,6 +26,10 @@ module.exports = {
       inject: true
     })
   ],
+  babel: {
+    presets: ['es2015'],
+    plugins: ['transform-runtime']
+  },
   devServer: {
     contentBase: 'public',
     port: 8080
