@@ -6,7 +6,7 @@
 
 /config/database.yml
 /vendor
-/public/uploads
+/public/app.*.*js
 /node_modules
 *.rdb
 *.log
