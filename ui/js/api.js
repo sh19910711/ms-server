@@ -1,26 +1,35 @@
 import "whatwg-fetch";
 
 class API {
-  constuctor() {
-    this.username    = localStorage.getItem("username");
+  constructor() {
+    console.log("initializing");
+    this.user        = JSON.parse(localStorage.getItem("user"));
     this.credentials = JSON.parse(localStorage.getItem("credentials"));
   }
 
-  invoke(method, path, params, parse_json=false) {
-    let headers = Object.assign({
-                    "Content-Type": "application/json"
-                  }, this.credentials);
+  invoke(method, path, params) {
+    let req_headers = Object.assign({
+                        "Content-Type": "application/json"
+                      }, this.credentials);
 
     return new Promise((resolve, reject) => {
+      let status;
+      let headers;
       fetch(`/api${path}`, {
         method: method,
-        headers: headers,
+        headers: req_headers,
         body: JSON.stringify(params)
       }).then((response) => {
-        if (200 <= response.status && response.status <= 299)
-          resolve(response);
+        status = response.status;
+        headers = response.headers;
+        return response;
+      }).then((response) => {
+        return response.json();
+      }).then((json) => {
+        if (200 <= status && status <= 299)
+          resolve({status, headers, json });
         else
-          reject(response);
+          reject({status, headers, json });
       });
     });
   }
@@ -30,14 +39,18 @@ class API {
       name: username,
       password: password
     }).then(r => {
-      this.username = username;
+      this.user = {
+        name:  r.json["data"]["name"],
+        email: r.json["data"]["email"]
+      };
+
       this.credentials = {
         uid:            r.headers.get("uid"),
         client:         r.headers.get("client"),
         "access-token": r.headers.get("access-token")
       };
 
-      localStorage.setItem("username", this.username);
+      localStorage.setItem("user", JSON.stringify(this.user));
       localStorage.setItem("credentials", JSON.stringify(this.credentials));
     });
   }
