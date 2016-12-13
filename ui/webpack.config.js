@@ -12,6 +12,11 @@ module.exports = {
   },
   resolve: {
     extensions: ["", ".js"],
+    root: path.resolve("ui"),
+    alias: {
+      api: "js/api",
+      vue: "vue/dist/vue.js"
+    }
   },
   module: {
     loaders: [
