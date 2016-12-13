@@ -1,0 +1,16 @@
+@import "coloring";
+@import "form";
+
+
+body {
+  background: $grey-background-color;
+}
+
+.login {
+  width: $short-input-width + 20px;
+  margin: 0 auto 0;
+
+  input[type=submit] {
+    width: $short-input-width + 15px;
+  }
+}

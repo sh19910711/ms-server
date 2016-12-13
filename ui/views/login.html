@@ -1,0 +1,12 @@
+<main>
+  <div class="card login">
+    <p class="warning" v-if="failed">failed to log in</p>
+    <form v-on:submit.prevent="login">
+      <label>Name</label>
+      <input type="text" v-model="username" required="required" autofocus>
+      <label>Password</label>
+      <input type="password" v-model="password" required="required">
+      <input type="submit" value="Login">
+    </form>
+  </div>
+</main>

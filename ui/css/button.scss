@@ -1,0 +1,46 @@
+@mixin button {
+  cursor: pointer;
+  margin-top: 50px;
+  padding: 6px 12px 6px;
+  background: #ffffff;
+  font-size: 15px;
+  color: #333333;
+  border: 1px solid #333333;
+  border-radius: 3px;
+
+
+  /* FIXME: use autoprefixer */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:hover {
+    background:   #fafafa;
+    border-color: #fafafa;
+    color:        #fafafa;
+  }
+
+  &:active {
+    background:   #f7f7f7;
+    border-color: #f7f7f7;
+    color:        #f7f7f7;
+  }
+}
+
+@mixin accent-button {
+  @include button;
+  color:        $accent-color;
+  border-color: $accent-color;
+
+  &:hover {
+    background:   $accent-color-hover;
+    border-color: $accent-color-hover;
+    color:        #ffffff;
+  }
+
+  &:active {
+    background:   $accent-color-active;
+    border-color: $accent-color-active;
+    color:        #ffffff;
+  }
+}
