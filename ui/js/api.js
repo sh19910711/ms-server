@@ -2,7 +2,6 @@ import "whatwg-fetch";
 
 class API {
   constructor() {
-    console.log("initializing");
     this.user        = JSON.parse(localStorage.getItem("user"));
     this.credentials = JSON.parse(localStorage.getItem("credentials"));
   }

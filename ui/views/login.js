@@ -17,7 +17,6 @@ export default {
       api.login(this.username, this.password).then(() => {
         this.$router.push("/")
       }).catch((r) => {
-        console.log(r);
         this.failed = true;
       });
     }
