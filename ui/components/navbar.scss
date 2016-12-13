@@ -1,0 +1,50 @@
+header {
+  margin: 20px 10px 0;
+  display: flex;
+
+  .left {
+    margin-right: auto;
+    .icon {
+      width:  25px;
+      height: 25px;
+    }
+
+    .breadcrumbs {
+      vertical-align: center;
+      list-style: none;
+      display: inline;
+      padding-left: 7px;
+
+      li {
+        display: inline;
+      }
+
+      a {
+        color: #5e5d50;
+        font-size: 18px;
+        position: relative;
+        bottom: 4px;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .right {
+    .menu {
+      font-size: 30px;
+      position: relative;
+      bottom: 7px;
+      margin-right: 14px;
+      color: #777777;
+    }
+
+    .avatar {
+      width:         35px;
+      height:        35px;
+      border-radius: 35px;
+    }
+  }
+}

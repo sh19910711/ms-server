@@ -1,0 +1,20 @@
+<header>
+  <div class="left">
+    <img src="/icon.svg" class="icon">
+    <ul class="breadcrumbs" v-for="breadcrumb in breadcrumbs">
+      <li><a v-bind:href="breadcrumb.url">{{ breadcrumb.title }}</a></li>
+    </ul>
+  </div>
+
+  <div class="right">
+    <div class="dropdown">
+      <i class="fa fa-bars menu" aria-hidden="true"></i>
+      <div class="content">
+        <ul>
+          <li><router-link to="/">Home</router-link></li>
+        </ul>
+      </div>
+    </div>
+    <img v-bind:src="gravatar_url" class="avatar">
+  </div>
+</header>
