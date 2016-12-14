@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161203120357) do
+ActiveRecord::Schema.define(version: 20161214130057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,25 +28,27 @@ ActiveRecord::Schema.define(version: 20161203120357) do
     t.integer  "app_id"
     t.string   "status"
     t.text     "log"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "tag"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.binary   "source_file"
-    t.string   "comment"
+    t.integer  "deployment_id"
     t.index ["app_id"], name: "index_builds_on_app_id", using: :btree
+    t.index ["deployment_id"], name: "index_builds_on_deployment_id", using: :btree
   end
 
   create_table "deployments", force: :cascade do |t|
     t.integer  "app_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.string   "tag"
     t.string   "board"
-    t.string   "group_id"
     t.binary   "image"
     t.string   "comment"
+    t.integer  "major_version"
+    t.integer  "minor_version"
+    t.datetime "released_at"
     t.index ["app_id"], name: "index_deployments_on_app_id", using: :btree
-    t.index ["group_id"], name: "index_deployments_on_group_id", using: :btree
+    t.index ["major_version"], name: "index_deployments_on_major_version", unique: true, using: :btree
   end
 
   create_table "devices", force: :cascade do |t|
@@ -104,6 +106,7 @@ ActiveRecord::Schema.define(version: 20161203120357) do
 
   add_foreign_key "apps", "users"
   add_foreign_key "builds", "apps"
+  add_foreign_key "builds", "deployments"
   add_foreign_key "deployments", "apps"
   add_foreign_key "devices", "apps"
   add_foreign_key "devices", "users"

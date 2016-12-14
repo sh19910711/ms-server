@@ -48,7 +48,7 @@ RSpec.describe BuildsController, type: :controller do
             expect(response).to have_http_status(:accepted)
             expect(build.log).to include('failed to build')
             expect(build.status).to eq('failure'), "build log:\n#{build.log}"
-          end.to change(Deployment, :count).by(0)
+          end.to change(Deployment, :count).by(1)
         end
       end
     end
@@ -66,7 +66,7 @@ RSpec.describe BuildsController, type: :controller do
             expect(response).to have_http_status(:accepted)
             expect(build.log).to include('failed to build')
             expect(build.status).to eq('failure'), "build log:\n#{build.log}"
-          end.to change(Deployment, :count).by(0)
+          end.to change(Deployment, :count).by(1)
         end
       end
     end

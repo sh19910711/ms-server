@@ -14,7 +14,7 @@ class BuildJob < ApplicationJob
       Dir.mktmpdir("makestack-app-build-", tmp_base_dir) do |tmpdir|
         IO.binwrite(File.join(tmpdir, 'app.zip'), build.source_file)
         build(build, tmpdir)
-        deploy_images(build, generate_group_id(), get_image_files(tmpdir))
+        deploy_images(build, get_image_files(tmpdir))
       end
 
       finish_build(build)
@@ -26,10 +26,6 @@ class BuildJob < ApplicationJob
   end
 
   private
-
-  def generate_group_id
-    SecureRandom.uuid
-  end
 
   def get_image_files(tmpdir)
     image_files = Dir[File.join(tmpdir, "*.*.image")]
@@ -69,17 +65,31 @@ class BuildJob < ApplicationJob
     end
   end
 
-  def deploy_images(build, group_id, image_files)
-    image_files.each do |file|
-      logger.info "build ##{build.id}: deploying #{file}"
-      Deployment.create! do |d|
-        d.comment  = build.comment
-        d.app      = build.app
-        d.group_id = group_id
-        d.board    = ImageFile.get_board_from_filename(file)
-        d.tag      = build.tag
-        d.image    = File.open(file, 'rb').read
+  def deploy_images(build, image_files)
+    comment =  build.deployment.comment
+    app = build.deployment.app
+    tag = build.deployment.tag
+    major_version =  build.deployment.major_version
+    minor_version = (image_files.size == 0)? 0 : 1
+    released_at = Time.now
+
+    ActiveRecord::Base.transaction do
+      image_files.each do |file|
+        logger.info "build ##{build.id}: deploying #{file}"
+        Deployment.create! do |d|
+          d.comment       = comment
+          d.app           = app
+          d.major_version = major_version
+          d.minor_version = minor_version
+          d.tag           = tag
+          d.board         = ImageFile.get_board_from_filename(file)
+          d.image         = File.open(file, 'rb').read
+          d.released_at   = released_at
+        end
+        minor_version += 1
       end
+
+      build.deployment.destroy
     end
   end
 end

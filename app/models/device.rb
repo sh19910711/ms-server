@@ -61,8 +61,10 @@ class Device < ApplicationRecord
       deployment
     else
       # latest deployment
-      Deployment.where(app: self.app, board: self.board,
-                       tag: [self.tag, nil]).order("created_at").last
+      Deployment \
+        .where(app: self.app, board: self.board, tag: [self.tag, nil])
+        .where.not(released_at: nil)
+        .order("created_at").last
     end
   end
 

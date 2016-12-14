@@ -10,16 +10,16 @@ class DeploymentsController < ApplicationController
     Deployment.create! do |d|
       d.comment  = deployment_params[:comment]
       d.app      = @app
-      d.group_id = deployment_params[:group_id]
       d.board    = ImageFile.get_board_from_filename(filename)
       d.tag      = deployment_params[:tag]
       d.image    = deployment_params[:image].read
+      d.released_at = Time.now
     end
   end
 
   private
 
   def deployment_params
-    params.permit(:group_id, :tag, :image, :comment)
+    params.permit(:tag, :image, :comment)
   end
 end

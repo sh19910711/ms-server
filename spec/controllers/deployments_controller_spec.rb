@@ -11,7 +11,9 @@ RSpec.describe DeploymentsController, type: :controller do
     it 'returns a list of deployments' do
       api(:get, :index, params: { app_name: app.name })
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include_json(deployments: deployments.map {|d| d.slice(*%i(tag board group_id comment)) })
+      expect(response.body).to include_json(deployments: deployments.map {|d|
+                                              d.slice(*%i(tag board major_version minor_version comment))
+                                           })
     end
   end
 
