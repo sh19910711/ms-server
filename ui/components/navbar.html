@@ -1,6 +1,8 @@
 <header class="navbar">
   <div class="left">
-    <img src="/icon.svg" class="icon">
+    <router-link to="/">
+      <img src="/icon.svg" class="icon">
+    </router-link>
     <ul class="breadcrumbs" v-for="breadcrumb in breadcrumbs">
       <li><a v-bind:href="breadcrumb.url">{{ breadcrumb.title }}</a></li>
     </ul>
