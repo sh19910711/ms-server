@@ -13,4 +13,6 @@ end
 
 user = FactoryGirl.create(:user, name: "luke", email: "luke@example.com")
 app = FactoryGirl.create(:app, name: "starwars", user: user)
+FactoryGirl.create(:deployment, comment: "first commit!", app: app, board: "esp8266",
+                   released_at: Time.now)
 FactoryGirl.create(:device, name: "x-wing", device_secret: "abc", user: user)
