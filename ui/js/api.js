@@ -1,6 +1,6 @@
 import "whatwg-fetch";
 
-class API {
+export default new class {
   constructor() {
     this.user        = JSON.parse(localStorage.getItem("user"));
     this.credentials = JSON.parse(localStorage.getItem("credentials"));
@@ -54,5 +54,3 @@ class API {
     });
   }
 }
-
-export default new API();
