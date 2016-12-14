@@ -4,10 +4,10 @@
     <header>
       <h1>{{ app_name }}</h1>
       <div class="buttons">
-        <router-link :to="{ path: 'deployments', params: {app_name: this.app_name }}">
+        <router-link :to="{ name: 'deployments', params: {app_name: this.app_name }}">
           <button>deployments</button>
         </router-link>
-        <router-link :to="{ path: 'deployments', params: {app_name: this.app_name }}">
+        <router-link :to="{ name: 'devices' }">
           <button>devices</button>
         </router-link>
         <div class="middledot"></div>
