@@ -13,7 +13,10 @@ export default {
   },
   data() {
     return {
-      apps: []
+      breadcrumbs: [
+        { title: "apps", url: this.$router.currentRoute.path }
+      ],
+      apps: [],
     }
   },
   created() {
