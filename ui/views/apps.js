@@ -25,6 +25,7 @@ export default {
       this.apps = r.json.apps.map(app => {
         return {
           title: app.name,
+          clickable: true,
           onclick: () => {
             this.$router.push({ name: "app", params: { app_name: app.name }});
           }
