@@ -1,0 +1,11 @@
+main {
+  margin: 80px auto 0;
+  width: 800px;
+
+  & > h1 {
+    color: #3a3a3a;
+    margin-bottom: 30px;
+    font-family: "Lucida Grande", "Arial", sans-serif;
+    font-size:   40px;
+  }
+}

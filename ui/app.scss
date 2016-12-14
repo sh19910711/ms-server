@@ -3,6 +3,7 @@
 @import "dropdown";
 @import "card";
 @import "form";
+@import "main";
 
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome";
@@ -28,9 +29,4 @@ a {
   &:active {
     color: #ff7765;
   }
-}
-
-main {
-  margin: 100px auto 0;
-  width: 700px;
 }
