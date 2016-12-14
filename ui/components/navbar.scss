@@ -1,12 +1,12 @@
 header {
-  margin: 20px 10px 0;
+  margin: 15px 8px 0;
   display: flex;
 
   .left {
     margin-right: auto;
     .icon {
-      width:  25px;
-      height: 25px;
+      width:  20px;
+      height: 20px;
     }
 
     .breadcrumbs {
@@ -21,7 +21,8 @@ header {
 
       a {
         color: #5e5d50;
-        font-size: 18px;
+        font-size: 16px;
+        font-family: "Avenir", "Calibri", sans-serif;
         position: relative;
         bottom: 4px;
         text-decoration: none;
@@ -34,17 +35,19 @@ header {
 
   .right {
     .menu {
-      font-size: 30px;
+      font-size: 20px;
       position: relative;
       bottom: 7px;
       margin-right: 14px;
-      color: #777777;
+      color: #707070;
     }
 
     .avatar {
-      width:         35px;
-      height:        35px;
-      border-radius: 35px;
+      position: relative;
+      bottom:   2px;
+      width:         25px;
+      height:        25px;
+      border-radius: 25px;
     }
   }
 }
