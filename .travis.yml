@@ -30,6 +30,7 @@ env:
 cache:
   directories:
     - vendor/bundle
+    - node_modules
 
 before_install:
   - cp ci/database.$DB.yml config/database.yml
@@ -38,9 +39,11 @@ before_install:
 
 install:
   - bundle install --jobs 2 --path vendor/bundle
+  - npm install
 
 before_script:
   - bundle exec rails db:migrate RAILS_ENV=test
 
 script:
+  - npm run build
   - "CODECLIMATE=true bundle exec rspec"
