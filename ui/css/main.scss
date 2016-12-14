@@ -1,11 +1,29 @@
 main {
   margin: 80px auto 0;
-  width: 800px;
+  width: 90%;
 
-  & > h1 {
-    color: #3a3a3a;
+  @media screen and (min-width: 850px) {
+    width: 800px;
+  }
+
+  header {
     margin-bottom: 30px;
-    font-family: "Lucida Grande", "Arial", sans-serif;
-    font-size:   40px;
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+      margin: 0;
+      color: #3a3a3a;
+      font-family: "Lucida Grande", "Arial", sans-serif;
+      font-size: 40px;
+    }
+
+    .buttons {
+      margin-top: auto;
+
+      & > a:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
   }
 }

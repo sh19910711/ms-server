@@ -17,6 +17,7 @@ export default {
     this.apps = [
     {
       title: "led-blink",
+      link: "/apps",
       menu: [{
         title: "delete",
         link:  "/somewhere"

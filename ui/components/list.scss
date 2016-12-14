@@ -1,18 +1,2 @@
 .list {
-  .element {
-    display: flex;
-    justify-content: space-between;
-
-    :not(:last-child) {
-      margin-bottom: 13px;
-    }
-
-    .title {
-      display: inline-box;
-    }
-
-    .right {
-      display: inline-box;
-    }
-  }
 }

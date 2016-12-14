@@ -3,6 +3,7 @@ import "whatwg-fetch";
 export default new class {
   constructor() {
     this.user        = JSON.parse(localStorage.getItem("user"));
+    this.team        = JSON.parse(localStorage.getItem("team"));
     this.credentials = JSON.parse(localStorage.getItem("credentials"));
   }
 
@@ -43,6 +44,7 @@ export default new class {
         email: r.json["data"]["email"]
       };
 
+      this.team = this.user.name;
       this.credentials = {
         uid:            r.headers.get("uid"),
         client:         r.headers.get("client"),
@@ -50,7 +52,12 @@ export default new class {
       };
 
       localStorage.setItem("user", JSON.stringify(this.user));
+      localStorage.setItem("team", JSON.stringify(this.team));
       localStorage.setItem("credentials", JSON.stringify(this.credentials));
     });
+  }
+
+  get_apps() {
+    return this.invoke("GET", `/${this.team}/apps`);
   }
 }

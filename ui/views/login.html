@@ -1,12 +1,12 @@
-<main class="login-view">
-  <div class="card login-form">
+<div class="login-view">
+  <div class="card form">
     <p class="warning" v-if="failed">failed to log in</p>
     <form v-on:submit.prevent="login">
       <label>Name</label>
       <input type="text" v-model="username" required="required" autofocus>
       <label>Password</label>
       <input type="password" v-model="password" required="required">
-      <input type="submit" value="Login">
+      <input type="submit" value="Login" class="login-button">
     </form>
   </div>
-</main>
+</div>

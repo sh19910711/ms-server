@@ -30,3 +30,12 @@ a {
     color: #ff7765;
   }
 }
+
+.middledot {
+  display: inline;
+  color: #b7b7b7;
+
+  &:after {
+    content: "・";
+  }
+}

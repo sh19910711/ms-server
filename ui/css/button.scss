@@ -1,6 +1,5 @@
 @mixin button {
   cursor: pointer;
-  margin-top: 50px;
   padding: 6px 12px 6px;
   background: #ffffff;
   font-size: 15px;
@@ -37,5 +36,36 @@
     background:   $accent-color-active;
     border-color: $accent-color-active;
     color:        #ffffff;
+  }
+}
+
+@mixin delete-button {
+  @include button;
+  color:        $delete-color;
+  border-color: $delete-color;
+
+  &:hover {
+    background:   $delete-color-hover;
+    border-color: $delete-color-hover;
+    color:        #ffffff;
+  }
+
+  &:active {
+    background:   $delete-color-active;
+    border-color: $delete-color-active;
+    color:        #ffffff;
+  }
+}
+
+
+button {
+  @include button;
+
+  &.accent-button {
+    @include accent-button;
+  }
+
+  &.delete-button {
+    @include delete-button;
   }
 }
