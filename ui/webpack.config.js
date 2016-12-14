@@ -22,7 +22,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /.js$/,    loader: "babel", exclude: /node_modules/ },
-      { test: /\.scss$/, loader: "style!css!sass"},
+      { test: /\.scss$/, loader: "style!css!postcss!sass"},
       { test: /\.html$/, loader: "html" },
       { test: /\.(woff|woff2|ttf|eot|svg)(\?.*)?$/, loader: "file" },
     ]
