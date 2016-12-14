@@ -15,16 +15,23 @@
       display: inline;
       padding-left: 7px;
 
+      .fa-caret-right {
+        color: #7e7d70;
+        position: relative;
+        bottom: 5px;
+        margin-left: 4px;
+      }
+
       li {
         display: inline;
       }
 
       a {
-        color: #5e5d50;
+        color: #4e4d40;
         font-size: 16px;
         font-family: "Avenir", "Calibri", sans-serif;
         position: relative;
-        bottom: 4px;
+        bottom: 6px;
         text-decoration: none;
         &:hover {
           text-decoration: underline;

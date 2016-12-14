@@ -15,7 +15,7 @@ export default {
     return {
       team: this.$router.currentRoute.params.team || api.user.name,
       breadcrumbs: [
-        { title: "apps", url: this.$router.currentRoute.path }
+        { title: "apps", route: {name: "apps"}}
       ],
       apps: [],
     }

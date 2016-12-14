@@ -3,9 +3,10 @@
     <router-link to="/">
       <img src="/icon.svg" class="icon">
     </router-link>
-    <ul class="breadcrumbs" v-for="breadcrumb in breadcrumbs">
-      <li><a v-bind:href="breadcrumb.url">{{ breadcrumb.title }}</a></li>
-    </ul>
+    <span class="breadcrumbs" v-for="(breadcrumb, index) in breadcrumbs">
+      <router-link v-bind:to="breadcrumb.route">{{ breadcrumb.title }}</router-link>
+      <i class="fa fa-caret-right" aria-hidden="true" v-if="index != breadcrumbs.length - 1"></i>
+    </span>
   </div>
 
   <div class="right">
