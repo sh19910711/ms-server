@@ -1,8 +1,34 @@
-.card {
+@mixin card {
   padding: 10px;
-  width: 300px;
+  width: 330px;
   border: 1px solid #f7f7f7;
   border-radius: 5px;
   box-shadow: 0 1px 3px #dddddd;
   background: #ffffff;
+}
+
+
+.cards {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card {
+  @include card;
+}
+
+
+.card-with-title {
+  @include card;
+
+  h1 {
+    color: #484848;
+    font-family: "Lucida Grande", "Arial", sans-serif;
+    font-size:   12px;
+    font-weight: 600;
+    text-align:  center;
+    margin-top:  0;
+  }
 }
