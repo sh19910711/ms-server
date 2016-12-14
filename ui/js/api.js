@@ -57,7 +57,11 @@ export default new class {
     });
   }
 
-  get_apps() {
-    return this.invoke("GET", `/${this.team}/apps`);
+  get_apps(team) {
+    return this.invoke("GET", `/${team}/apps`);
+  }
+
+  get_devices(team) {
+    return this.invoke("GET", `/${team}/devices`);
   }
 }

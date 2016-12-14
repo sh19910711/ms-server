@@ -13,6 +13,7 @@ export default {
   },
   data() {
     return {
+      team: this.$router.currentRoute.params.team || api.user.name,
       breadcrumbs: [
         { title: "apps", url: this.$router.currentRoute.path }
       ],
@@ -20,7 +21,7 @@ export default {
     }
   },
   created() {
-    api.get_apps().then(r => {
+    api.get_apps(this.team).then(r => {
       this.apps = r.json.apps.map(app => {
         return {
           title: app.name,
