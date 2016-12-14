@@ -64,4 +64,12 @@ export default new class {
   get_devices(team) {
     return this.invoke("GET", `/${team}/devices`);
   }
+
+  get_deployments(team, app_name) {
+    return this.invoke("GET", `/${team}/apps/${app_name}/deployments`);
+  }
+
+  get_build_log(team, app_name, major_version) {
+    return this.invoke("GET", `/${team}/apps/${app_name}/deployments/${major_version}`);
+  }
 }
