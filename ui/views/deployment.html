@@ -1,0 +1,9 @@
+<div>
+  <nav-bar v-bind:breadcrumbs="breadcrumbs"></nav-bar>
+  <main class="deployment-view">
+    <header>
+      <h1>Deployment #{{ deployment_id }}</h1>
+    </header>
+    <build-result v-bind:team="team" v-bind:app_name="app_name" v-bind:deployment_id="deployment_id"></build-result>
+  </main>
+</div>
