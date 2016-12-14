@@ -36,6 +36,7 @@ before_install:
   - cp ci/database.$DB.yml config/database.yml
   - psql  -c 'create database travis_ci_test;' -U postgres
   - mysql -e 'create database travis_ci_test;' -u root
+  - npm install -g npm@4.0.3
 
 install:
   - bundle install --jobs 2 --path vendor/bundle
