@@ -22,11 +22,13 @@ export default {
   },
   created() {
     api.get_devices(this.team).then(r => {
-      this.devices = r.json.devices.map(app => {
+      this.devices = r.json.devices.map(device => {
         return {
-          title: app.name,
-          clickable: false,
-          onclick: () => {}
+          title: device.name,
+          clickable: true,
+          onclick: () => {
+            this.$router.push({ name: "device", params: { device_name: device.name }});
+          }
         };
       });
     });
