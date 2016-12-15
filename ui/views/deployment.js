@@ -16,7 +16,11 @@ export default {
     return {
       team: this.$router.currentRoute.params.team || api.user.name,
       app_name: this.$router.currentRoute.params.app_name,
-      major_version: this.$router.currentRoute.params.major_version
+      major_version: this.$router.currentRoute.params.major_version,
+      status: "",
+      build_log: "",
+      updated_at: null,
+      created_at: null
     }
   },
   computed: {
@@ -30,5 +34,11 @@ export default {
     }
   },
   created() {
+    api.get_deployment(this.team, this.app_name, this.major_version).then(r => {
+      this.status     = r.json.build.status;
+      this.build_log  = r.json.build.log;
+      this.created_at = (new Date(r.json.created_at)).toLocaleString();
+      this.updated_at = (new Date(r.json.updated_at)).toLocaleString();
+    });
   }
 }

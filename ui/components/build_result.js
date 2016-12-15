@@ -43,12 +43,7 @@ function parse_build_log(build_log) {
 export default {
   name: "build_result",
   template: require("./build_result.html"),
-  props: ["team", "app_name", "major_version"],
-  data() {
-    return {
-      build_log: ""
-    }
-  },
+  props: ["build_log"],
   computed: {
     stages: function() {
       return parse_build_log(this.build_log);
@@ -59,10 +54,5 @@ export default {
       this.stages[stage].actions[action].show = !this.stages[stage].actions[action].show;
       this.$forceUpdate();
     }
-  },
-  created() {
-    api.get_build_log(this.team, this.app_name, this.major_version).then(r => {
-      this.build_log = r.json.build.log;
-    });
   }
 }
