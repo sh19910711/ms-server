@@ -5,6 +5,7 @@ import AppsView from "./views/apps";
 import AppView from "./views/app";
 import HomeView from "./views/home";
 import DevicesView from "./views/devices";
+import DeviceView from "./views/device";
 import DeploymentView from "./views/deployment";
 import DeploymentsView from "./views/deployments";
 
@@ -18,6 +19,7 @@ export default new VueRouter({
     { name: "deployments", path: "/apps/:app_name/deployments", component: Vue.extend(DeploymentsView) },
     { name: "deployment", path: "/apps/:app_name/deployments/:major_version", component: Vue.extend(DeploymentView) },
     { name: "devices", path: "/devices",        component: Vue.extend(DevicesView)  },
+    { name: "device", path: "/devices/:device_name", component: Vue.extend(DeviceView)  },
     { name: "team_devices", path: "/:team/devices",  component: Vue.extend(DevicesView)  },
     { name: "login",   path: "/login",          component: Vue.extend(LoginView) },
   ]
