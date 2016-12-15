@@ -14,7 +14,7 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   NProgress.configure({
-    spinner: false
+    showSpinner: false
   });
   NProgress.start(0.4);
   next();
