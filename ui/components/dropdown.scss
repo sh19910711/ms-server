@@ -1,16 +1,11 @@
 .dropdown {
   position: relative;
-  display:  inline-block;
-
-  &:hover .content {
-    display: block;
-  }
+  display: inline-block;
 
   .content {
-    display: none;
     position: absolute;
-    top: 22px;
-    right: -14px;
+    top: 5px;
+    right: -5px;
     padding: 10px;
     min-width: 120px;
     border: 1px solid #f7f7f7;
@@ -33,19 +28,13 @@
       box-shadow:       -1px 1px 1px 0 rgba(0, 0, 0, 0.085);
     }
 
-    ul {
-      list-style:   none;
-      margin:       3px;
-      padding:      0;
+    & > a {
       font-size:    18px;
+      display: inline-block;
+      width: 100%;
 
-      li {
-        display: inline-block;
-        width: 100%;
-
-        &:not(:first-child) {
-          margin-top: 18px;
-        }
+      &:not(:first-child) {
+        margin-top: 18px;
       }
     }
   }
