@@ -6,7 +6,7 @@ export default {
   template: require("./home.html"),
   components: {
     "nav-bar": NavBar,
-    "simple-list": List
+    "list": List
   },
   data() {
     return {

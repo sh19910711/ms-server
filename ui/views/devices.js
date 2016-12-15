@@ -9,7 +9,7 @@ export default {
   template: require("./devices.html"),
   components: {
     "nav-bar": NavBar,
-    "simple-list": List
+    "list": List
   },
   data() {
     return {

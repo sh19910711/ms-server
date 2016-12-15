@@ -10,7 +10,7 @@ export default {
   template: require("./deployments.html"),
   components: {
     "nav-bar": NavBar,
-    "simple-list": List
+    "list": List
   },
   data() {
     return {

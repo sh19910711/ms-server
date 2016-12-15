@@ -11,7 +11,7 @@ export default {
   template: require("./apps.html"),
   components: {
     "nav-bar": NavBar,
-    "simple-list": List,
+    "list": List,
     "modal": Modal
   },
   data() {
