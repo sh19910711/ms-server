@@ -1,0 +1,33 @@
+.statusbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto 0;
+  padding: 0;
+  padding: 8px 0px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  z-index: 1000;
+  width: 280px;
+
+  .body {
+    margin-left: 4px;
+    position: relative;
+    bottom: 1px;
+  }
+
+  &.success {
+    background: #19FF8D;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: #074526;
+    border-radius: 0px 0px 8px 8px;
+  }
+
+  &.failure {
+    background: #E42E2A;
+    border: 1px solid #074526;
+  }
+}
