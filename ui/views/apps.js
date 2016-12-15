@@ -1,6 +1,8 @@
 import api from "api"
 import NavBar from "components/navbar"
 import List from "components/list"
+import Modal from "components/modal"
+
 
 require("./apps.scss");
 
@@ -9,7 +11,8 @@ export default {
   template: require("./apps.html"),
   components: {
     "nav-bar": NavBar,
-    "simple-list": List
+    "simple-list": List,
+    "modal": Modal
   },
   data() {
     return {
@@ -18,7 +21,18 @@ export default {
         { title: "apps", route: {name: "apps"}}
       ],
       apps: [],
+      app_name: "",
+      show_create_modal: false
     }
+  },
+  methods: {
+    create_app: function() {
+      let app_name = this.app_name;
+      api.create_app(this.team, app_name).then(() => {
+        // TODO: statusbar
+        this.$router.push({ name: "app", params: { app_name: app_name }});
+      });
+    },
   },
   created() {
     api.get_apps(this.team).then(r => {
