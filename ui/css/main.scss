@@ -1,3 +1,5 @@
+@import "title";
+
 main {
   margin: 80px auto 0;
   width: 90%;
@@ -12,10 +14,13 @@ main {
     justify-content: space-between;
 
     h1 {
+      @include title;
       margin: 0;
-      color: #3a3a3a;
-      font-family: "Lucida Grande", "Arial", sans-serif;
-      font-size: 40px;
+      margin-top: auto;
+    }
+
+    .meta {
+      margin-top: auto;
     }
 
     .buttons {
