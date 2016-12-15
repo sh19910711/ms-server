@@ -76,4 +76,9 @@ export default new class {
   create_app(team, app_name) {
     return this.invoke("POST", `/${team}/apps`, { app_name: app_name });
   }
+
+  add_device_to_app(team, app_name, device_name) {
+    return this.invoke("POST", `/${team}/apps/${app_name}/devices`,
+                       { device_name: device_name });
+  }
 }
