@@ -1,5 +1,5 @@
 import NavBar from "components/navbar"
-import BuildResult from "components/build_result"
+import BuildLog from "components/buildlog"
 import api from "api"
 
 
@@ -10,7 +10,7 @@ export default {
   template: require("./deployment.html"),
   components: {
     "nav-bar": NavBar,
-    "build-result": BuildResult
+    "build-result": BuildLog
   },
   data() {
     return {

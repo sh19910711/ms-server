@@ -1,6 +1,6 @@
 import api from "api";
 
-require("./build_result.scss");
+require("./buildlog.scss");
 
 
 function parse_build_log(build_log) {
@@ -41,8 +41,8 @@ function parse_build_log(build_log) {
 
 
 export default {
-  name: "build_result",
-  template: require("./build_result.html"),
+  name: "buildlog",
+  template: require("./buildlog.html"),
   props: ["build_log"],
   computed: {
     stages: function() {
