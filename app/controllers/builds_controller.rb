@@ -10,13 +10,12 @@ class BuildsController < ApplicationController
     source_filedata = build_params[:source_file].read
     tag = build_params[:tag]
 
-    deployment = Deployment.new(app: @app, tag: tag,
-                                comment: build_params[:comment])
-    deployment.save!
 
-    @build = Build.new(app: @app, source_file: source_filedata,
-                       deployment: deployment)
-    @build.save_and_enqueue!
+    @build = Build.new(app: @app, source_file: source_filedata)
+    Deployment.create(app: @app, tag: tag, build: @build,
+                      comment: build_params[:comment])
+
+    @build.save_and_enqueue!(deployment)
 
     render :show, status: :accepted
   end
