@@ -27,10 +27,9 @@ export default {
   },
   methods: {
     create_app: function() {
-      let app_name = this.app_name;
-      api.create_app(this.team, app_name).then(() => {
+      api.create_app(this.team, this.app_name).then(() => {
         // TODO: statusbar
-        this.$router.push({ name: "app", params: { app_name: app_name }});
+        this.$router.push({ name: "app", params: { app_name: this.app_name }});
       });
     },
   },
@@ -42,7 +41,7 @@ export default {
           clickable: true,
           onclick: () => {
             this.$router.push({ name: "app", params: { app_name: app.name }});
-          }
+          },
         };
       });
     });
