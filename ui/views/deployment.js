@@ -9,7 +9,7 @@ export default {
   name: "deployment",
   template: require("./deployment.html"),
   components: {
-    "nav-bar": NavBar,
+    "navbar": NavBar,
     "build-result": BuildLog
   },
   data() {

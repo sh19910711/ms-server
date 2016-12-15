@@ -9,7 +9,7 @@ export default {
   name: "device",
   template: require("./device.html"),
   components: {
-    "nav-bar": NavBar,
+    "navbar": NavBar,
     "modal": Modal
   },
   data() {

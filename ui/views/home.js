@@ -5,7 +5,7 @@ export default {
   name: "home",
   template: require("./home.html"),
   components: {
-    "nav-bar": NavBar
+    "navbar": NavBar
   },
   data() {
     return {

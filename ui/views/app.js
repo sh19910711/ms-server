@@ -8,7 +8,7 @@ export default {
   name: "app",
   template: require("./app.html"),
   components: {
-    "nav-bar": NavBar
+    "navbar": NavBar
   },
   data() {
     return {

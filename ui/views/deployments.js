@@ -9,7 +9,7 @@ export default {
   name: "deployments",
   template: require("./deployments.html"),
   components: {
-    "nav-bar": NavBar,
+    "navbar": NavBar,
     "card": Card
   },
   data() {

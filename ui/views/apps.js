@@ -10,7 +10,7 @@ export default {
   name: "apps",
   template: require("./apps.html"),
   components: {
-    "nav-bar": NavBar,
+    "navbar": NavBar,
     "card": Card,
     "modal": Modal
   },

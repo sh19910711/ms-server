@@ -8,7 +8,7 @@ export default {
   name: "devices",
   template: require("./devices.html"),
   components: {
-    "nav-bar": NavBar,
+    "navbar": NavBar,
     "card": Card
   },
   data() {

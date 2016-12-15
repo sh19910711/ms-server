@@ -7,7 +7,7 @@ require("./navbar.scss");
 
 
 export default {
-  name: "nav-bar",
+  name: "navbar",
   components: {
     "dropdown": Dropdown
   },
