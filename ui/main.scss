@@ -1,8 +1,8 @@
 @import "coloring";
 @import "button";
+@import "title";
 @import "form";
 @import "list";
-@import "main";
 
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome";
@@ -37,5 +37,39 @@ a {
 
   &:after {
     content: "・";
+  }
+}
+
+
+main {
+  margin: 80px auto 0;
+  width: 90%;
+
+  @media screen and (min-width: 850px) {
+    width: 800px;
+  }
+
+  header {
+    margin-bottom: 70px;
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+      @include title;
+      margin: 0;
+      margin-top: auto;
+    }
+
+    .meta {
+      margin-top: auto;
+    }
+
+    .buttons {
+      margin-top: auto;
+
+      & > a:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
   }
 }

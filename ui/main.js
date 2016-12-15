@@ -1,9 +1,14 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import NProgress from "nprogress";
-import App from "./app";
 import router from "./router";
 
+require("./main.scss");
+
+let App = {
+  name: "app",
+  template: require("./main.html")
+};
 
 Vue.use(VueRouter);
 
