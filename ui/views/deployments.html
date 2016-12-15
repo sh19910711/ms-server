@@ -4,6 +4,13 @@
     <header>
       <h1>Deployments</h1>
     </header>
-    <list v-bind:items="deployments"></list>
+    <div class="list">
+      <card v-for="deployment in deployments" type="list">
+         <router-link :to="{ name: 'deployment', params: {major_version: deployment.major_version}}"
+                      slot="title">
+          #{{ deployment.major_version }}: {{ deployment.comment }}
+        </router-link>
+      </card>
+    </div>
   </main>
 </div>

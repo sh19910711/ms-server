@@ -1,6 +1,7 @@
 import api from "api"
 import NavBar from "components/navbar"
 import List from "components/list"
+import Card from "components/card"
 
 require("./devices.scss");
 
@@ -9,6 +10,7 @@ export default {
   template: require("./devices.html"),
   components: {
     "nav-bar": NavBar,
+    "card": Card,
     "list": List
   },
   data() {
@@ -22,15 +24,7 @@ export default {
   },
   created() {
     api.get_devices(this.team).then(r => {
-      this.devices = r.json.devices.map(device => {
-        return {
-          title: device.name,
-          clickable: true,
-          onclick: () => {
-            this.$router.push({ name: "device", params: { device_name: device.name }});
-          }
-        };
-      });
+      this.devices = r.json.devices;
     });
   }
 }

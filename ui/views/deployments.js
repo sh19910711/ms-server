@@ -1,5 +1,6 @@
 import NavBar from "components/navbar"
 import List from "components/list"
+import Card from "components/card"
 import api from "api"
 
 
@@ -10,7 +11,8 @@ export default {
   template: require("./deployments.html"),
   components: {
     "nav-bar": NavBar,
-    "list": List
+    "list": List,
+    "card": Card
   },
   data() {
     return {
@@ -30,15 +32,7 @@ export default {
   },
   created() {
     api.get_deployments(this.team, this.app_name).then(r => {
-      this.deployments = r.json.deployments.map(deployment => {
-        return {
-          title: `#${deployment.major_version}: ${deployment.comment}`,
-          clickable: true,
-          onclick: () => {
-            this.$router.push({ name: "deployment", params: { major_version: deployment.major_version }});
-          }
-        };
-      });
+      this.deployments = r.json.deployments;
     });
   }
 }

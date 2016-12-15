@@ -1,6 +1,6 @@
 import api from "api"
 import NavBar from "components/navbar"
-import List from "components/list"
+import Card from "components/card"
 import Modal from "components/modal"
 
 
@@ -11,7 +11,7 @@ export default {
   template: require("./apps.html"),
   components: {
     "nav-bar": NavBar,
-    "list": List,
+    "card": Card,
     "modal": Modal
   },
   data() {
@@ -35,15 +35,7 @@ export default {
   },
   created() {
     api.get_apps(this.team).then(r => {
-      this.apps = r.json.apps.map(app => {
-        return {
-          title: app.name,
-          clickable: true,
-          onclick: () => {
-            this.$router.push({ name: "app", params: { app_name: app.name }});
-          },
-        };
-      });
+      this.apps = r.json.apps;
     });
   }
 }

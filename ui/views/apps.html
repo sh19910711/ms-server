@@ -16,6 +16,12 @@
         <button class="accent-button" @click="show_create_modal = true">create</button>
       </div>
     </header>
-    <list v-bind:items="apps"></list>
+    <div class="list">
+      <card v-for="app in apps" type="list">
+         <router-link :to="{ name: 'app', params: {app_name: app.name}}" slot="title">
+          {{ app.name }}
+        </router-link>
+      </card>
+    </div>
   </main>
 </div>
