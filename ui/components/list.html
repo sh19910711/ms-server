@@ -2,15 +2,5 @@
   <div class="list-card" v-for="item in items" v-bind:class="{ link: item.clickable }"
        v-on:click="item.onclick">
     <div class="title">{{ item.title }}</div>
-    <div class="right">
-      <div class="dropdown">
-        <i class="fa fa-caret-down" aria-hidden="true"></i>
-        <div class="content">
-          <ul v-for="menu in item.menu">
-            <li><a :href="menu.link">{{ menu.title }}</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
