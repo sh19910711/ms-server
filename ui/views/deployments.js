@@ -1,5 +1,4 @@
 import NavBar from "components/navbar"
-import List from "components/list"
 import Card from "components/card"
 import api from "api"
 
@@ -11,7 +10,6 @@ export default {
   template: require("./deployments.html"),
   components: {
     "nav-bar": NavBar,
-    "list": List,
     "card": Card
   },
   data() {

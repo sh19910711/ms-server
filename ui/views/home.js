@@ -1,12 +1,11 @@
 import NavBar from "components/navbar"
-import List from "components/list"
+
 
 export default {
   name: "home",
   template: require("./home.html"),
   components: {
-    "nav-bar": NavBar,
-    "list": List
+    "nav-bar": NavBar
   },
   data() {
     return {

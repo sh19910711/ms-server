@@ -1,6 +1,5 @@
 import api from "api"
 import NavBar from "components/navbar"
-import List from "components/list"
 import Card from "components/card"
 
 require("./devices.scss");
@@ -10,8 +9,7 @@ export default {
   template: require("./devices.html"),
   components: {
     "nav-bar": NavBar,
-    "card": Card,
-    "list": List
+    "card": Card
   },
   data() {
     return {
