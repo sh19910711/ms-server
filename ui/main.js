@@ -8,6 +8,11 @@ import router from "./router";
 Vue.use(VueRouter);
 
 router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
+  next();
+})
+
+router.beforeEach((to, from, next) => {
   NProgress.configure({
     spinner: false
   });

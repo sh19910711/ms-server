@@ -42,6 +42,7 @@ export default {
     }
   },
   created() {
+    document.title = this.device_name;
     api.get_apps(this.team).then(r => {
       this.apps = r.json.apps;
       // FIXME: what if there are no apps?

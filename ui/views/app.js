@@ -25,5 +25,6 @@ export default {
     }
   },
   created() {
+    document.title = this.app_name;
   }
 }
