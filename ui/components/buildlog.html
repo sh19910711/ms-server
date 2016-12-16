@@ -1,0 +1,11 @@
+<div class="buildlog">
+  <section class="stage" v-for="(stage, stage_index) in stages">
+    <h1>{{ stage.title }}</h1>
+    <div class="action" v-for="(action, action_index) in stage.actions">
+      <h2 v-bind:class="[action.result]" v-on:click="show_log(stage_index, action_index)">{{ action.title }}</h2>
+      <div class="log" v-show="action.show">
+        <p class="log" v-for="line in action.log">{{ line }}</p>
+      </div>
+    </div>
+  </section>
+</div>

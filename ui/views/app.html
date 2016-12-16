@@ -1,0 +1,13 @@
+<div>
+  <nav-bar v-bind:breadcrumbs="breadcrumbs"></nav-bar>
+  <main class="app">
+    <header>
+      <h1>{{ app_name }}</h1>
+      <div class="buttons">
+        <router-link :to="{ name: 'deployments', params: {app_name: this.app_name }}">
+          <button>deployments</button>
+        </router-link>
+      </div>
+    </header>
+  </main>
+</div>

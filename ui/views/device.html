@@ -1,0 +1,24 @@
+<div>
+  <modal v-if="show_add_modal" @close="show_add_modal = false">
+    <h1 slot="title">Add to an app</h1>
+    <form v-on:submit.prevent="add_to_app" slot="content">
+      <label>App</label>
+      <select v-model="add_device_to">
+        <option v-bind:value="app.name" v-for="app in apps">{{ app.name }}</option>
+      </select>
+      <input type="submit" v-bind:value="add_modal_submit_button">
+    </form>
+  </modal>
+
+  <nav-bar v-bind:breadcrumbs="breadcrumbs"></nav-bar>
+  <main class="device">
+    <header>
+      <h1>{{ device_name }}</h1>
+      <div class="buttons">
+        <button class="accent-button" @click="show_add_modal = ! show_add_modal">
+          add to an app
+        </button>
+      </div>
+    </header>
+  </main>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214130057) do
+ActiveRecord::Schema.define(version: 20161214231457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,12 +28,10 @@ ActiveRecord::Schema.define(version: 20161214130057) do
     t.integer  "app_id"
     t.string   "status"
     t.text     "log"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.binary   "source_file"
-    t.integer  "deployment_id"
     t.index ["app_id"], name: "index_builds_on_app_id", using: :btree
-    t.index ["deployment_id"], name: "index_builds_on_deployment_id", using: :btree
   end
 
   create_table "deployments", force: :cascade do |t|
@@ -47,8 +45,10 @@ ActiveRecord::Schema.define(version: 20161214130057) do
     t.integer  "major_version"
     t.integer  "minor_version"
     t.datetime "released_at"
+    t.integer  "build_id"
     t.index ["app_id"], name: "index_deployments_on_app_id", using: :btree
-    t.index ["major_version"], name: "index_deployments_on_major_version", unique: true, using: :btree
+    t.index ["build_id"], name: "index_deployments_on_build_id", using: :btree
+    t.index ["major_version"], name: "index_deployments_on_major_version", using: :btree
   end
 
   create_table "devices", force: :cascade do |t|
@@ -106,8 +106,8 @@ ActiveRecord::Schema.define(version: 20161214130057) do
 
   add_foreign_key "apps", "users"
   add_foreign_key "builds", "apps"
-  add_foreign_key "builds", "deployments"
   add_foreign_key "deployments", "apps"
+  add_foreign_key "deployments", "builds"
   add_foreign_key "devices", "apps"
   add_foreign_key "devices", "users"
   add_foreign_key "envvars", "devices"

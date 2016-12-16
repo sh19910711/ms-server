@@ -1,0 +1,60 @@
+.navbar {
+  margin: 15px 8px 0;
+  display: flex;
+  justify-content: space-between;
+
+  .left {
+    .icon {
+      width:  20px;
+      height: 20px;
+    }
+
+    .breadcrumbs {
+      vertical-align: center;
+      list-style: none;
+      display: inline;
+      padding-left: 7px;
+
+      .fa-caret-right {
+        color: #7e7d70;
+        position: relative;
+        bottom: 5px;
+        margin-left: 4px;
+      }
+
+      li {
+        display: inline;
+      }
+
+      a {
+        color: #4e4d40;
+        font-size: 16px;
+        font-family: "Avenir", "Calibri", sans-serif;
+        position: relative;
+        bottom: 6px;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .right {
+    .menu {
+      font-size: 20px;
+      position: relative;
+      bottom: 7px;
+      color: #707070;
+    }
+
+    .avatar {
+      margin-left: 14px;
+      position: relative;
+      bottom:   2px;
+      width:         25px;
+      height:        25px;
+      border-radius: 25px;
+    }
+  }
+}

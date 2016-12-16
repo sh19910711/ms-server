@@ -1,8 +1,18 @@
 class DeploymentsController < ApplicationController
-  before_action :set_app, only: [:index, :create]
+  before_action :set_app, only: [:index, :show, :create]
 
   def index
     @deployments = @app.deployments
+  end
+
+  def show
+    major = params[:major]
+    minor = params[:minor] || 0
+
+    @deployment = @app.deployments \
+                    .where(major_version: major, minor_version: minor)
+                    .includes(:build)
+                    .first
   end
 
   def create

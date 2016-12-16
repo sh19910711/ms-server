@@ -1,0 +1,6 @@
+<div class="list">
+  <div class="list-card" v-for="item in items" v-bind:class="{ link: item.clickable }"
+       v-on:click="item.onclick">
+    <div class="title">{{ item.title }}</div>
+  </div>
+</div>

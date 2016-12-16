@@ -1,0 +1,10 @@
+Description:
+    Generates an UI component
+
+Example:
+    rails generate component table
+
+    This will create:
+        ui/components/table.js
+        ui/components/table.scss
+        ui/components/table.html

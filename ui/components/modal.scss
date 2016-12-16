@@ -1,0 +1,40 @@
+@import "title";
+
+.modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+
+  .close {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    font-size: 30px;
+    color: #9a9a9a;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  h1 {
+    @include title;
+    margin-bottom: 70px;
+  }
+
+  .content {
+    opacity: 1.0;
+    z-index: 3;
+    background: #ffffff;
+    width: 400px;
+    margin: 100px auto 0px;
+    padding: 10px;
+  }
+}

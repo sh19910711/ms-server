@@ -4,7 +4,8 @@ end
 class BuildJob < ApplicationJob
   queue_as :build
 
-  def perform(build_id)
+  def perform(deployment_id, build_id)
+    deployment = Deployment.find(deployment_id)
     build = Build.find(build_id)
 
     begin
@@ -14,7 +15,7 @@ class BuildJob < ApplicationJob
       Dir.mktmpdir("makestack-app-build-", tmp_base_dir) do |tmpdir|
         IO.binwrite(File.join(tmpdir, 'app.zip'), build.source_file)
         build(build, tmpdir)
-        deploy_images(build, get_image_files(tmpdir))
+        deploy_images(deployment, build, get_image_files(tmpdir))
       end
 
       finish_build(build)
@@ -65,11 +66,11 @@ class BuildJob < ApplicationJob
     end
   end
 
-  def deploy_images(build, image_files)
-    comment =  build.deployment.comment
-    app = build.deployment.app
-    tag = build.deployment.tag
-    major_version =  build.deployment.major_version
+  def deploy_images(deployment, build, image_files)
+    comment =  deployment.comment
+    app = deployment.app
+    tag = deployment.tag
+    major_version =  deployment.major_version
     minor_version = (image_files.size == 0)? 0 : 1
     released_at = Time.now
 
@@ -85,11 +86,12 @@ class BuildJob < ApplicationJob
           d.board         = ImageFile.get_board_from_filename(file)
           d.image         = File.open(file, 'rb').read
           d.released_at   = released_at
+          d.build         = build
         end
         minor_version += 1
       end
 
-      build.deployment.destroy
+      deployment.destroy
     end
   end
 end

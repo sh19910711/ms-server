@@ -1,7 +1,9 @@
 class Deployment < ApplicationRecord
   belongs_to :app
+  belongs_to :build
 
   validates :app, presence: true
+  validates :build, presence: true
   validates :image, presence: true, if: :released?
   validates :board, inclusion: { in: SUPPORTED_BOARDS }, if: :released?
 

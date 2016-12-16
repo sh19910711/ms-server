@@ -1,0 +1,40 @@
+@import "coloring";
+@import "button";
+@import "card";
+@import "form";
+@import "main";
+
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Meiryo', 'Ubuntu', sans-serif;
+  color: #333333;
+  font-size: 14px;
+}
+
+a {
+  text-decoration: none;
+
+  &:link, &:visited {
+    color: #4f8fcf;
+  }
+
+  &:hover {
+    color: #00bdff;
+  }
+
+  &:active {
+    color: #ff7765;
+  }
+}
+
+.middledot {
+  display: inline;
+  color: #b7b7b7;
+
+  &:after {
+    content: "・";
+  }
+}

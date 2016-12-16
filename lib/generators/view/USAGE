@@ -1,0 +1,10 @@
+Description:
+    Generatesa an UI view
+
+Example:
+    rails generate view Thing
+
+    This will create:
+        ui/views/table.js
+        ui/views/table.scss
+        ui/views/table.html

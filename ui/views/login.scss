@@ -1,0 +1,26 @@
+@import "coloring";
+@import "form";
+
+
+.login-view {
+  padding-top: 100px;
+  height:      100%;
+  width:       100%;
+  position:    absolute;
+  top:         0;
+  left:        0;
+  background:  $grey-background-color;
+
+  .form {
+    width: $short-input-width + 20px;
+    margin: 0 auto 0;
+
+    input[type=submit] {
+      width: $short-input-width + 15px;
+    }
+
+    .login-button {
+      margin-top: 30px;
+    }
+  }
+}
