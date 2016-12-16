@@ -1,4 +1,5 @@
 import api from "api";
+import ProgressBar from "progressbar"
 
 require("./login.scss");
 
@@ -20,5 +21,8 @@ export default {
         this.failed = true;
       });
     }
+  },
+  created() {
+    ProgressBar.done();
   }
 }

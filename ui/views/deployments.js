@@ -1,6 +1,7 @@
 import NavBar from "components/navbar"
 import Card from "components/card"
 import api from "api"
+import ProgressBar from "progressbar"
 
 
 require("./deployments.scss");
@@ -31,6 +32,7 @@ export default {
   created() {
     api.get_deployments(this.team, this.app_name).then(r => {
       this.deployments = r.json.deployments;
+      ProgressBar.done();
     });
   }
 }

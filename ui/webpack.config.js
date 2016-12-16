@@ -16,6 +16,7 @@ module.exports = {
     root: path.resolve("ui"),
     alias: {
       api:  "js/api",
+      progressbar: "js/progressbar",
       vue:  "vue/dist/vue.js"
     }
   },

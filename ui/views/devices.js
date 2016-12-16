@@ -1,5 +1,6 @@
 import api from "api"
 import NavBar from "components/navbar"
+import ProgressBar from "progressbar"
 import Card from "components/card"
 
 require("./devices.scss");
@@ -23,6 +24,7 @@ export default {
   created() {
     api.get_devices(this.team).then(r => {
       this.devices = r.json.devices;
+      ProgressBar.done();
     });
   }
 }

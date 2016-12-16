@@ -1,3 +1,4 @@
+import ProgressBar from "progressbar"
 import NavBar from "components/navbar"
 
 
@@ -37,5 +38,7 @@ export default {
       }]
     }
     ];
+
+    ProgressBar.done();
   }
 }

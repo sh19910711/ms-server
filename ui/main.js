@@ -1,6 +1,6 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
-import NProgress from "nprogress";
+import ProgressBar from "progressbar"
+import VueRouter from "vue-router"
 import router from "./router";
 
 require("./main.scss");
@@ -13,20 +13,9 @@ let App = {
 Vue.use(VueRouter);
 
 router.beforeEach((to, from, next) => {
+  ProgressBar.start();
   document.title = to.meta.title;
   next();
-})
-
-router.beforeEach((to, from, next) => {
-  NProgress.configure({
-    showSpinner: false
-  });
-  NProgress.start(0.4);
-  next();
-})
-
-router.afterEach((to, from) => {
-  NProgress.done();
 })
 
 new Vue(Vue.util.extend({ router }, App)).$mount("#app");

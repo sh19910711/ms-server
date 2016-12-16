@@ -1,6 +1,7 @@
 import NavBar from "components/navbar"
 import BuildLog from "components/buildlog"
 import api from "api"
+import ProgressBar from "progressbar"
 
 
 require("./deployment.scss");
@@ -39,6 +40,7 @@ export default {
       this.build_log  = r.json.build.log;
       this.created_at = (new Date(r.json.created_at)).toLocaleString();
       this.updated_at = (new Date(r.json.updated_at)).toLocaleString();
+      ProgressBar.done();
     });
   }
 }

@@ -1,5 +1,7 @@
 import api from "api"
+import ProgressBar from "progressbar"
 import NavBar from "components/navbar"
+import {set_statusbar} from "components/statusbar"
 import Card from "components/card"
 import Modal from "components/modal"
 
@@ -36,6 +38,7 @@ export default {
   created() {
     api.get_apps(this.team).then(r => {
       this.apps = r.json.apps;
+      ProgressBar.done();
     });
   }
 }

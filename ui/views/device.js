@@ -1,4 +1,5 @@
 import NavBar from "components/navbar"
+import ProgressBar from "progressbar"
 import Modal from "components/modal"
 import api from "api"
 
@@ -48,5 +49,7 @@ export default {
       // FIXME: what if there are no apps?
       this.add_device_to = this.apps[0].name;
     });
+
+    ProgressBar.done();
   }
 }

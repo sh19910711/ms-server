@@ -1,4 +1,5 @@
 import NavBar from "components/navbar"
+import ProgressBar from "progressbar"
 import api from "api"
 
 
@@ -26,5 +27,6 @@ export default {
   },
   created() {
     document.title = this.app_name;
+    ProgressBar.done();
   }
 }
