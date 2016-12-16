@@ -2,6 +2,18 @@
 @import "title";
 @import "button";
 
+$modal-transition-duration: 0.4s;
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .modal {
   width: 100%;
   height: 100%;
@@ -12,13 +24,19 @@
   width: 100%;
   height: 100%;
   background: #ffffff;
+  display: none;
+
+  &.show {
+    display: block;
+    animation: show $modal-transition-duration ease-out;
+  }
 
   .close {
     transition: color $button-transition-duration;
     display: block;
     position: absolute;
-    top: 20px;
-    right: 10px;
+    top: 40px;
+    right: 50px;
     font-size: 30px;
     color: $modal-close-button-color;
 

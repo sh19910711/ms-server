@@ -1,4 +1,4 @@
-<div class="modal">
+<div class="modal" v-bind:class="{show: show}">
   <i class="fa fa-window-close close" aria-hidden="true" @click="$emit('close')"></i>
   <div class="content">
     <slot name="title"></slot>

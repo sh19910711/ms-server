@@ -1,5 +1,5 @@
 <div>
-  <modal v-if="show_create_modal" @close="show_create_modal = false">
+  <modal v-bind:show="show_create_modal" @close="show_create_modal = false">
     <h1 slot="title">Create a new app</h1>
     <form v-on:submit.prevent="create_app" slot="content">
       <label>Name</label>
