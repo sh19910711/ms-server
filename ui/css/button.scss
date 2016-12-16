@@ -18,9 +18,9 @@ $button-transition-duration: 0.5s;
   appearance: none;
 
   &:hover {
-    background:   #ffffff;
-    border-color: $normal-button-active-color;
-    color:        $normal-button-active-color;
+    background:   $normal-button-hover-color;
+    border-color: $normal-button-hover-color;
+    color:        #ffffff;
   }
 
   &:active {

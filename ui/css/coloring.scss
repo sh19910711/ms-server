@@ -4,15 +4,15 @@ $default-font-color: #333333;
 //
 //  Buttons
 //
-$normal-button-color: green;
-$normal-button-hover-color: darkgreen;
-$normal-button-active-color: red;
-$accent-button-color: green;
-$accent-button-hover-color: darkgreen;
-$accent-button-active-color: red;
-$delete-button-color: red;
-$delete-button-hover-color: darkgreen;
-$delete-button-active-color: red;
+$normal-button-color: #3f3f3f;
+$normal-button-hover-color: #3f3f3f;
+$normal-button-active-color: #7a7a7a;
+$accent-button-color: #0451ac;
+$accent-button-hover-color: #0451ac;
+$accent-button-active-color: #00a1d9;
+$delete-button-color: #ee2222;
+$delete-button-hover-color: #ee2222;
+$delete-button-active-color: #ff3333;
 
 //
 //  Modal
@@ -53,15 +53,15 @@ $buildlog-stage-title-color: #8a8a8a;
 $buildlog-log-background-color: #0a0a0a;
 $buildlog-log-font-color: #fafafa;
 $buildlog-action-title-color: #8a8a8a;
-$buildlog-success-color: red;
-$buildlog-fail-color: red;
+$buildlog-success-color: #00a388;
+$buildlog-fail-color: #cd2c24;
 
 //
 //  Statusbar
 //
-$statusbar-success-font-color: #074526;
-$statusbar-success-background-color: #19FF8D;
-$statusbar-success-border-color: #074526;
-$statusbar-failure-font-color: #074526;
-$statusbar-failure-background-color: #19FF8D;
-$statusbar-failure-border-color: #074526;
+$statusbar-success-font-color: #111111;
+$statusbar-success-background-color: #beeb9f;
+$statusbar-success-border-color: #00a388;
+$statusbar-failure-font-color: #111111;
+$statusbar-failure-background-color: #f2836b;
+$statusbar-failure-border-color: #cd2c24;
