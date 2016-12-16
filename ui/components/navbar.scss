@@ -1,3 +1,7 @@
+@import "coloring";
+@import "fonts";
+@import "button";
+
 .navbar {
   margin: 15px 8px 0;
   display: flex;
@@ -16,7 +20,7 @@
       padding-left: 7px;
 
       .fa-caret-right {
-        color: #7e7d70;
+        color: $breadcrumbs-caret-color;
         position: relative;
         bottom: 5px;
         margin-left: 4px;
@@ -27,9 +31,9 @@
       }
 
       a {
-        color: #4e4d40;
+        color: $breadcrumbs-link-color;
         font-size: 16px;
-        font-family: "Avenir", "Calibri", sans-serif;
+        font-family: $breadcrumbs-link-font;
         position: relative;
         bottom: 6px;
         text-decoration: none;
@@ -45,11 +49,18 @@
     .menu {
       display: inline-block;
       i {
+        @include button-transition;
+
         display: inline;
         font-size: 20px;
         position: relative;
         bottom: 7px;
-        color: #707070;
+        color: $navbar-menu-button-color;
+
+        &:hover {
+          cursor: pointer;
+          color: $navbar-menu-button-hover-color;
+        }
       }
     }
 

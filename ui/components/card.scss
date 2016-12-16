@@ -1,17 +1,12 @@
+@import "coloring";
+@import "fonts";
+
 .card {
   border: 1px solid #f7f7f7;
   border-radius: 5px;
   box-shadow: 0 1px 3px #dddddd;
   background: #ffffff;
   width: 330px;
-
-
-  &.link {
-    &:hover {
-      background: #f5f5f5;
-      cursor: pointer;
-    }
-  }
 
   &.list {
     width: 90%;
@@ -28,12 +23,17 @@
     .title {
       padding: 15px 20px;
       width: 100%;
+      color: $card-list-font-color;
+
+      a {
+        color: $card-list-font-color;
+      }
     }
   }
 
   h3 {
-    color: #484848;
-    font-family: "Lucida Grande", "Arial", sans-serif;
+    color: $card-title-color;
+    font-family: $card-title-font;
     font-size:   12px;
     font-weight: 600;
     text-align:  center;

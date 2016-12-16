@@ -1,8 +1,11 @@
+@import "coloring";
+@import "fonts";
+
 .buildlog {
   h1 {
-    color: #8a8a8a;
+    color: $buildlog-stage-title-color;
     border-bottom: 1px solid #eeeeee;
-    font-family: "Helvetica Neue", sans-serif;
+    font-family: $buildlog-stage-title-font;
     font-weight: 400;
     font-size: 14px;
     text-transform: uppercase;
@@ -16,8 +19,8 @@
   h2 {
     border: 1px solid #f3f3f3;
     border-left: 10px solid #f3f3f3;
-    color: #5a5a5a;
-    font-family: "Helvetica Neue", sans-serif;
+    color: $buildlog-action-title-color;
+    font-family: $buildlog-action-title-font;
     font-weight: 500;
     font-size: 13px;
     padding: 14px 10px 14px;
@@ -28,20 +31,20 @@
     }
 
     &.success {
-      border-left-color: green;
+      border-left-color: $buildlog-success-color;
     }
 
     &.fail {
-      border-left-color: red;
+      border-left-color: $buildlog-fail-color;
     }
   }
 
   .log {
     margin: 20px;
     padding: 7px 10px 7px;
-    background: #0a0a0a;
-    color: #fefefe;
-    font-family: "Source Code Pro", "Monaco", "Consolas", monospace;
+    background: $buildlog-log-background-color;
+    color: $buildlog-log-font-color;
+    font-family: $buildlog-log-font;
     font-size: 14px;
 
     p {

@@ -1,8 +1,67 @@
-/* FIXME */
-$grey-background-color: #f9f9f9;
-$accent-color: green;
-$accent-color-hover: darkgreen;
-$accent-color-active: red;
-$delete-color: red;
-$delete-color-hover: darkgreen;
-$delete-color-active: red;
+$title-color: #3a3a3a;
+$default-font-color: #333333;
+
+//
+//  Buttons
+//
+$normal-button-color: green;
+$normal-button-hover-color: darkgreen;
+$normal-button-active-color: red;
+$accent-button-color: green;
+$accent-button-hover-color: darkgreen;
+$accent-button-active-color: red;
+$delete-button-color: red;
+$delete-button-hover-color: darkgreen;
+$delete-button-active-color: red;
+
+//
+//  Modal
+//
+$modal-close-button-color: #9a9a9a;
+$modal-close-button-hover-color: #3a3a3a;
+
+//
+//  Link
+//
+$link-color: #4f8fcf;
+$link-hover-color: #00bdff;
+$link-active-color: #ff7765;
+
+//
+//  Login
+//
+$login-background-color: #f9f9f9;
+
+//
+//  Card
+//
+$card-title-color: #4a4a4a;
+$card-list-font-color: #4a4a4a;
+
+//
+//  Navbar
+//
+$navbar-menu-button-hover-color: #000000;
+$navbar-menu-button-color: #707070;
+$breadcrumbs-caret-color: #7e7d70;
+$breadcrumbs-link-color: #4e4d40;
+
+//
+//  Buildlog
+//
+$buildlog-stage-title-color: #8a8a8a;
+$buildlog-log-background-color: #0a0a0a;
+$buildlog-log-font-color: #fafafa;
+$buildlog-action-title-color: #8a8a8a;
+$buildlog-success-color: red;
+$buildlog-fail-color: red;
+
+//
+//  Statusbar
+//
+$statusbar-success-font-color: #074526;
+$statusbar-success-background-color: #19FF8D;
+$statusbar-success-border-color: #074526;
+$statusbar-failure-font-color: #074526;
+$statusbar-failure-background-color: #19FF8D;
+$statusbar-failure-border-color: #074526;

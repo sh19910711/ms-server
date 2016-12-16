@@ -1,6 +1,9 @@
+@import "coloring";
+@import "fonts";
+
 @mixin title {
-  font-family: "Lucida Grande", "Arial", sans-serif;
-  color: #3a3a3a;
+  font-family: $title-font;
+  color: $title-color;
   font-size: 40px;
   font-weight: 600;
 }

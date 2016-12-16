@@ -1,3 +1,5 @@
+@import "coloring";
+
 .statusbar {
   position: absolute;
   top: 0;
@@ -11,6 +13,9 @@
   font-weight: bold;
   z-index: 1000;
   width: 280px;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-radius: 0px 0px 8px 8px;
 
   .body {
     margin-left: 4px;
@@ -19,15 +24,14 @@
   }
 
   &.success {
-    background: #19FF8D;
-    border-width: 0px 1px 1px 1px;
-    border-style: solid;
-    border-color: #074526;
-    border-radius: 0px 0px 8px 8px;
+    color: $statusbar-success-font-color;
+    background: $statusbar-success-background-color;
+    border-color: $statusbar-success-border-color;
   }
 
   &.failure {
-    background: #E42E2A;
-    border: 1px solid #074526;
+    color: $statusbar-failure-font-color;
+    background: $statusbar-failure-background-color;
+    border-color: $statusbar-failure-border-color;
   }
 }

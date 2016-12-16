@@ -1,4 +1,6 @@
+@import "coloring";
 @import "title";
+@import "button";
 
 .modal {
   width: 100%;
@@ -12,15 +14,17 @@
   background: #ffffff;
 
   .close {
+    transition: color $button-transition-duration;
     display: block;
     position: absolute;
     top: 20px;
     right: 10px;
     font-size: 30px;
-    color: #9a9a9a;
+    color: $modal-close-button-color;
 
     &:hover {
       cursor: pointer;
+      color: $modal-close-button-hover-color;
     }
   }
 

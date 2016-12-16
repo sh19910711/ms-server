@@ -1,58 +1,68 @@
+@import "coloring";
+
+$button-transition-duration: 0.5s;
+@mixin button-transition {
+  transition: all $button-transition-duration;
+}
+
 @mixin button {
+  @include button-transition;
+
   cursor: pointer;
   padding: 6px 12px 6px;
   background: #ffffff;
   font-size: 15px;
-  color: #333333;
-  border: 1px solid #333333;
+  color: $normal-button-color;
+  border: 1px solid $normal-button-color;
   border-radius: 3px;
   appearance: none;
 
   &:hover {
-    background:   #fafafa;
-    border-color: #fafafa;
-    color:        #fafafa;
+    background:   #ffffff;
+    border-color: $normal-button-active-color;
+    color:        $normal-button-active-color;
   }
 
   &:active {
-    background:   #f7f7f7;
-    border-color: #f7f7f7;
-    color:        #f7f7f7;
+    background:   #normal-button-active-color;
+    border-color: #normal-button-active-color;
+    color:        #normal-button-active-color;
   }
 }
 
 @mixin accent-button {
   @include button;
-  color:        $accent-color;
-  border-color: $accent-color;
+  color:        $accent-button-color;
+  border-color: $accent-button-color;
 
   &:hover {
-    background:   $accent-color-hover;
-    border-color: $accent-color-hover;
+    background:   $accent-button-hover-color;
+    border-color: $accent-button-hover-color;
     color:        #ffffff;
   }
 
   &:active {
-    background:   $accent-color-active;
-    border-color: $accent-color-active;
+    background:   $accent-button-active-color;
+    border-color: $accent-button-active-color;
     color:        #ffffff;
   }
 }
 
 @mixin delete-button {
   @include button;
-  color:        $delete-color;
-  border-color: $delete-color;
+
+  color:        $delete-button-color;
+  border-color: $delete-button-color;
 
   &:hover {
-    background:   $delete-color-hover;
-    border-color: $delete-color-hover;
+    background:   $delete-button-hover-color;
+    border-color: $delete-button-hover-color;
     color:        #ffffff;
   }
 
   &:active {
-    background:   $delete-color-active;
-    border-color: $delete-color-active;
+    background:   $delete-button-active-color;
+    border-color: $delete-button-active-color;
     color:        #ffffff;
   }
 }
