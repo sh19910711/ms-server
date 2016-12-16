@@ -12,12 +12,16 @@
   </div>
 
   <div class="right">
-    <i class="fa fa-bars menu" aria-hidden="true" @click="show_menu = !show_menu"></i>
-    <dropdown v-if="show_menu">
-      <router-link :to="{ name: 'home' }">Home</router-link>
-      <router-link :to="{ name: 'apps' }">Apps</router-link>
-      <router-link :to="{ name: 'devices' }">Devices</router-link>
-    </dropdown>
+    <div class="menu">
+      <i class="fa fa-bars" aria-hidden="true" @click="show_menu = !show_menu"></i>
+
+      <dropdown v-if="show_menu">
+        <router-link :to="{ name: 'home' }">Home</router-link>
+        <router-link :to="{ name: 'apps' }">Apps</router-link>
+        <router-link :to="{ name: 'devices' }">Devices</router-link>
+      </dropdown>
+    </div>
+
     <img v-bind:src="gravatar_url" class="avatar">
   </div>
 </header>

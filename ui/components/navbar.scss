@@ -41,14 +41,20 @@
   }
 
   .right {
+    font-size:0;
     .menu {
-      font-size: 20px;
-      position: relative;
-      bottom: 7px;
-      color: #707070;
+      display: inline-block;
+      i {
+        display: inline;
+        font-size: 20px;
+        position: relative;
+        bottom: 7px;
+        color: #707070;
+      }
     }
 
     .avatar {
+      display: inline-block;
       margin-left: 14px;
       position: relative;
       bottom:   2px;
