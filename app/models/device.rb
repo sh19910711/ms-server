@@ -68,8 +68,4 @@ class Device < ApplicationRecord
         .order("created_at").last
     end
   end
-
-  def envvars_index
-    self.envvars.select('name', 'value').all
-  end
 end

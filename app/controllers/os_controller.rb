@@ -21,7 +21,7 @@ class OsController < ApplicationController
   end
 
   def envvars
-    envvars = @device.envvars_index.map{|v| "#{v.name}=#{v.value}" }
+    envvars = @device.envvars.map{|v| "#{v.name}=#{v.value}" }
     envvars << "device_name=#{@device.name}"
     body = envvars.join("\x04")
     render status: :ok, body: body
