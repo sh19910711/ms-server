@@ -7,29 +7,20 @@ Welcome to MakeStack
 
 
 ## Requirements
+
 - RDBMS: PostgreSQL (recommended) or MySQL
 - Redis
 - Docker
 
 
 ## Development
-We recommend to use PostgreSQL.
 
 ```sh
 $ bundle install
+$ rails db:create db:schema:load
 $ bundle exec foreman start
 ```
 
-
-## Testing
-
-```sh
-$ bundle exec rspec    # backend test
-$ bundle exec guard
-$ npm run test         # frontend test
-$ npm run test-watch
-```
-
-
 ## License
+
 MIT
