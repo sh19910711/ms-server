@@ -7,8 +7,9 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   USER_NAME_REGEX = /\A[a-zA-Z][a-zA-Z0-9\-\_\.]*\z/
-  validates :name, presence: true, uniqueness: true,
-            exclusion: { in: RESERVED_USER_NAMES, message: "%{value} is not available." }, format: { with: USER_NAME_REGEX }
+  validates :name, presence: true, uniqueness: { case_sensitive: false },
+            exclusion: { in: RESERVED_USER_NAMES, message: "%{value} is not available." },
+            format: { with: USER_NAME_REGEX }
 
   validates :email, presence: true
   has_many :apps, dependent: :destroy
