@@ -4,50 +4,48 @@ end
 class BuildJob < ApplicationJob
   queue_as :build
 
-  def perform(deployment_id, build_id)
+  def perform(deployment_id)
     deployment = Deployment.find(deployment_id)
-    build = Build.find(build_id)
 
     begin
-      start_build(build)
+      start_build(deployment)
 
       tmp_base_dir = prepare_tmp_base_dir
       Dir.mktmpdir("makestack-app-build-", tmp_base_dir) do |tmpdir|
-        IO.binwrite(File.join(tmpdir, 'app.zip'), build.source_file)
-        build(build, tmpdir)
-        deploy_images(deployment, build, get_image_files(tmpdir))
+        IO.binwrite(File.join(tmpdir, "app.zip"), deployment.source_file)
+        build(deployment, tmpdir)
+        deploy(deployment, get_image_file(tmpdir))
       end
 
-      finish_build(build)
+      finish_build(deployment)
     rescue BuildError => e
-      build.status = 'failure'
-      build.log += "\n#{e}\n"
-      build.save!
+      deployment.status = "failure"
+      deployment.buildlog += "\n#{e}\n"
+      deployment.save!
     end
   end
 
   private
 
-  def get_image_files(tmpdir)
+  def get_image_file(tmpdir)
     image_files = Dir[File.join(tmpdir, "*.*.image")]
     if image_files == []
       raise BuildError, "no image files to deploy"
     end
 
-    image_files
+    image_files[0]
   end
 
-  def start_build(build)
-    logger.info "build ##{build.id}: starting"
-    build.update!(status: 'building')
-    build.log = ""
-    build
+  def start_build(deployment)
+    logger.info "build ##{deployment.id}: starting"
+    deployment.update!(status: 'building')
+    deployment.buildlog = ""
   end
 
-  def finish_build(build)
-    logger.info "build ##{build.id}: #{build.status}"
-    build.source_file = nil
-    build.save!
+  def finish_build(deployment)
+    logger.info "build ##{deployment.id}: #{deployment.status}"
+    deployment.source_file = nil
+    deployment.save!
   end
 
   def prepare_tmp_base_dir
@@ -56,42 +54,20 @@ class BuildJob < ApplicationJob
     tmp_base_dir
   end
 
-  def build(build, appdir)
-    build.log += %x[docker run --rm -v #{appdir}:/app -t makestack/os 2>&1]
+  def build(deployment, appdir)
+    deployment.buildlog += %x[docker run --rm -v #{appdir}:/app -t makestack/os 2>&1]
     if $?.success?
-      build.status = 'success'
+      deployment.status = 'success'
     else
-      build.status = 'failure'
+      deployment.status = 'failure'
       raise BuildError, "failed to build"
     end
   end
 
-  def deploy_images(deployment, build, image_files)
-    comment =  deployment.comment
-    app = deployment.app
-    tag = deployment.tag
-    major_version =  deployment.major_version
-    minor_version = (image_files.size == 0)? 0 : 1
-    released_at = Time.now
-
-    ActiveRecord::Base.transaction do
-      image_files.each do |file|
-        logger.info "build ##{build.id}: deploying #{file}"
-        Deployment.create! do |d|
-          d.comment       = comment
-          d.app           = app
-          d.major_version = major_version
-          d.minor_version = minor_version
-          d.tag           = tag
-          d.board         = ImageFile.get_board_from_filename(file)
-          d.image         = File.open(file, 'rb').read
-          d.released_at   = released_at
-          d.build         = build
-        end
-        minor_version += 1
-      end
-
-      deployment.destroy
-    end
+  def deploy(deployment, image_file)
+    logger.info "build ##{deployment.id}: deploying #{image_file}"
+    deployment.board = ImageFile.get_board_from_filename(image_file)
+    deployment.image = File.open(image_file, 'rb').read
+    deployment.released_at = Time.now
   end
 end

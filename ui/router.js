@@ -47,7 +47,7 @@ export default new VueRouter({
     },
     {
       name: "deployment",
-      path: "/apps/:app_name/deployments/:major_version",
+      path: "/apps/:app_name/deployments/:version",
       component: Vue.extend(DeploymentView),
       meta: {
         title: "Deployment"

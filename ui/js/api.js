@@ -73,8 +73,8 @@ export default new class {
     return this.invoke("GET", `/${team}/apps/${app_name}/deployments`);
   }
 
-  get_deployment(team, app_name, major_version) {
-    return this.invoke("GET", `/${team}/apps/${app_name}/deployments/${major_version}`);
+  get_deployment(team, app_name, version) {
+    return this.invoke("GET", `/${team}/apps/${app_name}/deployments/${version}`);
   }
 
   create_app(team, app_name) {

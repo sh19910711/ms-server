@@ -43,7 +43,8 @@ I> switch to #6
 I> switch to #7
 ")
 
-build = FactoryGirl.create(:build, app: app, status: "success", log: "
+FactoryGirl.create(:deployment, app: app, status: "success", comment: "first commit!",
+                   board: "esp8266", released_at: Time.now, buildlog: "
 >>> stage: Infra
 >>> action: Build Environment Info
 Hello
@@ -76,6 +77,3 @@ baz
 >>> action_end: success
 >>> stage_end
 ")
-
-FactoryGirl.create(:deployment, comment: "first commit!", app: app, board: "esp8266",
-                   released_at: Time.now, build: build)
