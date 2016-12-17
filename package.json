@@ -1,5 +1,9 @@
 {
   "private": true,
+  "engines": {
+    "node": "v7.2.1",
+    "npm": "v4.0.3"
+  },
   "scripts": {
     "build": "webpack --config ui/webpack.config.js --progress",
     "start": "webpack-dev-server -d --config ui/webpack.config.js"
