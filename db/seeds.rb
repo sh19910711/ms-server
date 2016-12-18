@@ -16,7 +16,33 @@ end
 
 user = FactoryGirl.create(:user, name: "luke", email: "luke@example.com")
 app = FactoryGirl.create(:app, name: "starwars", user: user)
-FactoryGirl.create(:device, name: "x-wing", device_secret: "abc", user: user)
+device = FactoryGirl.create(:device, name: "x-wing", device_secret: "abc", user: user)
+
+device.update_status("running", "
+I> Hello World!
+I> kmalloc: allocating 3KB
+W> failed to allocate
+I> switch to #1
+I> switch to #2
+I> switch to #3
+I> switch to #1
+I> switch to #6
+I> switch to #3
+I> switch to #1
+I> switch to #5
+I> switch to #3
+I> switch to #3
+I> switch to #2
+I> switch to #1
+I> switch to #2
+I> switch to #7
+I> switch to #3
+I> switch to #4
+I> switch to #5
+I> switch to #6
+I> switch to #7
+")
+
 build = FactoryGirl.create(:build, app: app, status: "success", log: "
 >>> stage: Infra
 >>> action: Build Environment Info
