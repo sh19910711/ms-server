@@ -7,27 +7,27 @@
   box-shadow: 0 1px 3px #dddddd;
   background: #ffffff;
   width: 330px;
+  padding: 10px;
+
+  &.full-width {
+    width: 100%;
+  }
 
   &.list {
+    padding: 8px;
     width: 100%;
-    display: flex;
     font-size: 17px;
     font-weight: 600;
     line-height: 22px;
-    justify-content: space-between;
 
     &:not(:last-child) {
       margin-bottom: 13px;
     }
 
-    .title {
+    a {
       padding: 15px 20px;
       width: 100%;
       color: $card-list-font-color;
-
-      a {
-        color: $card-list-font-color;
-      }
     }
   }
 

@@ -18,9 +18,11 @@
     </header>
     <div class="list">
       <card v-for="app in apps" type="list">
-         <router-link :to="{ name: 'app', params: {app_name: app.name}}" slot="title">
-          {{ app.name }}
-        </router-link>
+        <div slot="content">
+          <router-link :to="{ name: 'app', params: {app_name: app.name}}">
+            {{ app.name }}
+          </router-link>
+        </div>
       </card>
     </div>
   </main>

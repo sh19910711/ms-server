@@ -6,9 +6,11 @@
     </header>
     <div class="list">
       <card v-for="device in devices" type="list">
-         <router-link :to="{ name: 'device', params: {device_name: device.name}}" slot="title">
-          {{ device.name }}
-        </router-link>
+        <div slot="content">
+          <router-link :to="{ name: 'device', params: {device_name: device.name}}">
+            {{ device.name }}
+          </router-link>
+        </div>
       </card>
     </div>
   </main>
