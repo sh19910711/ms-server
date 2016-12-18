@@ -1,7 +1,9 @@
-import NavBar from "components/navbar"
-import ProgressBar from "progressbar"
-import Modal from "components/modal"
 import api from "api"
+import ProgressBar from "progressbar"
+import NavBar from "components/navbar"
+import Card from "components/card"
+import DeviceLog from "components/devicelog"
+import Modal from "components/modal"
 
 
 require("./device.scss");
@@ -11,7 +13,9 @@ export default {
   template: require("./device.html"),
   components: {
     "navbar": NavBar,
-    "modal": Modal
+    "modal": Modal,
+    "card": Card,
+    "devicelog": DeviceLog
   },
   data() {
     return {
@@ -19,6 +23,7 @@ export default {
       device_name: this.$router.currentRoute.params.device_name,
       show_add_modal: false,
       apps: [],
+      devicelog: [],
       add_device_to: ""
     }
   },
@@ -48,6 +53,10 @@ export default {
       this.apps = r.json.apps;
       // FIXME: what if there are no apps?
       this.add_device_to = this.apps[0].name;
+    });
+
+    api.get_device_log(this.team, this.device_name).then(r => {
+      this.devicelog = r.json.log;
     });
 
     ProgressBar.done();
