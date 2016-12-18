@@ -1,0 +1,14 @@
+@import "coloring";
+@import "fonts";
+
+.devicelog {
+  color: $devicelog-font-color;
+  background: $devicelog-background-color;
+  padding: 10px;
+
+  p {
+    margin: 0;
+    font-size: 13px;
+    font-family: $devicelog-log-font;
+  }
+}

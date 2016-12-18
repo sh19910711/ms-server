@@ -57,6 +57,12 @@ $buildlog-success-color: #00a388;
 $buildlog-fail-color: #cd2c24;
 
 //
+//  Devicelog
+//
+$devicelog-background-color: $buildlog-log-background-color;
+$devicelog-font-color: $buildlog-log-font-color;
+
+//
 //  Statusbar
 //
 $statusbar-success-font-color: #111111;
