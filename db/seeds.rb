@@ -16,7 +16,8 @@ end
 
 user = FactoryGirl.create(:user, name: "luke", email: "luke@example.com")
 app = FactoryGirl.create(:app, name: "starwars", user: user)
-device = FactoryGirl.create(:device, name: "x-wing", device_secret: "abc", user: user)
+device = FactoryGirl.create(:device, name: "x-wing", device_secret: "abc", app: app,
+                            user: user)
 
 device.update_status("running", "
 I> Hello World!

@@ -19,6 +19,7 @@ RSpec.describe DeploymentsController, type: :controller do
 
   describe 'POST create' do
     let!(:app)         { create(:app, user: user) }
+    let!(:devices)     { [create(:device, user: user, app: app)] }
     let!(:deployments) { [create(:deployment, app: app)] }
 
     context 'valid zip file' do

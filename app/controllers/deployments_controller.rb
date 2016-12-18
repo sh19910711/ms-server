@@ -12,7 +12,7 @@ class DeploymentsController < ApplicationController
   def create
     if deployment_params[:image]
       filename    = deployment_params[:image].original_filename
-      board       = ImageFile.get_board_from_filename(filename)
+      boards      = [ImageFile.get_board_from_filename(filename)]
       image       = deployment_params[:image].read
       source_file = nil
     else
@@ -21,25 +21,33 @@ class DeploymentsController < ApplicationController
         return
       end
 
-      board       = "esp8266" # TODO
+      boards = @app.devices.pluck(:board).uniq
+      if boards == []
+        render_error :not_acceptable, "No devices associated to the app."
+        return
+      end
+
       image       = nil
       source_file = deployment_params[:source_file].read
     end
 
-    deployment = Deployment.new(
-                   app:         @app,
-                   board:       board,
-                   image:       image,
-                   source_file: source_file,
-                   status:      (image)? "success" : "queued",
-                   comment:     deployment_params[:comment],
-                   tag:         deployment_params[:tag],
-                   released_at: (image)? Time.now : nil
-                 )
+    @deployments = boards.map do |board|
+      deployment = Deployment.new
+      deployment.app         = @app
+      deployment.board       = board
+      deployment.image       = image
+      deployment.source_file = source_file
+      deployment.status      = (image)? "success" : "queued"
+      deployment.comment     = deployment_params[:comment]
+      deployment.tag         = deployment_params[:tag]
+      deployment.released_at = (image)? Time.now : nil
+      deployment.save!
 
-    deployment.save!
-    if source_file
-      deployment.build
+      if source_file
+        deployment.build
+      end
+
+      deployment
     end
   end
 
