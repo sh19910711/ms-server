@@ -16,7 +16,8 @@ end
 
 user = FactoryGirl.create(:user, name: "luke", email: "luke@example.com")
 app = FactoryGirl.create(:app, name: "starwars", user: user)
-device = FactoryGirl.create(:device, name: "x-wing", device_secret: "abc", user: user)
+device = FactoryGirl.create(:device, name: "x-wing", device_secret: "abc", app: app,
+                            user: user)
 
 device.update_status("running", "
 I> Hello World!
@@ -43,7 +44,8 @@ I> switch to #6
 I> switch to #7
 ")
 
-build = FactoryGirl.create(:build, app: app, status: "success", log: "
+FactoryGirl.create(:deployment, app: app, status: "success", comment: "first commit!",
+                   board: "esp8266", released_at: Time.now, buildlog: "
 >>> stage: Infra
 >>> action: Build Environment Info
 Hello
@@ -76,6 +78,3 @@ baz
 >>> action_end: success
 >>> stage_end
 ")
-
-FactoryGirl.create(:deployment, comment: "first commit!", app: app, board: "esp8266",
-                   released_at: Time.now, build: build)

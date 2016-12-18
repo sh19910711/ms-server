@@ -2,7 +2,6 @@ class App < ApplicationRecord
   include Redis::Objects
 
   belongs_to :user
-  has_many :builds, dependent: :destroy
   has_many :deployments, dependent: :destroy
   has_many :devices, dependent: :nullify
 

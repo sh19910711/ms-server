@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :deployment do
     app
-    build
     board 'esp8266'
     image 'abcdefghijklmn'
+    status 'queued'
     released_at { Time.now }
   end
 end

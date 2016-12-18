@@ -1,1 +1,2 @@
-json.deployments @deployments, :tag, :board, :major_version, :minor_version, :comment, :created_at
+json.deployments @deployments, :tag, :board, :version, :comment, :created_at, :status,
+                               :buildlog, :updated_at, :released_at

@@ -6,9 +6,9 @@
     </header>
     <div class="list">
       <card v-for="deployment in deployments" type="list">
-         <router-link :to="{ name: 'deployment', params: {major_version: deployment.major_version}}"
+         <router-link :to="{ name: 'deployment', params: {version: deployment.version}}"
                       slot="title">
-          #{{ deployment.major_version }}: {{ deployment.comment }}
+          #{{ deployment.version }}: {{ deployment.comment }}
         </router-link>
       </card>
     </div>

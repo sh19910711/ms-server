@@ -1,18 +1,20 @@
 class Deployment < ApplicationRecord
   belongs_to :app
-  belongs_to :build
 
   validates :app, presence: true
-  validates :build, presence: true
+  validates :version, uniqueness: { scope: :app }
   validates :image, presence: true, if: :released?
   validates :board, inclusion: { in: SUPPORTED_BOARDS }, if: :released?
+  validates :status, inclusion: { in: BUILD_STATUSES }
 
   before_create :set_versions
 
+  def build
+    BuildJob.perform_later(self.id)
+  end
+
   def set_versions
-    max = Deployment.where(app: self.app).maximum(:major_version) || 0
-    self.major_version ||= max + 1
-    self.minor_version ||= 0
+    self.version = (Deployment.where(app: self.app).maximum(:version) || 0) + 1
   end
 
   def released?
