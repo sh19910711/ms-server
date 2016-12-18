@@ -65,6 +65,10 @@ export default new class {
     return this.invoke("GET", `/${team}/devices`);
   }
 
+  get_device_log(team, device_name) {
+    return this.invoke("GET", `/${team}/devices/${device_name}/log`);
+  }
+
   get_deployments(team, app_name) {
     return this.invoke("GET", `/${team}/apps/${app_name}/deployments`);
   }
