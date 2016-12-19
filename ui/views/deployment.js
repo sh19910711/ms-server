@@ -36,8 +36,8 @@ export default {
   },
   created() {
     api.get_deployment(this.team, this.app_name, this.version).then(r => {
-      this.status     = r.json.build.status;
-      this.build_log  = r.json.build.buildlog;
+      this.status     = r.json.status;
+      this.build_log  = r.json.buildlog;
       this.created_at = (new Date(r.json.created_at)).toLocaleString();
       this.updated_at = (new Date(r.json.updated_at)).toLocaleString();
       ProgressBar.done();
