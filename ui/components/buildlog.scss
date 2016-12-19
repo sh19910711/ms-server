@@ -12,7 +12,7 @@
     text-align: center;
   }
 
-  .stage {
+  .stage:not(:first-child) {
     margin-top: 50px;
   }
 

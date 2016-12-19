@@ -19,6 +19,9 @@
         </p>
       </div>
     </header>
-    <build-result v-bind:build_log="build_log"></build-result>
+
+    <card class="full-width">
+      <build-result slot="content" v-bind:build_log="build_log"></build-result>
+    </card>
   </main>
 </div>

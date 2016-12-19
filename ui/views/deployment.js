@@ -1,5 +1,6 @@
 import NavBar from "components/navbar"
 import BuildLog from "components/buildlog"
+import Card from "components/card"
 import api from "api"
 import ProgressBar from "progressbar"
 
@@ -11,7 +12,8 @@ export default {
   template: require("./deployment.html"),
   components: {
     "navbar": NavBar,
-    "build-result": BuildLog
+    "build-result": BuildLog,
+    card: Card
   },
   data() {
     return {
