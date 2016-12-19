@@ -17,7 +17,7 @@ Welcome to MakeStack
 
 ```sh
 $ bundle install
-$ rails db:create db:schema:load
+$ rails db:setup
 $ bundle exec foreman start
 ```
 
