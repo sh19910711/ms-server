@@ -1,3 +1,5 @@
+require 'rails/generators/named_base'
+
 class ViewGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('../templates', __FILE__)
   def copy_initializer_file
