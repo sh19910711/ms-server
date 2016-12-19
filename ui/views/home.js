@@ -14,31 +14,7 @@ export default {
     }
   },
   created() {
-    this.apps = [
-    {
-      title: "led-blink",
-      link: "/apps",
-      menu: [{
-        title: "delete",
-        link:  "/somewhere"
-      }]
-    },
-    {
-      title: "led-blink",
-      menu: [{
-        title: "delete",
-        link:  "/somewhere"
-      }]
-    },
-    {
-      title: "led-blink",
-      menu: [{
-        title: "delete",
-        link:  "/somewhere"
-      }]
-    }
-    ];
-
-    ProgressBar.done();
+    // TODO
+    this.$router.push({name: "apps"});
   }
 }
