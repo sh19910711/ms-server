@@ -18,7 +18,7 @@ gem 'rails_12factor', group: :heroku
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :development, :test do
-  gem 'sqlite3'
+  gem 'sqlite3', group: :sqlite3
   gem 'pry-rails'
   gem 'active_record_query_trace'
   gem 'byebug', platform: :mri
