@@ -20,6 +20,7 @@ let App = {
     }
   },
   created() {
+    // FIXME: do this in beforeEach()
     if (!api.credentials && this.$router.currentRoute.name != "login") {
       // Authentication required.
       if (!["home", "login"].includes(this.$router.currentRoute.name))
@@ -31,9 +32,6 @@ let App = {
 
     let statusbar = get_statusbar();
     if (statusbar) {
-      this.statusbar_status = statusbar.status;
-      this.statusbar_body   = statusbar.body;
-    } else {
       this.statusbar_status = statusbar.status;
       this.statusbar_body   = statusbar.body;
     }
