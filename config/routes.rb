@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     post   '/:team/apps/:app_name/devices',     to: 'apps#add_device'
     get    '/:team/apps/:app_name/log',         to: 'apps#log'
     get    '/:team/apps/:app_name/deployments', to: 'deployments#index'
-    get    '/:team/apps/:app_name/deployments/:major', to: 'deployments#show'
+    get    '/:team/apps/:app_name/deployments/:version', to: 'deployments#show'
     post   '/:team/apps/:app_name/deployments', to: 'deployments#create'
 
     post   '/:team/apps/:app_name/builds',      to: 'builds#create'

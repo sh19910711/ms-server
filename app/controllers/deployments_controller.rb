@@ -7,6 +7,10 @@ class DeploymentsController < ApplicationController
 
   def show
     @deployment = @app.deployments.find_by_version(params[:version])
+    unless @deployment
+      render_error :not_found, "The deployment not found."
+      return
+    end
   end
 
   def create
