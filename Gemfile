@@ -12,6 +12,7 @@ gem 'redis-objects'
 gem 'whenever', require: false
 gem 'mysql2', '~> 0.4.4', group: :mysql
 gem 'pg', '~> 0.18.2', group: :postgres
+gem 'rails_12factor', group: :heroku
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
