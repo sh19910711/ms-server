@@ -4,7 +4,7 @@
 
 $modal-transition-duration: 0.4s;
 
-@keyframes show {
+@keyframes show-modal {
   0% {
     opacity: 0;
   }
@@ -28,7 +28,7 @@ $modal-transition-duration: 0.4s;
 
   &.show {
     display: block;
-    animation: show $modal-transition-duration ease-out;
+    animation: show-modal $modal-transition-duration ease-out;
   }
 
   .close {
