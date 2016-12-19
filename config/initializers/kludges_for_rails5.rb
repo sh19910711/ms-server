@@ -1,5 +1,5 @@
 class KludgeForRails5
-  def initialize(app, options={})
+  def initialize(app, options: {})
     @app = app
     @requests = []
   end

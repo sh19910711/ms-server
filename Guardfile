@@ -13,7 +13,6 @@ guard :rspec, cmd: "bundle exec rspec", notification: false do
   dsl.watch_spec_files_for(ruby.lib_files)
 
   # Rails files
-  rails = dsl.rails
   watch('spec/spec_helper.rb')                                      { "spec" }
   watch('app/controllers/application_controller.rb')                { "spec/controllers" }
   watch('config/routes.rb')                                         { "spec/routing" }
