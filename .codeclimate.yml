@@ -15,8 +15,6 @@ engines:
     enabled: true
   scss-lint:
     enabled: true
-  rubymotion:
-    enabled: true
   bundler-audit:
     enabled: true
 #  nodesecurity:
