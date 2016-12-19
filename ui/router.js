@@ -11,7 +11,7 @@ import DeploymentsView from "./views/deployments";
 
 
 export default new VueRouter({
-  mode: "history",
+  mode: (location.host.indexOf("herokuapp.com") == -1) ? "history" : "hash",
   routes: [
     {
       name: "home",
