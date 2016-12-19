@@ -6,7 +6,7 @@
   },
   "scripts": {
     "build": "webpack --config ui/webpack.config.js --progress",
-    "start": "webpack-dev-server -d --config ui/webpack.config.js",
+    "dev": "webpack-dev-server -d --config ui/webpack.config.js",
     "postinstall": "npm run build"
   },
   "dependencies": {
