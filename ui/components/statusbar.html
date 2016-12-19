@@ -1,4 +1,4 @@
-<div class="statusbar" v-bind:class="status" v-if="show">
+<div class="statusbar" v-bind:class="[status, show ? 'show' : 0]">
   <i class="fa fa-check-circle" aria-hidden="true" v-if="status == 'success'"></i>
   <i class="fa fa-exclamation-triangle" aria-hidden="true" v-if="status == 'failure'"></i>
   <span class="body">{{ body }}</span>

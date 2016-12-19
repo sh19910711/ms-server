@@ -1,5 +1,33 @@
 @import "coloring";
 
+$hide-statusbar-after: 6s;
+
+@keyframes show-statusbar {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  12% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+
+  90% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 .statusbar {
   position: absolute;
   top: 0;
@@ -16,8 +44,12 @@
   border-width: 0px 1px 1px 1px;
   border-style: solid;
   border-radius: 0px 0px 8px 8px;
+  display: none;
 
-  // TODO: animation
+  &.show {
+    display: block;
+    animation: show-statusbar $hide-statusbar-after forwards;
+  }
 
   .body {
     margin-left: 4px;
