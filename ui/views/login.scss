@@ -1,4 +1,5 @@
 @import "coloring";
+@import "fonts";
 @import "form";
 
 
@@ -9,11 +10,16 @@
   position:    absolute;
   top:         0;
   left:        0;
-  background:  login-background-color;
+  background:  $login-background-color;
+
+  h1 {
+    font-family: $login-title-font;
+    text-align: center;
+  }
 
   .form {
     width: $short-input-width + 20px;
-    margin: 0 auto 0;
+    margin: 40px auto 0;
 
     input[type=submit] {
       width: $short-input-width + 15px;
