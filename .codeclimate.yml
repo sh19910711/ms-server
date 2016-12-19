@@ -19,8 +19,8 @@ engines:
     enabled: true
   bundler-audit:
     enabled: true
-  nodesecurity:
-    enabled: true
+#  nodesecurity:
+#    enabled: true
 
 ratings:
   paths:
