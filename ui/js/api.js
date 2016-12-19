@@ -1,4 +1,5 @@
 import "whatwg-fetch";
+import {set_statusbar} from "components/statusbar"
 
 export default new class {
   constructor() {
@@ -32,6 +33,12 @@ export default new class {
           reject({status, headers, json });
       });
     });
+  }
+
+  logout() {
+    localStorage.removeItem("user");
+    localStorage.removeItem("team");
+    localStorage.removeItem("credentials");
   }
 
   login(username, password) {

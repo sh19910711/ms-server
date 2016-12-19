@@ -26,7 +26,6 @@ export const StatusBar = {
   created() {
     if (this.status) {
       this.show = true;
-      setTimeout((()=>{ this.show = false; }).bind(this), 3000);
     }
   }
 }
