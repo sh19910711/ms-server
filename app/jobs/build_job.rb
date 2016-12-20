@@ -9,6 +9,7 @@ class BuildJob < ApplicationJob
 
     begin
       start_build(deployment)
+      setup
 
       tmp_base_dir = prepare_tmp_base_dir
       Dir.mktmpdir("makestack-app-build-", tmp_base_dir) do |tmpdir|
@@ -26,6 +27,16 @@ class BuildJob < ApplicationJob
   end
 
   private
+
+  def setup
+    # TODO
+    # deployment.build += ">>> stage: infra\n"
+    # deployment.build += ">>> action: Build Environment Info\n"
+    # deployment.build += ">>> action_end: success\n"
+    # deployment.build += ">>> action: Pull Docker image\n"
+    # deployment.build += ">>> action_end: success\n"
+    # deployment.build += ">>> stage_end: success\n"
+  end
 
   def get_image_file(tmpdir)
     image_files = Dir[File.join(tmpdir, "*.*.image")]
@@ -55,19 +66,32 @@ class BuildJob < ApplicationJob
   end
 
   def build(deployment, appdir)
-    deployment.buildlog += %x[docker run --rm -v #{appdir}:/app -t makestack/os 2>&1]
-    if $?.success?
-      deployment.status = 'success'
+    deployment.buildlog += ">>> stage: build\n"
+    deployment.buildlog += ">>> action: Build the app image\n"
+    deployment.buildlog += %x[docker run --rm -v #{appdir}:/app -t makestack/os 2>&1].chomp("\n") + "\n"
+    status = ($?.success?)? "success" : "failure"
+    deployment.buildlog += ">>> action_end: #{status}\n"
+    deployment.buildlog += ">>> stage_end\n"
+
+    if status == "success"
+      deployment.status = status
     else
-      deployment.status = 'failure'
+      deployment.status = status
       raise BuildError, "failed to build"
     end
   end
 
   def deploy(deployment, image_file)
     logger.info "build ##{deployment.id}: deploying #{image_file}"
+    deployment.buildlog += ">>> stage: deploy\n"
+    deployment.buildlog += ">>> action: Deploy the built image\n"
     deployment.board = ImageFile.get_board_from_filename(image_file)
     deployment.image = File.open(image_file, 'rb').read
     deployment.released_at = Time.now
+    deployment.save!
+
+    deployment.buildlog += ">>> action_end: success\n"
+    deployment.buildlog += ">>> stage_end\n"
+    deployment.save!
   end
 end
