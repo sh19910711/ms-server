@@ -34,8 +34,8 @@
       border-left-color: $buildlog-success-color;
     }
 
-    &.fail {
-      border-left-color: $buildlog-fail-color;
+    &.failure {
+      border-left-color: $buildlog-failure-color;
     }
   }
 
@@ -49,6 +49,7 @@
 
     p {
       margin: 0;
+      padding: 3px 0;
     }
   }
 }
