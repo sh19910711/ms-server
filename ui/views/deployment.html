@@ -4,8 +4,9 @@
     <header>
       <h1>Deployment #{{ version }}</h1>
       <div class="meta">
-        <p>
+        <p class="status" v-bind:class="status">
           <i class="fa fa-check" v-if="status == 'success'" aria-hidden="true"></i>
+          <i class="fa fa-hourglass-half" v-else-if="status == 'building'" aria-hidden="true"></i>
           <i class="fa fa-close" v-else aria-hidden="true"></i>
           <span>{{ status }}</span>
         </p>
@@ -15,7 +16,7 @@
         </p>
         <p>
           <i class="fa fa-clock-o" aria-hidden="true"></i>
-          <span>started at {{ updated_at }}</span>
+          <span>started at {{ created_at }}</span>
         </p>
       </div>
     </header>

@@ -47,6 +47,13 @@ $breadcrumbs-caret-color: #7e7d70;
 $breadcrumbs-link-color: #4e4d40;
 
 //
+//  Deployment
+//
+$deployment-success-color: #00a388;
+$deployment-failure-color: #cd2c24;
+$deployment-building-color: #aaaa33;
+
+//
 //  Buildlog
 //
 $buildlog-stage-title-color: #8a8a8a;
@@ -54,7 +61,7 @@ $buildlog-log-background-color: #0a0a0a;
 $buildlog-log-font-color: #fafafa;
 $buildlog-action-title-color: #8a8a8a;
 $buildlog-success-color: #00a388;
-$buildlog-fail-color: #cd2c24;
+$buildlog-failure-color: #cd2c24;
 
 //
 //  Devicelog

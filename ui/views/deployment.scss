@@ -1,2 +1,19 @@
+@import "coloring";
+
 .deployment-view {
+  .status {
+    font-weight: bold;
+
+    &.success {
+      color: $deployment-success-color;
+    }
+
+    &.building {
+      color: $deployment-building-color;
+    }
+
+    &.failure {
+      color: $deployment-failure-color;
+    }
+  }
 }
