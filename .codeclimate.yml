@@ -4,6 +4,9 @@ engines:
     enabled: true
   duplication:
     enabled: true
+    exclude_fingerprints:
+      - 344ea7830d7576620e2d41bbd12a40f8
+      - f3ee13553a668376390fdd1d9ec5c653
     config:
       languages:
       - ruby
@@ -15,6 +18,9 @@ engines:
     enabled: true
   scss-lint:
     enabled: true
+    exclude_fingerprints:
+      - 0cea3efd3b75600100fc381622709b9c
+      - 322c82d8f9859fcc83a62bb073707bdd
   bundler-audit:
     enabled: true
 #  nodesecurity:
