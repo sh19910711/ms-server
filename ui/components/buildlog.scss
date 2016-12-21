@@ -3,13 +3,13 @@
 
 .buildlog {
   h1 {
-    color: $buildlog-stage-title-color;
     border-bottom: 1px solid #eeeeee;
+    color: $buildlog-stage-title-color;
     font-family: $buildlog-stage-title-font;
-    font-weight: 400;
     font-size: 14px;
-    text-transform: uppercase;
+    font-weight: 400;
     text-align: center;
+    text-transform: uppercase;
   }
 
   .stage:not(:first-child) {
@@ -21,13 +21,13 @@
     border-left: 10px solid #f3f3f3;
     color: $buildlog-action-title-color;
     font-family: $buildlog-action-title-font;
-    font-weight: 500;
     font-size: 13px;
-    padding: 14px 10px 14px;
+    font-weight: 500;
+    padding: 14px 10px;
 
     &:hover {
-      cursor: pointer;
       background: #f7f7f7;
+      cursor: pointer;
     }
 
     &.success {
@@ -40,12 +40,12 @@
   }
 
   .log {
-    margin: 20px;
-    padding: 7px 10px 7px;
     background: $buildlog-log-background-color;
     color: $buildlog-log-font-color;
     font-family: $buildlog-log-font;
     font-size: 14px;
+    margin: 20px;
+    padding: 7px 10px;
 
     p {
       margin: 0;

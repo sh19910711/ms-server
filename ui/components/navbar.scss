@@ -3,27 +3,28 @@
 @import "button";
 
 .navbar {
-  margin: 15px 8px 0;
   display: flex;
   justify-content: space-between;
+  margin: 15px 8px 0;
 
   .left {
+
     .icon {
-      width:  20px;
+      width: 20px;
       height: 20px;
     }
 
     .breadcrumbs {
-      vertical-align: center;
-      list-style: none;
       display: inline;
+      list-style: none;
       padding-left: 7px;
+      vertical-align: center;
 
       .fa-caret-right {
-        color: $breadcrumbs-caret-color;
-        position: relative;
         bottom: 5px;
+        color: $breadcrumbs-caret-color;
         margin-left: 4px;
+        position: relative;
       }
 
       li {
@@ -31,12 +32,13 @@
       }
 
       a {
+        bottom: 6px;
         color: $breadcrumbs-link-color;
         font-size: 16px;
         font-family: $breadcrumbs-link-font;
         position: relative;
-        bottom: 6px;
         text-decoration: none;
+
         &:hover {
           text-decoration: underline;
         }
@@ -45,33 +47,35 @@
   }
 
   .right {
-    font-size:0;
+    font-size: 0;
+
     .menu {
       display: inline-block;
+
       i {
         @include button-transition;
 
+        bottom: 7px;
+        color: $navbar-menu-button-color;
         display: inline;
         font-size: 20px;
         position: relative;
-        bottom: 7px;
-        color: $navbar-menu-button-color;
 
         &:hover {
-          cursor: pointer;
           color: $navbar-menu-button-hover-color;
+          cursor: pointer;
         }
       }
     }
 
     .avatar {
+      border-radius: 25px;
+      bottom: 2px;
       display: inline-block;
+      height: 25px;
       margin-left: 14px;
       position: relative;
-      bottom:   2px;
-      width:         25px;
-      height:        25px;
-      border-radius: 25px;
+      width: 25px;
     }
   }
 }

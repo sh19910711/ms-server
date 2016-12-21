@@ -21,7 +21,7 @@ let App = {
   },
   created() {
     // FIXME: do this in beforeEach()
-    if (!api.credentials && this.$router.currentRoute.name != "login") {
+    if (!api.credentials && this.$router.currentRoute.name !== "login") {
       // Authentication required.
       if (!["home", "login"].includes(this.$router.currentRoute.name))
         set_statusbar("failure", "Login first.");

@@ -33,7 +33,7 @@ export default {
         // TODO: statusbar
         this.$router.push({ name: "app", params: { app_name: this.app_name }});
       });
-    },
+    }
   },
   created() {
     api.get_apps(this.team).then(r => {

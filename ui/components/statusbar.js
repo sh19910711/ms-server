@@ -8,10 +8,7 @@ export function get_statusbar() {
 }
 
 export function set_statusbar(status, body) {
-  Cookies.set("statusbar", {
-    status: status,
-    body, body
-  });
+  Cookies.set("statusbar", { status, body });
 }
 
 export const StatusBar = {

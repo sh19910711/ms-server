@@ -18,7 +18,7 @@ export default {
       breadcrumbs: [
         { title: "devices", route: {name: "devices"}}
       ],
-      devices: [],
+      devices: []
     }
   },
   created() {

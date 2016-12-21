@@ -25,7 +25,7 @@ module.exports = {
       { test: /.js$/,    loader: "babel", exclude: /node_modules/ },
       { test: /\.scss$/, loader: "style!css!postcss!sass"},
       { test: /\.html$/, loader: "html" },
-      { test: /\.(woff|woff2|ttf|eot|svg)(\?.*)?$/, loader: "file" },
+      { test: /\.(woff|woff2|ttf|eot|svg)(\?.*)?$/, loader: "file" }
     ]
   },
   plugins: [
