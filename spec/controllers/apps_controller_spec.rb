@@ -81,9 +81,8 @@ RSpec.describe AppsController, type: :controller do
     end
 
     context "invalid device" do
-      let!(:invalid_device) { create(:device) }
       it 'returns :not_found' do
-        api(:post, :add_device, params: { app_name: app.name, device_name: invalid_device.name })
+        api(:post, :add_device, params: { app_name: app.name, device_name: "hogehoge" })
 
         device.reload
         expect(response).to have_http_status(:not_found)
