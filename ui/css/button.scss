@@ -25,9 +25,9 @@ $button-transition-duration: .5s;
   }
 
   &:active {
-    background: #normal-button-active-color;
-    border-color: #normal-button-active-color;
-    color: #normal-button-active-color;
+    background: $normal-button-active-color;
+    border-color: $normal-button-active-color;
+    color: $normal-button-active-color;
   }
 }
 
