@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161217005159) do
+ActiveRecord::Schema.define(version: 20161220235844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,19 +33,17 @@ ActiveRecord::Schema.define(version: 20161217005159) do
     t.binary   "image"
     t.string   "comment"
     t.datetime "released_at"
-    t.integer  "build_id"
     t.binary   "source_file"
     t.text     "buildlog"
     t.string   "status"
     t.integer  "version"
     t.index ["app_id"], name: "index_deployments_on_app_id", using: :btree
-    t.index ["build_id"], name: "index_deployments_on_build_id", using: :btree
   end
 
   create_table "devices", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "board"
     t.integer  "user_id"
     t.string   "tag"
@@ -53,8 +51,10 @@ ActiveRecord::Schema.define(version: 20161217005159) do
     t.integer  "app_id"
     t.string   "status"
     t.datetime "heartbeated_at"
+    t.string   "device_secret_prefix"
     t.index ["app_id"], name: "index_devices_on_app_id", using: :btree
     t.index ["device_secret"], name: "index_devices_on_device_secret", using: :btree
+    t.index ["device_secret_prefix"], name: "index_devices_on_device_secret_prefix", unique: true, using: :btree
     t.index ["user_id"], name: "index_devices_on_user_id", using: :btree
   end
 

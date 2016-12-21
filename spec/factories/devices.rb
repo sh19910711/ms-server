@@ -5,5 +5,6 @@ FactoryGirl.define do
     board         'esp8266'
     device_secret { Digest::SHA1.hexdigest(FFaker::Internet.email) }
     status        'new'
+    device_secret_prefix { device_secret[0, DEVICE_SECRET_PREFIX_LEN] }
   end
 end

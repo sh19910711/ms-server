@@ -8,12 +8,24 @@ class Device < ApplicationRecord
 
   DEVICE_NAME_REGEX = /\A[a-zA-Z][a-zA-Z0-9\-\_]*\z/
   validates :user, presence: true
-  validates :device_secret, presence: true
+  validates :device_secret, presence: true, uniqueness: true
+  validates :device_secret_prefix, presence: true, uniqueness: true
   validates :name, uniqueness: { scope: :user, case_sensitive: false },
             presence: true,
             format: { with: DEVICE_NAME_REGEX }
   validates :board, inclusion: { in: SUPPORTED_BOARDS }
   validates :status, inclusion: { in: DEVICE_STATUSES }
+
+  def self.authenticate(device_secret)
+    prefix = device_secret[0, DEVICE_SECRET_PREFIX_LEN]
+    device = Device.find_by_device_secret_prefix(prefix)
+
+    if device && ActiveSupport::SecurityUtils.secure_compare(device.device_secret, device_secret)
+      device
+    else
+      nil
+    end
+  end
 
   def log_messages(since=0)
     self.log.rangebyscore(since, Float::INFINITY) || []

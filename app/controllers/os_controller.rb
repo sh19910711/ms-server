@@ -56,7 +56,7 @@ class OsController < ApplicationController
   end
 
   def auth_device
-    @device = Device.find_by_device_secret(params[:device_secret])
+    @device = Device.authenticate(params[:device_secret])
     unless @device
       head :forbidden
       return false

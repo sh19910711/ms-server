@@ -14,6 +14,7 @@ class DevicesController < ApplicationController
     @device.user          = current_team
     @device.name          = device_params[:name]
     @device.device_secret = Digest::SHA1.hexdigest(SecureRandom.uuid)
+    @device.device_secret_prefix = @device.device_secret[0, DEVICE_SECRET_PREFIX_LEN]
     @device.board         = device_params[:board]
     @device.tag           = device_params[:tag]
     @device.status        = 'new'
