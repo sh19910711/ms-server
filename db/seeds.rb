@@ -57,7 +57,7 @@ World
 >>> stage: Build
 >>> action: Build System Info
 Great
->>> action_end: fail
+>>> action_end: failure
 >>> action: Extract source .zip file
 Again
 !
@@ -67,7 +67,7 @@ America
 >>> action_end: success
 >>> action: Build an app image for ESP8266
 foo
->>> action_end: fail
+>>> action_end: failure
 >>> stage_end
 >>> stage: Deploy
 >>> action: Collect app images
