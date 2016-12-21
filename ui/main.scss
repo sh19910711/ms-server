@@ -11,15 +11,16 @@ $fa-font-path: "~font-awesome/fonts";
 
 
 body {
-  font-family: $default-font-family;
   color: $default-font-color;
+  font-family: $default-font-family;
   font-size: 14px;
 }
 
 a {
   text-decoration: none;
 
-  &:link, &:visited {
+  &:link,
+  &:visited {
     color: $link-color;
   }
 
@@ -33,10 +34,10 @@ a {
 }
 
 .middledot {
-  display: inline;
   color: #b7b7b7;
+  display: inline;
 
-  &:after {
+  &::after {
     content: "・";
   }
 }
@@ -51,9 +52,9 @@ main {
   }
 
   header {
-    margin-bottom: 70px;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 70px;
 
     h1 {
       @include title;
@@ -68,7 +69,7 @@ main {
     .buttons {
       margin-top: auto;
 
-      & > a:not(:last-child) {
+      a:not(:last-child) {
         margin-right: 5px;
       }
     }

@@ -4,13 +4,13 @@
 
 
 .login-view {
+  background: $login-background-color;
+  height: 100%;
+  left: 0;
   padding-top: 100px;
-  height:      100%;
-  width:       100%;
   position:    absolute;
-  top:         0;
-  left:        0;
-  background:  $login-background-color;
+  top: 0;
+  width: 100%;
 
   h1 {
     font-family: $login-title-font;
@@ -18,10 +18,10 @@
   }
 
   .form {
-    width: $short-input-width + 20px;
     margin: 40px auto 0;
+    width: $short-input-width + 20px;
 
-    input[type=submit] {
+    [type=submit] {
       width: $short-input-width + 15px;
     }
 
